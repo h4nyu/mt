@@ -2,8 +2,7 @@
 
 A automated currency exchange system with machine learning
 
-
-## Packages
+# Packages
 
 | Packages                                  | Description  |
 | :-                                        | :-           |
@@ -12,6 +11,20 @@ A automated currency exchange system with machine learning
 | **[@kagura/web](./packages/web)**         | web frontend |
 | **[@kagura/server](./packages/server)**   | backend      |
 | **[@kagura/api](./packages/api)**         | client       |
+
+# Setup
+
+1. Build local environment image
+
+```
+docker-compose build app
+```
+
+1. Install node dependecies
+
+```
+docker compose run --rm app yarn install
+```
 
 # Contributors
 
