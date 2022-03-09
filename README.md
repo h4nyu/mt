@@ -6,21 +6,30 @@ A automated currency exchange system with machine learning
 
 | Packages                                  | Description  |
 | :-                                        | :-           |
-| **[kagura_nn](./kagura_nn)**              | ML           |
-| **[@kagura/core](./packages/core)**       | domain       |
-| **[@kagura/web](./packages/web)**         | web frontend |
-| **[@kagura/server](./packages/server)**   | backend      |
-| **[@kagura/api](./packages/api)**         | client       |
+| **[kaguya](./kaguya_nn)**              | ML           |
+| **[@kaguya/core](./packages/core)**       | domain       |
+| **[@kaguya/web](./packages/web)**         | web frontend |
+| **[@kaguya/server](./packages/server)**   | backend      |
+| **[@kaguya/api](./packages/api)**         | client       |
 
 # Setup
 
-1. Build local environment image
+1. Manually setup .env.
+```
+# gpu
+COMPOSE_FILE=docker-compose.yaml:docker-compose.gpu.yaml
+
+# cpu
+COMPOSE_FILE=docker-compose.yaml
+```
+
+2. Build local environment image
 
 ```
 docker-compose build app
 ```
 
-2. Install node dependecies
+3. Install node dependecies
 
 ```
 docker compose run --rm app yarn install
