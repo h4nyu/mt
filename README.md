@@ -14,13 +14,22 @@ A automated currency exchange system with machine learning
 
 # Setup
 
-1. Build local environment image
+1. Manually setup .env.
+```
+# gpu
+COMPOSE_FILE=docker-compose.yaml:docker-compose.gpu.yaml
+
+# cpu
+COMPOSE_FILE=docker-compose.yaml
+```
+
+2. Build local environment image
 
 ```
 docker-compose build app
 ```
 
-2. Install node dependecies
+3. Install node dependecies
 
 ```
 docker compose run --rm app yarn install
