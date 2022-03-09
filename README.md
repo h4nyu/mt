@@ -6,11 +6,11 @@ A automated currency exchange system with machine learning
 
 | Packages                                  | Description  |
 | :-                                        | :-           |
-| **[kagura_nn](./kagura_nn)**              | ML           |
-| **[@kagura/core](./packages/core)**       | domain       |
-| **[@kagura/web](./packages/web)**         | web frontend |
-| **[@kagura/server](./packages/server)**   | backend      |
-| **[@kagura/api](./packages/api)**         | client       |
+| **[kaguya](./kagura_nn)**              | ML           |
+| **[@kaguya/core](./packages/core)**       | domain       |
+| **[@kaguya/web](./packages/web)**         | web frontend |
+| **[@kaguya/server](./packages/server)**   | backend      |
+| **[@kaguya/api](./packages/api)**         | client       |
 
 # Setup
 
