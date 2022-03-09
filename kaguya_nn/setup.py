@@ -5,8 +5,8 @@ setup(
     version="0.1.0",
     install_requires=[
     ],
-    packages=["vision_tools"],
-    package_data={"vision_tools": ["py.typed"]},
+    packages=["kaguya_nn"],
+    package_data={"kaguya_nn": ["py.typed"]},
     extras_require={
         "dev": [
             "pytest",
