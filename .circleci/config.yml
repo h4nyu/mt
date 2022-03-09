@@ -30,7 +30,7 @@ jobs:
             fi
 
       - save_cache:
-          key: docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "vision_tools/setup.py" }}
+          key: docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "kagura_nn/setup.py" }}
           paths:
             - ./image.tar
 
