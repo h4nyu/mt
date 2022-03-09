@@ -1,0 +1,42 @@
+version: 2
+
+jobs:
+  build_and_test:
+    machine:
+      image: ubuntu-2004:202107-02
+      resource_class: large
+      docker_layer_caching: true
+
+    steps:
+      - checkout
+
+      - run:
+          name: "Setup environment variables"
+          command: |
+            echo 'export COMPOSE_FILE=docker-compose.yaml' >> $BASH_ENV
+
+      - restore_cache:
+          keys:
+            - docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "vision_tools/setup.py" }}
+
+      - run:
+          name: "Build images if needed"
+          command: |
+            if test -f image.tar; then
+              docker load < image.tar
+            else
+              docker-compose build app
+              docker save kaguya-dev > image.tar
+            fi
+
+      - save_cache:
+          key: docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "vision_tools/setup.py" }}
+          paths:
+            - ./image.tar
+
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build_and_test
