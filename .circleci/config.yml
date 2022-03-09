@@ -17,7 +17,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "vision_tools/setup.py" }}
+            - docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "kagura_nn/setup.py" }}
 
       - run:
           name: "Build images if needed"
