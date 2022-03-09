@@ -7,6 +7,9 @@ setup(
     ],
     packages=["kaguya_nn"],
     package_data={"kaguya_nn": ["py.typed"]},
+    install_requires=[
+        "doit",
+    ],
     extras_require={
         "dev": [
             "pytest",
