@@ -6,7 +6,7 @@ A automated currency exchange system with machine learning
 
 | Packages                                  | Description  |
 | :-                                        | :-           |
-| **[kaguya](./kagura_nn)**              | ML           |
+| **[kaguya](./kaguya_nn)**              | ML           |
 | **[@kaguya/core](./packages/core)**       | domain       |
 | **[@kaguya/web](./packages/web)**         | web frontend |
 | **[@kaguya/server](./packages/server)**   | backend      |
