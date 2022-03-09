@@ -1,0 +1,25 @@
+{
+  "name": "@kaguya/server",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "types": "index.ts",
+  "scripts": {
+    "clean": "tsc --build --clean",
+    "build": "tsc --noEmit false",
+    "prepack": "yarn build",
+    "postpack": "yarn clean",
+    "test": "jest"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "jest": "^27.0.4",
+    "ts-jest": "^27.0.3"
+  },
+  "jest": {
+    "transform": {"^.+\\.ts?$": "ts-jest"},
+    "testEnvironment": "node",
+    "testRegex": ".*\\.(test|spec)?\\.(ts|tsx)$"
+  }
+}
