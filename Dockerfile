@@ -5,8 +5,10 @@ ENV NVIDIA_VISIBLE_DEVICES=all \
     NVIDIA_DRIVER_CAPABILITIES=compute,utility \
     NVIDIA_REQUIRE_CUDA="cuda>=11.3" \
     CUDA_VERSION=11.3.0
-RUN apt-get update \
+RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - \
+    && apt-get update \
     && apt-get install -y --no-install-recommends \
+        nodejs \
         gnupg2 \
         libc-dev \
         libjpeg-dev \
