@@ -28,7 +28,7 @@ RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - \
         cuda-compat-11-3 \
     && ln -s cuda-11.3 /usr/local/cuda \
     && rm -rf /var/lib/apt/lists/* \
-    && npm install --global yarn
+    && npm install --global yarn \
     && pip install --no-cache-dir torch==1.10.2+cu113 torchvision==0.11.3+cu113 -f https://download.pytorch.org/whl/torch_stable.html
 
 
