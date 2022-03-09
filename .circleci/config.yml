@@ -34,7 +34,7 @@ jobs:
           paths:
             - ./image.tar
 
-     - run:
+      - run:
           name: Test
           command: |
             docker-compose run --rm  -w /app/kaguya_nn app pytest
