@@ -1,0 +1,20 @@
+version: '2.4'
+
+x-env: &env
+  CODECOV_TOKEN: &CODECOV_TOKEN ${CODECOV_TOKEN}
+
+
+x-app: &app
+  image: "kaguya-dev"
+  build:
+    context: .
+  volumes:
+    - .:/app
+
+
+services:
+  app:
+    <<: *app
+    environment:
+      CODECOV_TOKEN: *CODECOV_TOKEN
+      CONFIG_FILE:
