@@ -4,12 +4,11 @@ setup(
     name="kaguya_nn",
     version="0.1.0",
     install_requires=[
+        "doit",
+        "pandas"
     ],
     packages=["kaguya_nn"],
     package_data={"kaguya_nn": ["py.typed"]},
-    install_requires=[
-        "doit",
-    ],
     extras_require={
         "dev": [
             "pytest",
