@@ -18,6 +18,7 @@ RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - \
         unzip \
         graphviz \
         graphviz-dev \
+        wait-for-it \
         git \
     && curl -fsSL https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub | apt-key add - \
     && echo "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64 /" > /etc/apt/sources.list.d/cuda.list \

@@ -35,6 +35,12 @@ jobs:
             - ./image.tar
 
       - run:
+          name: Test db migrate
+          command: |
+            docker-compose up -d db
+            docker-compose run --rm app wait-for-it db:5432 -- yarn db-migrate up
+
+      - run:
           name: Test
           command: |
             docker-compose run --rm  -w /app/kaguya_nn app pytest

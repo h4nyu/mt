@@ -19,7 +19,7 @@ services:
   app:
     <<: *app
     environment:
-      CODECOV_TOKEN: *CODECOV_TOKEN
+      <<: *env
 
   db:
     image: "timescale/timescaledb:latest-pg13"
