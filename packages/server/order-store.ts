@@ -2,6 +2,7 @@ import { Row, Sql } from "postgres";
 import { Order } from "@kaguya/core/order"
 import { first } from "lodash";
 import { error, ErrorName } from "@kaguya/core/error";
+import { SymbolId } from "@kaguya/core/symbol";
 
 
 const TABLE = "orders"
@@ -10,6 +11,7 @@ const COLUMNS = [
   "contract_price",
   "kind",
   "status",
+  "symbol_id",
   "side",
   "price",
   "updated_at",
@@ -24,6 +26,7 @@ export const OrderStore = (sql: Sql<any>) => {
       kind: r.kind,
       status: r.status,
       side: r.side,
+      symbolId: r.symbol_id,
       price: r.price ?? undefined,
       updatedAt: r.updated_at,
       createdAt: r.created_at,
@@ -38,6 +41,7 @@ export const OrderStore = (sql: Sql<any>) => {
       status: r.status,
       side: r.side,
       price: r.price ?? null,
+      symbol_id: r.symbolId,
       updated_at: r.updatedAt,
       created_at: r.createdAt,
     };
@@ -59,6 +63,22 @@ export const OrderStore = (sql: Sql<any>) => {
       return err;
     }
   }
+
+  const filter = async (req: {symbolId?:SymbolId}) => {
+    try {
+      const rows = await (async () => {
+        const { symbolId } = req
+        if(symbolId !== undefined) {
+          return await sql`SELECT * FROM ${sql(TABLE)} WHERE symbol_id=${symbolId}`;
+        }
+        return []
+      })()
+      console.log(rows)
+      return rows.map(to)
+    } catch (err) {
+      return err;
+    }
+  }
   const create = async (row: Order) => {
     try {
       await sql` INSERT INTO ${sql(TABLE)} ${sql(from(row),...COLUMNS)}`;
@@ -67,8 +87,18 @@ export const OrderStore = (sql: Sql<any>) => {
       return err;
     }
   }
+
+  const clear = async () => {
+    try {
+      await sql` DELETE FROM ${sql(TABLE)}`;
+    } catch (err) {
+      return err;
+    }
+  }
   return {
     find,
     create,
+    filter,
+    clear,
   };
 };

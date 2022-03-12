@@ -19,6 +19,7 @@ export enum OrderStatus {
 
 export type Order = {
   id: string
+  symbolId: string,
   contractPrice?: number,
   status: OrderStatus,
   side: SideKind,
@@ -41,9 +42,10 @@ export const Order = (
   const updatedAt = props.updatedAt ?? createdAt;
   const status = props.status ?? OrderStatus.New;
   const side = props.side ?? SideKind.Buy;
-  const { kind, price } = props;
+  const { kind, price, symbolId } = props;
   return {
     id,
+    symbolId,
     kind,
     status,
     side,

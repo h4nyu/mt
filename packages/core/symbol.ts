@@ -5,8 +5,8 @@ export type Symbol = {
 }
 
 export enum SymbolId {
-  ETH = 'ETH',
-  BTC = 'BTC',
+  BTC_JPY = 'BTC_JPY',
+  ETH_JPY = 'ETH_JPY',
 }
 export const Symbol = (props: Symbol):Symbol => {
   const { id, description } = props

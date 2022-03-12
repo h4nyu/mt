@@ -7,6 +7,7 @@ export type CandleStore = {
 }
 
 export type OrderStore = {
+  find: (req: {id:string}) => Promise<Order|Error>,
   create: (order: Order) => Promise<Order|Error>,
   filter: (req: { symbolId?:string }) => Promise<Order[]|Error>,
 }
