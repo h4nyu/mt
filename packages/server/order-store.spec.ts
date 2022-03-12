@@ -3,7 +3,7 @@ import { Postgresql } from "./postgresql"
 import { Order, OrderKind } from "@kaguya/core/order"
 import { ErrorName } from "@kaguya/core/error"
 
-describe("box", () => {
+describe("order-store", () => {
   const sql = Postgresql()
   const store = OrderStore(sql)
   afterAll(async () => {
