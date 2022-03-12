@@ -62,21 +62,16 @@ jobs:
             docker-compose up -d db
 
       - run:
-          name: Lint
-          command: |
-            docker-compose run --rm -w /app/kaguya_nn app mypy
-            docker-compose run --rm -w /app/packages/core app yarn tsc
-            docker-compose run --rm -w /app/packages/server app yarn tsc
-
-      - run:
           name: Test db migrate
           command: |
             docker-compose run --rm app wait-for-it db:5432 -- yarn db-migrate up
 
       - run:
-          name: Test
+          name: Lint & Test
           command: |
-            docker-compose run --rm  -w /app/kaguya_nn app pytest
+            docker-compose run --rm -w /app/kaguya_nn app mypy && pytest
+            docker-compose run --rm -w /app/packages/core app yarn tsc
+            docker-compose run --rm -w /app/packages/server app yarn tsc && yarn tset
 
 workflows:
   version: 2
