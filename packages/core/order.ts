@@ -5,11 +5,15 @@ export enum OrderKind {
   Stop = 'Stop',
 }
 
+export enum PositionKind {
+  Long = 'Long',
+  Short = 'Short',
+}
 
 export type Order = {
   id: string
   createdAt: Date
-  contractPrice?: number
+  positionKind: PositionKind
 } | {
   kind: OrderKind.Limit,
   price: number
