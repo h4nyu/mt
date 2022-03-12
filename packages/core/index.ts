@@ -6,6 +6,12 @@ export type CandleStore = {
   filter: (req: { symbolId?:string }) => Candle[],
 }
 
+export type OrderStore = {
+  find: (req: {id:string}) => Promise<Order|Error>,
+  create: (order: Order) => Promise<Order|Error>,
+  filter: (req: { symbolId?:string }) => Promise<Order[]|Error>,
+}
+
 export type Exchange = {
   order:(req: Omit<Order, 'id'>) => Promise<Order|Error>,
 }

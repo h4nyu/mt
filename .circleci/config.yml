@@ -76,7 +76,8 @@ jobs:
       - run:
           name: Test
           command: |
-            docker-compose run --rm  -w /app/kaguya_nn app pytest
+            docker-compose run --rm -w /app/kaguya_nn app mypy
+            docker-compose run --rm -w /app/packages/server app yarn test
 
 workflows:
   version: 2
