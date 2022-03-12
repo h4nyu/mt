@@ -1,4 +1,6 @@
 ```mermaid
 erDiagram
-    Symbol ||--o{ ORDER : orderId
+    Symbol ||--o{ Order : symbolId
+    Symbol ||--o{ Candle : symbolId
+    Position ||--|| Order : orderId
 ```
