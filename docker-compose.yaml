@@ -3,6 +3,9 @@ version: '2.4'
 x-env: &env
   CODECOV_TOKEN: &CODECOV_TOKEN ${CODECOV_TOKEN}
 
+  # internal
+  DATABASE_URL: postgres://app:app@db/app
+
 
 x-app: &app
   image: "kaguya-dev"
@@ -16,5 +19,10 @@ services:
   app:
     <<: *app
     environment:
-      CODECOV_TOKEN: *CODECOV_TOKEN
-      CONFIG_FILE:
+      <<: *env
+
+  db:
+    image: "timescale/timescaledb:latest-pg13"
+    environment:
+      POSTGRES_PASSWORD: app
+      POSTGRES_USER: app

@@ -17,7 +17,8 @@ jobs:
 
       - restore_cache:
           keys:
-            - docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "kagura_nn/setup.py" }}
+            - docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "kaguya_nn/setup.py" }}
+
 
       - run:
           name: "Build images if needed"
@@ -30,9 +31,47 @@ jobs:
             fi
 
       - save_cache:
-          key: docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "kagura_nn/setup.py" }}
+          key: docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "kaguya_nn/setup.py" }}
           paths:
             - ./image.tar
+
+
+
+      - restore_cache:
+          keys:
+            - node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install node modules if needed
+          command: |
+            if [ ! -d node_modules ]; then
+              docker-compose run --rm app yarn install  --frozen-lockfile
+            fi
+
+      - save_cache:
+          key: node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
+            - ./packages/core/node_modules
+            - ./packages/server/node_modules
+            - ./packages/api/node_modules
+            - ./packages/web/node_modules
+
+      - run:
+          name: Setup services
+          command: |
+            docker-compose up -d db
+
+      - run:
+          name: Lint
+          command: |
+            docker-compose run --rm -w /app/kaguya_nn app mypy
+            docker-compose run --rm -w /app/packages/core app yarn tsc
+            docker-compose run --rm -w /app/packages/server app yarn tsc
+
+      - run:
+          name: Test db migrate
+          command: |
+            docker-compose run --rm app wait-for-it db:5432 -- yarn db-migrate up
 
       - run:
           name: Test

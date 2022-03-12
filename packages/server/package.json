@@ -12,13 +12,17 @@
     "test": "jest"
   },
   "dependencies": {
+    "db-migrate": "^0.11.13",
+    "db-migrate-pg": "^1.2.2"
   },
   "devDependencies": {
     "jest": "^27.0.4",
     "ts-jest": "^27.0.3"
   },
   "jest": {
-    "transform": {"^.+\\.ts?$": "ts-jest"},
+    "transform": {
+      "^.+\\.ts?$": "ts-jest"
+    },
     "testEnvironment": "node",
     "testRegex": ".*\\.(test|spec)?\\.(ts|tsx)$"
   }
