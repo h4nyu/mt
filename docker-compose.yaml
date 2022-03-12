@@ -18,3 +18,9 @@ services:
     environment:
       CODECOV_TOKEN: *CODECOV_TOKEN
       CONFIG_FILE:
+
+  db:
+    image: "timescale/timescaledb:latest-pg13"
+    environment:
+      POSTGRES_PASSWORD: app
+      POSTGRES_USER: app
