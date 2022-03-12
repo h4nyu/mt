@@ -73,7 +73,6 @@ export const OrderStore = (sql: Sql<any>) => {
         }
         return []
       })()
-      console.log(rows)
       return rows.map(to)
     } catch (err) {
       return err;
