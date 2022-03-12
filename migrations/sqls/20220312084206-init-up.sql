@@ -2,7 +2,8 @@
 
 CREATE TABLE orders (
     id             text        NOT NULL PRIMARY KEY,
-    contract_price number,
+    contract_price double precision,
+    price          double precision,
     kind           text        NOT NULL,
     status         text        NOT NULL,
     side           text        NOT NULL,
