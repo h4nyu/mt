@@ -2,7 +2,7 @@ import { OrderStore } from "./order-store"
 import { Postgresql } from "./postgresql"
 import { Order, OrderKind } from "@kaguya/core/order"
 import { ErrorName } from "@kaguya/core/error"
-import { SymbolId } from "@kaguya/core/symbol"
+import { Symbol } from "@kaguya/core"
 import { range } from "lodash"
 
 describe("order-store", () => {
@@ -18,7 +18,7 @@ describe("order-store", () => {
   test("create & find", async () => {
     const order = Order({
       kind: OrderKind.Limit,
-      symbolId: SymbolId.BTC_JPY,
+      symbolId: Symbol.BTC_JPY,
       price: 100,
     })
     const saved = await store.create(order)
@@ -30,14 +30,14 @@ describe("order-store", () => {
   test("create & filter", async () => {
     const orders = range(10).map(i => Order({
       kind: OrderKind.Limit,
-      symbolId: SymbolId.ETH_JPY,
+      symbolId: Symbol.ETH_JPY,
       price: 100,
     }))
     for(const order of orders) {
       await store.create(order)
     }
     const filtered = await store.filter({
-      symbolId: SymbolId.ETH_JPY,
+      symbolId: Symbol.ETH_JPY,
     })
     expect(filtered).toEqual(orders)
   });

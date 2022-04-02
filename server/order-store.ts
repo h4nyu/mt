@@ -2,7 +2,7 @@ import { Row, Sql } from "postgres";
 import { Order } from "@kaguya/core/order"
 import { first } from "lodash";
 import { error, ErrorName } from "@kaguya/core/error";
-import { SymbolId } from "@kaguya/core/symbol";
+import { Symbol } from "@kaguya/core";
 
 
 const TABLE = "orders"
@@ -64,7 +64,7 @@ export const OrderStore = (sql: Sql<any>) => {
     }
   }
 
-  const filter = async (req: {symbolId?:SymbolId}) => {
+  const filter = async (req: {symbolId?:Symbol}) => {
     try {
       const rows = await (async () => {
         const { symbolId } = req
