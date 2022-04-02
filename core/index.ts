@@ -12,6 +12,8 @@ export type OrderStore = {
   filter: (req: { symbolId?:string }) => Promise<Order[]|Error>,
 }
 
+export type ExchangeStatue = "OPEN" | "PREOPEN" | "MAINTENANCE"
+
 export type Exchange = {
   order:(req: Omit<Order, 'id'>) => Promise<Order|Error>,
 }
