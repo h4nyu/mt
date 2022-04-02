@@ -26,6 +26,7 @@ COMPOSE_FILE=docker-compose.yaml
 
 # https://coin.z.com/jp/member/api
 GMO_COIN_API_KEY=
+GMO_COIN_SECRET_KEY=
 ```
 
 2. Build local environment image
