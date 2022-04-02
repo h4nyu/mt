@@ -12,6 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "axios": "^0.26.1",
     "db-migrate": "^0.11.13",
     "db-migrate-pg": "^1.2.2",
     "lodash": "^4.17.21",
