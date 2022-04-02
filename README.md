@@ -21,6 +21,11 @@ COMPOSE_FILE=docker-compose.yaml:docker-compose.gpu.yaml
 
 # cpu
 COMPOSE_FILE=docker-compose.yaml
+
+# keys
+
+# https://coin.z.com/jp/member/api
+GMO_COIN_API_KEY=
 ```
 
 2. Build local environment image
