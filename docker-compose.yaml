@@ -2,6 +2,9 @@ version: '2.4'
 
 x-env: &env
   CODECOV_TOKEN: &CODECOV_TOKEN ${CODECOV_TOKEN}
+  GMO_COIN_API_KEY: &GMO_COIN_API_KEY ${GMO_COIN_API_KEY}
+  GMO_COIN_SECRET_KEY: &GMO_COIN_SECRET_KEY ${GMO_COIN_SECRET_KEY}
+
 
   # internal
   DATABASE_URL: postgres://app:app@db/app

@@ -4,7 +4,10 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "core",
+    "web",
+    "server",
+    "api"
   ],
   "devDependencies": {
     "@types/jest": "^27.4.1",

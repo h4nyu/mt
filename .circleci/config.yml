@@ -65,8 +65,8 @@ jobs:
           name: Lint
           command: |
             docker-compose run --rm -w /app/kaguya_nn app mypy
-            docker-compose run --rm -w /app/packages/core app yarn tsc
-            docker-compose run --rm -w /app/packages/server app yarn tsc
+            docker-compose run --rm -w /app/core app yarn tsc
+            docker-compose run --rm -w /app/server app yarn tsc
 
       - run:
           name: Test db migrate
@@ -76,8 +76,7 @@ jobs:
       - run:
           name: Test
           command: |
-            docker-compose run --rm -w /app/kaguya_nn app mypy
-            docker-compose run --rm -w /app/packages/server app yarn test
+            docker-compose run --rm -w /app/server app yarn test
 
 workflows:
   version: 2
