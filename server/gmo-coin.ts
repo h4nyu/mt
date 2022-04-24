@@ -1,75 +1,80 @@
-import axios from 'axios';
-import { Symbol, Interval } from "@kaguya/core"
-import { Candle } from '@kaguya/core/candle';
-import * as datefns from 'date-fns'
+import axios from "axios";
+import { Symbol, Interval } from "@kaguya/core";
+import { Candle } from "@kaguya/core/candle";
+import { Ticker } from "@kaguya/core/ticker";
+import * as datefns from "date-fns";
 
-const mapInterval = (value:Interval) => {
+const mapInterval = (value: Interval) => {
   switch (value) {
     case Interval.ONE_MINUTE:
-      return '1min';
+      return "1min";
     case Interval.FIVE_MINUTES:
-      return '5min';
+      return "5min";
     case Interval.FIFTEEN_MINUTES:
-      return '15min';
+      return "15min";
     case Interval.THIRTY_MINUTES:
-      return '30min';
+      return "30min";
     case Interval.ONE_HOUR:
-      return '1hour';
+      return "1hour";
     case Interval.FOUR_HOURS:
-      return '4hour';
+      return "4hour";
     case Interval.EIGHT_HOURS:
-      return '8hour';
+      return "8hour";
     case Interval.TWELVE_HOURS:
-      return '12hour';
+      return "12hour";
     case Interval.ONE_DAY:
-      return '1day';
+      return "1day";
     case Interval.ONE_WEEK:
-      return '1week';
+      return "1week";
     case Interval.ONE_MONTH:
-      return '1month';
+      return "1month";
     default:
-      return '1min';
+      return "1min";
   }
-}
+};
 
-
-export const GmoCoin = (props?: {
-  apiKey?: string;
-  apiSecretKey?: string;
-}) => {
+export const GmoCoin = (props?: { apiKey?: string; apiSecretKey?: string }) => {
   const apiKey = props?.apiKey ?? process.env.GMO_COIN_API_KEY;
   const apiSecretKey = props?.apiSecretKey ?? process.env.GMO_COIN_SECRET_KEY;
   const publicEndpoint = axios.create();
-  publicEndpoint.defaults.baseURL = 'https://api.coin.z.com/public';
+  publicEndpoint.defaults.baseURL = "https://api.coin.z.com/public";
 
   const status = async () => {
-    try{
-      const res = await publicEndpoint.get('/v1/status');
+    try {
+      const res = await publicEndpoint.get("/v1/status");
       return res.data.data.status;
-    }catch(e){
-      return e
+    } catch (e) {
+      return e;
     }
   };
   const candles = async (req: {
-    symbol: Symbol
-    interval: Interval,
-    date: Date,
+    symbol: Symbol;
+    interval: Interval;
+    date: Date;
   }) => {
-    try{
+    try {
       const dateStirng = (() => {
-        if([Interval.ONE_MINUTE, Interval.FIVE_MINUTES, Interval.FIFTEEN_MINUTES, Interval.THIRTY_MINUTES, Interval.ONE_HOUR].includes(req.interval)){
-          return datefns.format(req.date, 'yyyyMMdd')
+        if (
+          [
+            Interval.ONE_MINUTE,
+            Interval.FIVE_MINUTES,
+            Interval.FIFTEEN_MINUTES,
+            Interval.THIRTY_MINUTES,
+            Interval.ONE_HOUR,
+          ].includes(req.interval)
+        ) {
+          return datefns.format(req.date, "yyyyMMdd");
         }
-        return datefns.format(req.date, 'yyyy')
-      })()
-      const res = await publicEndpoint.get('/v1/klines', {
+        return datefns.format(req.date, "yyyy");
+      })();
+      const res = await publicEndpoint.get("/v1/klines", {
         params: {
           symbol: req.symbol,
           interval: mapInterval(req.interval),
           date: dateStirng,
-        }
+        },
       });
-      return res.data.data.map(x => {
+      return res.data.data.map((x) => {
         return Candle({
           open: parseInt(x.open),
           high: parseInt(x.close),
@@ -79,15 +84,39 @@ export const GmoCoin = (props?: {
           symbol: req.symbol,
           interval: req.interval,
           date: new Date(parseInt(x.openTime)),
-        })
+        });
       });
-    }catch(e){
-      console.log(e)
-      return e
+    } catch (e) {
+      return e;
+    }
+  };
+
+  const ticker = async (req: { symbol: Symbol }) => {
+    try {
+      const res = await publicEndpoint.get("/v1/ticker", {
+        params: {
+          symbol: req.symbol,
+        },
+      });
+      return res.data.data.map((x) => {
+        return Ticker({
+          symbol: req.symbol,
+          ask: parseInt(x.ask),
+          bid: parseInt(x.bid),
+          last: parseInt(x.last),
+          high: parseInt(x.high),
+          low: parseInt(x.low),
+          volume: parseInt(x.volume),
+          ts: new Date(x.timestamp),
+        });
+      });
+    } catch (e) {
+      return e;
     }
   };
   return {
     status,
     candles,
-  }
-}
+    ticker,
+  };
+};

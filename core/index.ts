@@ -1,5 +1,6 @@
 import { Candle } from "./candle";
 import { Order } from "./order";
+import { Ticker } from "./ticker";
 
 export enum Interval {
   ONE_MINUTE = "ONE_MINUTE",
@@ -43,4 +44,8 @@ export type Exchange = {
     data: Date;
   }) => Promise<Candle[] | Error>;
   order: (req: Omit<Order, "id">) => Promise<Order | Error>;
+};
+
+export type TickerStore = {
+  create: (row: Ticker) => Promise<Ticker | Error>;
 };
