@@ -5,16 +5,18 @@ A automated currency exchange system with machine learning
 # Packages
 
 | Packages                       | Description  |
-| :-                             | :-           |
+| :----------------------------- | :----------- |
 | **[kaguya](./kaguya_nn)**      | ML           |
 | **[@kaguya/core](./core)**     | Domain       |
 | **[@kaguya/web](./web)**       | Web frontend |
 | **[@kaguya/server](./server)** | Backend      |
 | **[@kaguya/api](./api)**       | Client       |
+| **[@kaguya/cli](./cli)**       | CLI          |
 
 # Setup
 
 1. Manually setup .env.
+
 ```
 # gpu
 COMPOSE_FILE=docker-compose.yaml:docker-compose.gpu.yaml

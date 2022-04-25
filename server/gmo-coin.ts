@@ -3,6 +3,7 @@ import { Symbol, Interval } from "@kaguya/core";
 import { Candle } from "@kaguya/core/candle";
 import { Ticker } from "@kaguya/core/ticker";
 import * as datefns from "date-fns";
+import WebSocket from "ws";
 
 const mapInterval = (value: Interval) => {
   switch (value) {
@@ -39,6 +40,7 @@ export const GmoCoin = (props?: { apiKey?: string; apiSecretKey?: string }) => {
   const publicEndpoint = axios.create();
   publicEndpoint.defaults.baseURL = "https://api.coin.z.com/public";
 
+  const ws = new WebSocket("wss://api.coin.z.com/ws/public/v1");
   const status = async () => {
     try {
       const res = await publicEndpoint.get("/v1/status");
@@ -114,9 +116,27 @@ export const GmoCoin = (props?: { apiKey?: string; apiSecretKey?: string }) => {
       return e;
     }
   };
+  const subscribe = (handler: (ticker: Ticker) => void) => {
+    try {
+      ws.on("open", () => {
+        const message = JSON.stringify({
+          command: "subscribe",
+          channel: "ticker",
+          symbol: "BTC",
+        });
+        ws.send(message);
+      });
+      ws.on("message", (data) => {
+        console.log("WebSocket message: ", data);
+      });
+    } catch (e) {
+      return e;
+    }
+  };
   return {
     status,
     candles,
     ticker,
+    subscribe,
   };
 };

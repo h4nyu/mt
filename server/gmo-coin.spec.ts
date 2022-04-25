@@ -30,4 +30,9 @@ describe("GmoCoin", () => {
       throw res;
     }
   });
+
+  test("subscribe", async () => {
+    gmoCoin.subscribe(console.log);
+    await new Promise((f) => setTimeout(f, 1000));
+  });
 });
