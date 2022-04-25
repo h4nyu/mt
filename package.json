@@ -7,7 +7,8 @@
     "core",
     "web",
     "server",
-    "api"
+    "api",
+    "cli"
   ],
   "devDependencies": {
     "@types/jest": "^27.4.1",
