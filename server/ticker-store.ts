@@ -56,6 +56,7 @@ export const TickerStore = (sql: Sql<any>) => {
       return err;
     }
   };
+  console.log("aaa");
 
   const clear = async () => {
     try {
