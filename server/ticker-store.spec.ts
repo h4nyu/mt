@@ -31,4 +31,34 @@ describe("order-store", () => {
     const filtered = await store.filter({ symbol: row.symbol });
     expect(filtered).toEqual([row]);
   });
+  test("last", async () => {
+    const symbol = Symbol.BTC_JPY;
+    const rows = [
+      Ticker({
+        symbol,
+        low: 9.0,
+        ask: 10.0,
+        bid: 9.1,
+        last: 11.3,
+        high: 12.0,
+        volume: 100,
+        ts: new Date(),
+      }),
+      Ticker({
+        symbol,
+        low: 9.0,
+        ask: 10.0,
+        bid: 9.1,
+        last: 11.3,
+        high: 12.0,
+        volume: 100,
+        ts: new Date(),
+      }),
+    ];
+    for (const row of rows) {
+      await store.create(row);
+    }
+    const last = await store.last({ symbol });
+    expect(last).toEqual(rows[1]);
+  });
 });

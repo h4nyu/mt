@@ -56,7 +56,17 @@ export const TickerStore = (sql: Sql<any>) => {
       return err;
     }
   };
-  console.log("aaa");
+
+  const last = async (req: { symbol: Symbol }) => {
+    try {
+      const rows = await sql`SELECT * FROM ${sql(
+        TABLE
+      )} ORDER BY ts ASC LIMIT 1`;
+      return first(rows.map(to));
+    } catch (err) {
+      return err;
+    }
+  };
 
   const clear = async () => {
     try {
@@ -68,6 +78,7 @@ export const TickerStore = (sql: Sql<any>) => {
   return {
     create,
     filter,
+    last,
     clear,
   };
 };
