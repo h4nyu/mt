@@ -11,9 +11,14 @@ export const CreateFn = (props: {
   };
 }): CreateFn => {
   return async (req: Ticker) => {
-    const prev = props.store.ticker.find(req);
+    const prev = await props.store.ticker.find(req);
     if (prev instanceof Error && prev.name !== ErrorName.NotFound) {
       return prev;
+    }
+    if (!(prev instanceof Error)) {
+      props.store.logger?.info(
+        `Ticker ${req.symbol} at ${req.ts} already exists`
+      );
     }
     const created = await props.store.ticker.create(req);
     if (created instanceof Error) {
