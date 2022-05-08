@@ -1,5 +1,6 @@
 export enum ErrorName {
-  OrderNotFound = 'OrderNotFound',
+  NotFound = "NotFound",
+  AlreadyExists = "AlreadyExists",
 }
 
 export const error = (name: ErrorName, message: string): Error => {

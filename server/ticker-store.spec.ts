@@ -31,7 +31,7 @@ describe("order-store", () => {
     const filtered = await store.filter({ symbol: row.symbol });
     expect(filtered).toEqual([row]);
   });
-  test("last", async () => {
+  test("find", async () => {
     const symbol = Symbol.BTC_JPY;
     const rows = [
       Ticker({
@@ -58,7 +58,7 @@ describe("order-store", () => {
     for (const row of rows) {
       await store.create(row);
     }
-    const last = await store.last({ symbol });
-    expect(last).toEqual(rows[1]);
+    const found = await store.find({ symbol, ts: rows[1].ts });
+    expect(found).toEqual(rows[1]);
   });
 });

@@ -1,4 +1,4 @@
-import { Symbol } from ".";
+import { Symbol } from "@kaguya/core";
 
 export type Ticker = {
   symbol: Symbol;
