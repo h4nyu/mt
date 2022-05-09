@@ -48,4 +48,10 @@ export type Exchange = {
 
 export type TickerStore = {
   create: (row: Ticker) => Promise<Ticker | Error>;
+  find: (req: { symbol: Symbol; ts: Date }) => Promise<Ticker | Error>;
+};
+
+export type Logger = {
+  info: (msg: string) => void;
+  error: (msg: string) => void;
 };

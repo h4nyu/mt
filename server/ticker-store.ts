@@ -56,13 +56,19 @@ export const TickerStore = (sql: Sql<any>) => {
       return err;
     }
   };
-
-  const last = async (req: { symbol: Symbol }) => {
+  const find = async (req: { symbol: Symbol; ts: Date }) => {
     try {
-      const rows = await sql`SELECT * FROM ${sql(
-        TABLE
-      )} ORDER BY ts ASC LIMIT 1`;
-      return first(rows.map(to));
+      const rows = await sql`SELECT * FROM ${sql(TABLE)} WHERE symbol=${
+        req.symbol
+      } AND ts=${req.ts} LIMIT 1`;
+      const found = first(rows);
+      if (!found) {
+        return error(
+          ErrorName.NotFound,
+          `Ticker not found for ${req.symbol} at ${req.ts}`
+        );
+      }
+      return to(found);
     } catch (err) {
       return err;
     }
@@ -78,7 +84,7 @@ export const TickerStore = (sql: Sql<any>) => {
   return {
     create,
     filter,
-    last,
+    find,
     clear,
   };
 };
