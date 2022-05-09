@@ -19,6 +19,7 @@ export const CreateFn = (props: {
       props.store.logger?.info(
         `Ticker ${req.symbol} at ${req.ts} already exists`
       );
+      return prev;
     }
     const created = await props.store.ticker.create(req);
     if (created instanceof Error) {
