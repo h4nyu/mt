@@ -41,7 +41,7 @@ jobs:
       - run:
           name: Install node modules if needed
           command: |
-            yarn install
+            docker-compose run --rm app yarn install
 
       - save_cache:
           key: node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
