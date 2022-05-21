@@ -35,6 +35,17 @@ jobs:
           paths:
             - ./image.tar
 
+      - restore_cache:
+          keys:
+            - node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install node modules if needed
+
+      - save_cache:
+          key: node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
+          paths:
+            - ./.yarn/cache
+
       - run:
           name: Setup services
           command: |
