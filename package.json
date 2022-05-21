@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "clean": "yarn workspaces foreach -pv --from '@kaguya/*' run clean",
+    "build": "yarn workspaces foreach -pvR --topological-dev --from '@kaguya/*' run build"
+  },
   "workspaces": [
     "core",
     "web",
