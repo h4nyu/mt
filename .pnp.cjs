@@ -1916,6 +1916,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./cli/",\
           "packageDependencies": [\
             ["@kgy/cli", "workspace:cli"],\
+            ["@kgy/core", "workspace:core"],\
             ["@kgy/server", "workspace:server"],\
             ["@types/node", "npm:17.0.35"],\
             ["pino", "npm:7.10.0"],\

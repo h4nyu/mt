@@ -41,11 +41,9 @@ jobs:
             docker-compose up -d db
 
       - run:
-          name: Lint
+          name: Build
           command: |
-            docker-compose run --rm -w /app/kaguya_nn app mypy
-            docker-compose run --rm -w /app/core app yarn tsc
-            docker-compose run --rm -w /app/server app yarn tsc
+            docker-compose run app yarn build
 
       - run:
           name: Test db migrate
