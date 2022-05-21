@@ -33,7 +33,7 @@ jobs:
       - save_cache:
           key: docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "kaguya_nn/setup.py" }}
           paths:
-            - ./image.tar
+            - ./image.tar.gz
 
       - run:
           name: Setup services
