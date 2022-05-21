@@ -4103,6 +4103,8 @@ __metadata:
   resolution: "kgy@workspace:."
   dependencies:
     "@types/jest": ^27.4.1
+    db-migrate: ^0.11.13
+    db-migrate-pg: ^1.2.2
     jest: ^27.5.1
     ts-jest: ^27.1.3
     ts-node: ^10.7.0
