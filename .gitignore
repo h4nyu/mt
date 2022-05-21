@@ -2,3 +2,10 @@ node_modules/
 *.egg-info/
 **/*.log
 .env*
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
