@@ -7,7 +7,7 @@
     "clean": "yarn workspaces foreach -pv --from '@kgy/*' run clean",
     "lint": "yarn workspaces foreach -pv --from '@kgy/*' run lint",
     "build": "yarn workspaces foreach -pvR --topological-dev --from '@kgy/*' run build",
-    "test": "yarn workspaces foreach -pv --from '@kgy/*' run test"
+    "test": "yarn workspaces foreach -pv --from '@kgy/*' run test --passWithNoTests"
   },
   "workspaces": [
     "core",
