@@ -35,27 +35,6 @@ jobs:
           paths:
             - ./image.tar
 
-
-
-      - restore_cache:
-          keys:
-            - node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install node modules if needed
-          command: |
-            if [ ! -d node_modules ]; then
-              docker-compose run --rm app yarn install  --frozen-lockfile
-            fi
-
-      - save_cache:
-          key: node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-          paths:
-            - ./node_modules
-            - ./packages/core/node_modules
-            - ./packages/server/node_modules
-            - ./packages/api/node_modules
-            - ./packages/web/node_modules
-
       - run:
           name: Setup services
           command: |
