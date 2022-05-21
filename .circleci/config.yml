@@ -66,7 +66,7 @@ jobs:
       - run:
           name: Test
           command: |
-            docker-compose run --rm -w /app/server app yarn test
+            docker-compose run --rm app yarn test
 
 workflows:
   version: 2
