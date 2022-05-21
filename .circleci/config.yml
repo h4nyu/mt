@@ -23,11 +23,11 @@ jobs:
       - run:
           name: "Build images if needed"
           command: |
-            if test -f image.tar; then
-              docker load < image.tar
+            if test -f image.tar.gz; then
+              docker load < image.tar.gz
             else
               docker-compose build app
-              docker save kaguya-dev > image.tar
+              docker save kaguya-dev | gzip > image.tar.gz
             fi
 
       - save_cache:
