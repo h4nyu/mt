@@ -4,14 +4,14 @@ A automated currency exchange system with machine learning
 
 # Packages
 
-| Packages                       | Description  |
-| :----------------------------- | :----------- |
-| **[kaguya](./kaguya_nn)**      | ML           |
-| **[@kaguya/core](./core)**     | Domain       |
-| **[@kaguya/web](./web)**       | Web frontend |
-| **[@kaguya/server](./server)** | Backend      |
-| **[@kaguya/api](./api)**       | Client       |
-| **[@kaguya/cli](./cli)**       | CLI          |
+| Packages                    | Description  |
+| :---------------------------| :----------- |
+| **[kaguya](./kaguya_nn)**   | ML           |
+| **[@kgy/core](./core)**     | Domain       |
+| **[@kgy/web](./web)**       | Web frontend |
+| **[@kgy/server](./server)** | Backend      |
+| **[@kgy/api](./api)**       | Client       |
+| **[@kgy/cli](./cli)**       | CLI          |
 
 # Setup
 
