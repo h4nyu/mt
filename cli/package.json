@@ -1,5 +1,5 @@
 {
-  "name": "@kaguya/cli",
+  "name": "@kgy/cli",
   "version": "0.1.0",
   "license": "MIT",
   "types": "index.ts",
@@ -12,7 +12,7 @@
     "cli": "ts-node index.ts"
   },
   "bin": {
-    "kaguya": "bin/kaguya"
+    "kgy": "bin/kaguya"
   },
   "dependencies": {
     "pino": "^7.10.0",

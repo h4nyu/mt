@@ -1,8 +1,8 @@
 import { Argv } from "yargs";
-import { GmoCoin } from "@kaguya/server/gmo-coin";
-import { TickerStore } from "@kaguya/server/ticker-store";
-import { Postgresql } from "@kaguya/server/postgresql";
-import { CreateFn } from "@kaguya/core/ticker/create";
+import { GmoCoin } from "@kgy/server/gmo-coin";
+import { TickerStore } from "@kgy/server/ticker-store";
+import { Postgresql } from "@kgy/server/postgresql";
+import { CreateFn } from "@kgy/core/ticker/create";
 import pino from "pino";
 
 export default {

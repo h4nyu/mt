@@ -1,8 +1,8 @@
 import { TickerStore } from "./ticker-store";
 import { Postgresql } from "./postgresql";
-import { Ticker } from "@kaguya/core/ticker";
-import { ErrorName } from "@kaguya/core/error";
-import { Symbol } from "@kaguya/core";
+import { Ticker } from "@kgy/core/ticker";
+import { ErrorName } from "@kgy/core/error";
+import { Symbol } from "@kgy/core";
 import { range } from "lodash";
 
 describe("order-store", () => {

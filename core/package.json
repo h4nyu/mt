@@ -1,5 +1,5 @@
 {
-  "name": "@kaguya/core",
+  "name": "@kgy/core",
   "version": "0.1.0",
   "license": "MIT",
   "types": "index.ts",

@@ -1,11 +1,11 @@
 {
-  "name": "kaguya",
+  "name": "kgy",
   "version": "0.0.1",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "clean": "yarn workspaces foreach -pv --from '@kaguya/*' run clean",
-    "build": "yarn workspaces foreach -pvR --topological-dev --from '@kaguya/*' run build"
+    "clean": "yarn workspaces foreach -pv --from '@kgy/*' run clean",
+    "build": "yarn workspaces foreach -pvR --topological-dev --from '@kgy/*' run build"
   },
   "workspaces": [
     "core",

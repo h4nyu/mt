@@ -1,7 +1,7 @@
 import axios from "axios";
-import { Symbol, Interval } from "@kaguya/core";
-import { Candle } from "@kaguya/core/candle";
-import { Ticker } from "@kaguya/core/ticker";
+import { Symbol, Interval } from "@kgy/core";
+import { Candle } from "@kgy/core/candle";
+import { Ticker } from "@kgy/core/ticker";
 import * as datefns from "date-fns";
 import WebSocket from "ws";
 
