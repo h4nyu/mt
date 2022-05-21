@@ -1953,8 +1953,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/ws", "npm:8.5.3"],\
             ["axios", "npm:0.26.1"],\
             ["date-fns", "npm:2.28.0"],\
-            ["db-migrate", "npm:0.11.13"],\
-            ["db-migrate-pg", "npm:1.2.2"],\
             ["jest", "virtual:9da5d63588a57d9c783892fad2f78aa63cef41ebf4d1442e63e0873e0969f29cf4d75c8995cec6b70098d884572497c001233b98505137d60ad1956763ce8bbf#npm:28.1.0"],\
             ["lodash", "npm:4.17.21"],\
             ["postgres", "npm:2.0.0-beta.11"],\
