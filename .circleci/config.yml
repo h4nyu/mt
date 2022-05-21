@@ -23,17 +23,17 @@ jobs:
       - run:
           name: "Build images if needed"
           command: |
-            if test -f image.tar.gz; then
-              docker load < image.tar.gz
+            if test -f image.tar; then
+              docker load < image.tar
             else
               docker-compose build app
-              docker save kaguya-dev | gzip > image.tar.gz
+              docker save kaguya-dev > image.tar
             fi
 
       - save_cache:
           key: docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "kaguya_nn/setup.py" }}
           paths:
-            - ./image.tar.gz
+            - ./image.tar
 
       - run:
           name: Setup services
