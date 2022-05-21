@@ -2,11 +2,11 @@ node_modules/
 *.egg-info/
 **/*.log
 .env*
+**/*.js
+.pnp.*
 .yarn/*
-!.yarn/cache
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
-**/*.js
