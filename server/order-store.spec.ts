@@ -1,8 +1,8 @@
 import { OrderStore } from "./order-store";
 import { Postgresql } from "./postgresql";
-import { Order, OrderKind } from "@kaguya/core/order";
-import { ErrorName } from "@kaguya/core/error";
-import { Symbol } from "@kaguya/core";
+import { Order, OrderKind } from "@kgy/core/order";
+import { ErrorName } from "@kgy/core/error";
+import { Symbol } from "@kgy/core";
 import { range } from "lodash";
 
 describe("order-store", () => {

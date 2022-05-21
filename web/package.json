@@ -1,5 +1,5 @@
 {
-  "name": "@kaguya/web",
+  "name": "@kgy/web",
   "version": "0.1.0",
   "main": "index.js",
   "license": "MIT",
@@ -11,14 +11,15 @@
     "postpack": "yarn clean",
     "test": "jest"
   },
-  "dependencies": {
-  },
   "devDependencies": {
     "jest": "^27.0.4",
-    "ts-jest": "^27.0.3"
+    "ts-jest": "^27.0.3",
+    "typescript": "^4.6.4"
   },
   "jest": {
-    "transform": {"^.+\\.ts?$": "ts-jest"},
+    "transform": {
+      "^.+\\.ts?$": "ts-jest"
+    },
     "testEnvironment": "node",
     "testRegex": ".*\\.(test|spec)?\\.(ts|tsx)$"
   }

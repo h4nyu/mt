@@ -1,8 +1,8 @@
 import { Row, Sql } from "postgres";
-import { Order } from "@kaguya/core/order";
+import { Order } from "@kgy/core/order";
 import { first } from "lodash";
-import { error, ErrorName } from "@kaguya/core/error";
-import { Symbol } from "@kaguya/core";
+import { error, ErrorName } from "@kgy/core/error";
+import { Symbol } from "@kgy/core";
 
 const TABLE = "orders";
 const COLUMNS = [

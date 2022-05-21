@@ -1,8 +1,8 @@
 import { Row, Sql } from "postgres";
-import { Ticker } from "@kaguya/core/ticker";
+import { Ticker } from "@kgy/core/ticker";
 import { first } from "lodash";
-import { error, ErrorName } from "@kaguya/core/error";
-import { Symbol } from "@kaguya/core";
+import { error, ErrorName } from "@kgy/core/error";
+import { Symbol } from "@kgy/core";
 
 const TABLE = "tickers";
 const COLUMNS = ["symbol", "ask", "bid", "last", "high", "low", "volume", "ts"];

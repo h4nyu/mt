@@ -1,5 +1,5 @@
 {
-  "name": "@kaguya/server",
+  "name": "@kgy/server",
   "version": "0.1.0",
   "main": "index.js",
   "license": "MIT",
@@ -12,10 +12,9 @@
     "test": "jest"
   },
   "dependencies": {
+    "@kgy/core": "0.1.0",
     "axios": "^0.26.1",
     "date-fns": "^2.28.0",
-    "db-migrate": "^0.11.13",
-    "db-migrate-pg": "^1.2.2",
     "lodash": "^4.17.21",
     "postgres": "^2.0.0-beta.11"
   },
@@ -25,5 +24,13 @@
     },
     "testEnvironment": "node",
     "testRegex": ".*\\.(test|spec)?\\.(ts|tsx)$"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.5.1",
+    "@types/node": "^17.0.35",
+    "@types/ws": "^8.5.3",
+    "jest": "^28.1.0",
+    "ts-jest": "^28.0.2",
+    "typescript": "^4.6.4"
   }
 }

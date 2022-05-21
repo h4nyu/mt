@@ -1,5 +1,5 @@
 import { GmoCoin } from "./gmo-coin";
-import { Symbol, Interval } from "@kaguya/core";
+import { Symbol, Interval } from "@kgy/core";
 import { range } from "lodash";
 
 describe("GmoCoin", () => {

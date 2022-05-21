@@ -1,6 +1,6 @@
-import { Ticker } from "@kaguya/core/ticker";
-import { TickerStore, Logger } from "@kaguya/core";
-import { ErrorName } from "@kaguya/core/error";
+import { Ticker } from "@kgy/core/ticker";
+import { TickerStore, Logger } from "@kgy/core";
+import { ErrorName } from "@kgy/core/error";
 
 export type CreateFn = (req: Ticker) => Promise<Ticker | Error>;
 
