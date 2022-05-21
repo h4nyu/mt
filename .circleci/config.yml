@@ -40,6 +40,8 @@ jobs:
             - node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
       - run:
           name: Install node modules if needed
+          command: |
+            yarn install
 
       - save_cache:
           key: node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
