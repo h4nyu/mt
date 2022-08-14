@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Symbol, Interval } from "@kgy/core";
+import { Symbol, Interval, Logger } from "@kgy/core";
 import { Candle } from "@kgy/core/candle";
 import { Ticker } from "@kgy/core/ticker";
 import * as datefns from "date-fns";
@@ -33,8 +33,23 @@ const mapInterval = (value: Interval) => {
       return "1min";
   }
 };
+const decodeTicker = (str: string, symbol: Symbol):Ticker|Error => {
+  if(str.startsWith("ERR")) {
+    return new Error(str);
+  }
+  const obj = JSON.parse(str);
+  const ts = new Date(obj.timestamp);
+  return Ticker({
+    ...obj,
+    ts,
+  })
+}
 
-export const GmoCoin = (props?: { apiKey?: string; apiSecretKey?: string }) => {
+export const GmoCoin = (props?: { 
+  apiKey?: string; 
+  apiSecretKey?: string,
+  logger?:Logger
+}) => {
   const apiKey = props?.apiKey ?? process.env.GMO_COIN_API_KEY;
   const apiSecretKey = props?.apiSecretKey ?? process.env.GMO_COIN_SECRET_KEY;
   const publicEndpoint = axios.create();
@@ -116,18 +131,28 @@ export const GmoCoin = (props?: { apiKey?: string; apiSecretKey?: string }) => {
       return e;
     }
   };
-  const subscribe = (handler: (ticker: Ticker) => void) => {
+  const subscribe = (
+    symbol: Symbol,
+    handler: (ticker: Ticker) => void,
+  ) => {
     try {
       ws.on("open", () => {
+        console.log(symbol);
         const message = JSON.stringify({
           command: "subscribe",
           channel: "ticker",
-          symbol: "BTC",
+          symbol,
         });
         ws.send(message);
+        props?.logger?.info(`subscribed to ${symbol}`);
       });
-      ws.on("message", (data) => {
-        console.log("WebSocket message: ", data);
+      ws.on("message", async (data) => {
+        props?.logger?.info(`received message for ${symbol} ${data}`);
+        const ticker = decodeTicker(data.toString(), symbol);
+        if(ticker instanceof Error) {
+          return
+        }
+        handler(ticker)
       });
     } catch (e) {
       return e;

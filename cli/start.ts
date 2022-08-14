@@ -1,5 +1,6 @@
 import { Argv } from "yargs";
 import { GmoCoin } from "@kgy/server/gmo-coin";
+import { Symbol } from "@kgy/core";
 import { TickerStore } from "@kgy/server/ticker-store";
 import { Postgresql } from "@kgy/server/postgresql";
 import { CreateFn } from "@kgy/core/ticker/create";
@@ -12,11 +13,16 @@ export default {
   },
   handler: () => {
     const sql = Postgresql();
-    const exchange = GmoCoin();
     const logger = pino();
     const store = {
       ticker: TickerStore(sql),
     };
-    exchange.subscribe(CreateFn({ store }));
+    const exchange = GmoCoin({
+      logger
+    });
+    exchange.subscribe(
+      Symbol.BTC,
+      CreateFn({ store, logger })
+    );
   },
 };

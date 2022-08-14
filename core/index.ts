@@ -18,6 +18,7 @@ export enum Interval {
 
 export enum Symbol {
   BTC = "BTC",
+  ETH = "ETH",
   BTC_JPY = "BTC_JPY",
   ETH_JPY = "ETH_JPY",
   XRP_JPY = "XRP_JPY",

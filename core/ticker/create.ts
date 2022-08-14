@@ -7,8 +7,8 @@ export type CreateFn = (req: Ticker) => Promise<Ticker | Error>;
 export const CreateFn = (props: {
   store: {
     ticker: TickerStore;
-    logger?: Logger;
   };
+  logger?: Logger;
 }): CreateFn => {
   return async (req: Ticker) => {
     const prev = await props.store.ticker.find(req);
@@ -16,7 +16,7 @@ export const CreateFn = (props: {
       return prev;
     }
     if (!(prev instanceof Error)) {
-      props.store.logger?.info(
+      props.logger?.info(
         `Ticker ${req.symbol} at ${req.ts} already exists`
       );
       return prev;
@@ -25,7 +25,7 @@ export const CreateFn = (props: {
     if (created instanceof Error) {
       return created;
     }
-    props.store.logger?.info(
+    props.logger?.info(
       `Created ticker ${created.symbol} at ${created.ts}`
     );
     return created;
