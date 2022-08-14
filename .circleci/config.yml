@@ -17,7 +17,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "kaguya_nn/setup.py" }}
+            - docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "kgy_nn/setup.py" }}
 
 
       - run:
@@ -31,7 +31,7 @@ jobs:
             fi
 
       - save_cache:
-          key: docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "kaguya_nn/setup.py" }}
+          key: docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "kgy_nn/setup.py" }}
           paths:
             - ./image.tar
 
