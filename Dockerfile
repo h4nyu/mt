@@ -36,4 +36,4 @@ RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - \
 
 WORKDIR /app
 COPY . .
-RUN pip install -e kaguya_nn[dev]
+RUN pip install -e kgy_nn[dev]

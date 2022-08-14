@@ -32,7 +32,7 @@ describe("GmoCoin", () => {
   });
 
   test("subscribe", async () => {
-    gmoCoin.subscribe(console.log);
+    gmoCoin.subscribe(Symbol.BTC, console.log);
     await new Promise((f) => setTimeout(f, 1000));
   });
 });

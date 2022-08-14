@@ -1,8 +1,9 @@
 version: '2.4'
 
 x-env: &env
-  GMO_COIN_API_KEY: &GMO_COIN_API_KEY ${GMO_COIN_API_KEY}
-  GMO_COIN_SECRET_KEY: &GMO_COIN_SECRET_KEY ${GMO_COIN_SECRET_KEY}
+  GMO_COIN_API_KEY: &GMO_COIN_API_KEY ${GMO_COIN_API_KEY:?}
+  GMO_COIN_SECRET_KEY: &GMO_COIN_SECRET_KEY ${GMO_COIN_SECRET_KEY:?}
+  DATABASE_VOLUME: &DATABASE_VOLUME ${DATABASE_VOLUME:?}
 
   # internal
   DATABASE_URL: postgres://app:app@db/app
@@ -18,15 +19,17 @@ x-app: &app
 services:
   server:
     <<: *app
-    command: kgy start
+    command: bash -c 'wait-for-it db:5432 -- yarn db-migrate up && kgy start'
     environment:
       <<: *env
+    depends_on:
+      - db
 
 
   db:
     image: "timescale/timescaledb:latest-pg13"
     volumes: 
-      - ./db-data:/var/lib/postgresql/data
+      - ${DATABASE_VOLUME}:/var/lib/postgresql/data
 
     environment:
       POSTGRES_PASSWORD: app
