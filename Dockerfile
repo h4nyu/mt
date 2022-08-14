@@ -1,7 +1,7 @@
 FROM python:3.9-bullseye
 
 ENV NVIDIA_VISIBLE_DEVICES=all \
-    PATH=/usr/local/cuda/bin:/usr/local/nvidia/bin:/root/.local/bin:${PATH} \
+    PATH=/usr/local/cuda/bin:/usr/local/nvidia/bin:/root/.local/bin:${PATH}:/app/node_modules/.bin \
     NVIDIA_DRIVER_CAPABILITIES=compute,utility \
     NVIDIA_REQUIRE_CUDA="cuda>=11.3" \
     CUDA_VERSION=11.3.0

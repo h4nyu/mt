@@ -137,7 +137,6 @@ export const GmoCoin = (props?: {
   ) => {
     try {
       ws.on("open", () => {
-        console.log(symbol);
         const message = JSON.stringify({
           command: "subscribe",
           channel: "ticker",
