@@ -1,10 +1,8 @@
 version: '2.4'
 
 x-env: &env
-  CODECOV_TOKEN: &CODECOV_TOKEN ${CODECOV_TOKEN}
   GMO_COIN_API_KEY: &GMO_COIN_API_KEY ${GMO_COIN_API_KEY}
   GMO_COIN_SECRET_KEY: &GMO_COIN_SECRET_KEY ${GMO_COIN_SECRET_KEY}
-
 
   # internal
   DATABASE_URL: postgres://app:app@db/app
@@ -17,16 +15,20 @@ x-app: &app
   volumes:
     - .:/app
 
-
 services:
-  app:
+  server:
     <<: *app
+    command: kgy start
     environment:
       <<: *env
 
 
   db:
     image: "timescale/timescaledb:latest-pg13"
+    volumes: 
+      - ./db-data:/var/lib/postgresql/data
+
     environment:
       POSTGRES_PASSWORD: app
       POSTGRES_USER: app
+
