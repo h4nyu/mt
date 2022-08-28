@@ -4,7 +4,7 @@ import { Ticker } from '@kgy/core/ticker';
 import { Action } from '@kgy/core/constants';
 
 export type Trader = {
-  nextAction: (state: {
+  next: (state: {
     tickers: Ticker[];
     posisions: Position[];
   }) => Promise<Order | Error>;

@@ -1,6 +1,7 @@
 import { Candle } from "./candle";
 import { Order } from "./order";
 import { Ticker } from "./ticker";
+import { SymbolId } from "./constants";
 
 export enum Interval {
   ONE_MINUTE = "ONE_MINUTE",
@@ -16,14 +17,6 @@ export enum Interval {
   ONE_MONTH = "ONE_MONTH",
 }
 
-export enum Symbol {
-  BTC = "BTC",
-  ETH = "ETH",
-  BTC_JPY = "BTC_JPY",
-  ETH_JPY = "ETH_JPY",
-  XRP_JPY = "XRP_JPY",
-  LTC_JPY = "LTC_JPY",
-}
 
 export type CandleStore = {
   filter: (req: { symbolId?: string }) => Candle[];
@@ -40,7 +33,7 @@ export type ExchangeStatus = "OPEN" | "PREOPEN" | "MAINTENANCE";
 export type Exchange = {
   status: () => Promise<ExchangeStatus | Error>;
   ticker: (req: {
-    symbol: Symbol;
+    symbolId: SymbolId;
     interval: Interval;
     data: Date;
   }) => Promise<Candle[] | Error>;
@@ -49,7 +42,7 @@ export type Exchange = {
 
 export type TickerStore = {
   create: (row: Ticker) => Promise<Ticker | Error>;
-  find: (req: { symbol: Symbol; ts: Date }) => Promise<Ticker | Error>;
+  find: (req: { symbolId: SymbolId; ts: Date }) => Promise<Ticker | Error>;
 };
 
 export type Logger = {

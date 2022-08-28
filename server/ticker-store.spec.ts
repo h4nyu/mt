@@ -2,7 +2,7 @@ import { TickerStore } from "./ticker-store";
 import { Postgresql } from "./postgresql";
 import { Ticker } from "@kgy/core/ticker";
 import { ErrorName } from "@kgy/core/error";
-import { Symbol } from "@kgy/core";
+import { SymbolId } from "@kgy/core/constants";
 import { range } from "lodash";
 
 describe("order-store", () => {
@@ -17,7 +17,7 @@ describe("order-store", () => {
 
   test("create & find", async () => {
     const row = Ticker({
-      symbol: Symbol.BTC_JPY,
+      symbolId: SymbolId.BTC_JPY,
       low: 9.0,
       ask: 10.0,
       bid: 9.1,
@@ -28,14 +28,14 @@ describe("order-store", () => {
     });
     const created = await store.create(row);
     expect(created).toEqual(row);
-    const filtered = await store.filter({ symbol: row.symbol });
+    const filtered = await store.filter({ symbolId: row.symbolId });
     expect(filtered).toEqual([row]);
   });
   test("find", async () => {
-    const symbol = Symbol.BTC_JPY;
+    const symbolId = SymbolId.BTC_JPY;
     const rows = [
       Ticker({
-        symbol,
+        symbolId,
         low: 9.0,
         ask: 10.0,
         bid: 9.1,
@@ -45,7 +45,7 @@ describe("order-store", () => {
         ts: new Date(),
       }),
       Ticker({
-        symbol,
+        symbolId,
         low: 9.0,
         ask: 10.0,
         bid: 9.1,
@@ -58,7 +58,7 @@ describe("order-store", () => {
     for (const row of rows) {
       await store.create(row);
     }
-    const found = await store.find({ symbol, ts: rows[1].ts });
+    const found = await store.find({ symbolId, ts: rows[1].ts });
     expect(found).toEqual(rows[1]);
   });
 });

@@ -2,15 +2,15 @@ import { Row, Sql } from "postgres";
 import { Ticker } from "@kgy/core/ticker";
 import { first } from "lodash";
 import { error, ErrorName } from "@kgy/core/error";
-import { Symbol } from "@kgy/core";
+import { SymbolId } from "@kgy/core/constants";
 
 const TABLE = "tickers";
-const COLUMNS = ["symbol", "ask", "bid", "last", "high", "low", "volume", "ts"];
+const COLUMNS = ["symbol_id", "ask", "bid", "last", "high", "low", "volume", "ts"];
 
 export const TickerStore = (sql: Sql<any>) => {
   const to = (r: Row): Ticker => {
     return Ticker({
-      symbol: r.symbol,
+      symbolId: r.symbol_id,
       ask: r.ask,
       bid: r.bid,
       last: r.last,
@@ -23,7 +23,7 @@ export const TickerStore = (sql: Sql<any>) => {
 
   const from = (r: Ticker): Row => {
     return {
-      symbol: r.symbol,
+      symbol_id: r.symbolId,
       ask: r.ask,
       bid: r.bid,
       last: r.last,
@@ -34,12 +34,12 @@ export const TickerStore = (sql: Sql<any>) => {
     };
   };
 
-  const filter = async (req: { symbol?: Symbol }) => {
+  const filter = async (req: { symbolId?: SymbolId }) => {
     try {
       const rows = await (async () => {
-        const { symbol } = req;
-        if (symbol) {
-          return await sql`SELECT * FROM ${sql(TABLE)} WHERE symbol=${symbol}`;
+        const { symbolId } = req;
+        if (symbolId) {
+          return await sql`SELECT * FROM ${sql(TABLE)} WHERE symbol_id=${symbolId}`;
         }
         return [];
       })();
@@ -56,16 +56,16 @@ export const TickerStore = (sql: Sql<any>) => {
       return err;
     }
   };
-  const find = async (req: { symbol: Symbol; ts: Date }) => {
+  const find = async (req: { symbolId: SymbolId; ts: Date }) => {
     try {
-      const rows = await sql`SELECT * FROM ${sql(TABLE)} WHERE symbol=${
-        req.symbol
+      const rows = await sql`SELECT * FROM ${sql(TABLE)} WHERE symbol_id=${
+        req.symbolId
       } AND ts=${req.ts} LIMIT 1`;
       const found = first(rows);
       if (!found) {
         return error(
           ErrorName.NotFound,
-          `Ticker not found for ${req.symbol} at ${req.ts}`
+          `Ticker not found for ${req.symbolId} at ${req.ts}`
         );
       }
       return to(found);

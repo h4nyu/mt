@@ -17,7 +17,7 @@ export const CreateFn = (props: {
     }
     if (!(prev instanceof Error)) {
       props.logger?.info(
-        `Ticker ${req.symbol} at ${req.ts} already exists`
+        `Ticker ${req.symbolId} at ${req.ts} already exists`
       );
       return prev;
     }
@@ -26,7 +26,7 @@ export const CreateFn = (props: {
       return created;
     }
     props.logger?.info(
-      `Created ticker ${created.symbol} at ${created.ts}`
+      `Created ticker ${created.symbolId} at ${created.ts}`
     );
     return created;
   };

@@ -1,9 +1,10 @@
 import { nanoid } from "nanoid";
+import { SymbolId } from "@kgy/core/constants";
 import { Interval } from ".";
 
 export type Candle = {
   id: string;
-  symbol: string;
+  symbolId: SymbolId;
   interval: Interval;
   open: number;
   close: number;
@@ -18,10 +19,10 @@ export const Candle = (
 ): Candle => {
   const id = props.id ?? nanoid();
   const date = props.date ?? new Date();
-  const { open, close, high, low, volume, symbol, interval } = props;
+  const { open, close, high, low, volume, symbolId, interval } = props;
   return {
     id,
-    symbol,
+    symbolId,
     interval,
     open,
     close,

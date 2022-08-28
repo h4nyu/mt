@@ -1,5 +1,6 @@
 import { GmoCoin } from "./gmo-coin";
-import { Symbol, Interval } from "@kgy/core";
+import { Interval } from "@kgy/core";
+import { SymbolId } from "@kgy/core/constants";
 import { range } from "lodash";
 
 describe("GmoCoin", () => {
@@ -12,7 +13,7 @@ describe("GmoCoin", () => {
   });
   test("candles", async () => {
     const res = await gmoCoin.candles({
-      symbol: Symbol.BTC,
+      symbolId: SymbolId.BTC,
       interval: Interval.FIVE_MINUTES,
       date: new Date("2022-01-01T00:00:00.000Z"),
     });
@@ -24,7 +25,7 @@ describe("GmoCoin", () => {
 
   test("ticker", async () => {
     const res = await gmoCoin.ticker({
-      symbol: Symbol.BTC,
+      symbolId: SymbolId.BTC,
     });
     if (res instanceof Error) {
       throw res;
@@ -32,7 +33,7 @@ describe("GmoCoin", () => {
   });
 
   test("subscribe", async () => {
-    gmoCoin.subscribe(Symbol.BTC, console.log);
+    gmoCoin.subscribe(SymbolId.BTC, console.log);
     await new Promise((f) => setTimeout(f, 1000));
   });
 });

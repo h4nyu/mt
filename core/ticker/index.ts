@@ -1,7 +1,7 @@
-import { Symbol } from "@kgy/core";
+import { SymbolId } from "@kgy/core/constants";
 
 export type Ticker = {
-  symbol: Symbol;
+  symbolId: SymbolId;
   ask: number;
   bid: number;
   high: number;
@@ -12,6 +12,6 @@ export type Ticker = {
 };
 
 export const Ticker = (props: Ticker): Ticker => {
-  const { symbol, ask, bid, high, last, low, ts, volume } = props;
-  return { symbol, ask, bid, high, last, low, ts, volume };
+  const { symbolId, ask, bid, high, last, low, ts, volume } = props;
+  return { symbolId, ask, bid, high, last, low, ts, volume };
 };

@@ -1,8 +1,8 @@
 import { OrderStore } from "./order-store";
 import { Postgresql } from "./postgresql";
-import { Order, OrderKind } from "@kgy/core/order";
+import { Order } from "@kgy/core/order";
 import { ErrorName } from "@kgy/core/error";
-import { Symbol } from "@kgy/core";
+import { SymbolId, OrderKind } from "@kgy/core/constants";
 import { range } from "lodash";
 
 describe("order-store", () => {
@@ -17,8 +17,8 @@ describe("order-store", () => {
 
   test("create & find", async () => {
     const order = Order({
-      kind: OrderKind.Limit,
-      symbolId: Symbol.BTC_JPY,
+      kind: OrderKind.LIMIT,
+      symbolId: SymbolId.BTC_JPY,
       price: 100,
     });
     const saved = await store.create(order);
@@ -30,8 +30,8 @@ describe("order-store", () => {
   test("create & filter", async () => {
     const orders = range(10).map((i) =>
       Order({
-        kind: OrderKind.Limit,
-        symbolId: Symbol.ETH_JPY,
+        kind: OrderKind.LIMIT,
+        symbolId: SymbolId.ETH_JPY,
         price: 100,
       })
     );
@@ -39,7 +39,7 @@ describe("order-store", () => {
       await store.create(order);
     }
     const filtered = await store.filter({
-      symbolId: Symbol.ETH_JPY,
+      symbolId: SymbolId.ETH_JPY,
     });
     expect(filtered).toEqual(orders);
   });

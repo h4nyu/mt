@@ -2,7 +2,7 @@ import { Row, Sql } from "postgres";
 import { Order } from "@kgy/core/order";
 import { first } from "lodash";
 import { error, ErrorName } from "@kgy/core/error";
-import { Symbol } from "@kgy/core";
+import { SymbolId } from "@kgy/core/constants";
 
 const TABLE = "orders";
 const COLUMNS = [
@@ -11,7 +11,7 @@ const COLUMNS = [
   "kind",
   "status",
   "symbol_id",
-  "side",
+  "action",
   "price",
   "updated_at",
   "created_at",
@@ -24,7 +24,7 @@ export const OrderStore = (sql: Sql<any>) => {
       contractPrice: r.contract_price ?? undefined,
       kind: r.kind,
       status: r.status,
-      side: r.side,
+      action: r.action,
       symbolId: r.symbol_id,
       price: r.price ?? undefined,
       updatedAt: r.updated_at,
@@ -38,7 +38,7 @@ export const OrderStore = (sql: Sql<any>) => {
       contract_price: r.contractPrice ?? null,
       kind: r.kind,
       status: r.status,
-      side: r.side,
+      action: r.action,
       price: r.price ?? null,
       symbol_id: r.symbolId,
       updated_at: r.updatedAt,
@@ -60,7 +60,7 @@ export const OrderStore = (sql: Sql<any>) => {
     }
   };
 
-  const filter = async (req: { symbolId?: Symbol }) => {
+  const filter = async (req: { symbolId?: SymbolId }) => {
     try {
       const rows = await (async () => {
         const { symbolId } = req;

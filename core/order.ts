@@ -1,11 +1,6 @@
 import { nanoid } from 'nanoid';
-import { Action } from "@kgy/core/constants";
+import { Action, OrderKind, SymbolId } from "@kgy/core/constants";
 
-export enum OrderKind {
-  Limit = 'Limit',
-  Market = 'Market',
-  Stop = 'Stop',
-}
 
 // TODO
 export enum OrderStatus {
@@ -15,7 +10,7 @@ export enum OrderStatus {
 
 export type Order = {
   id: string
-  symbolId: string,
+  symbolId: SymbolId,
   contractPrice?: number,
   status: OrderStatus,
   action: Action,
@@ -25,7 +20,7 @@ export type Order = {
   price?: number
 }
 export const Order = (
-  props: Omit<Order, "id" | "createdAt"|"updatedAt"|"status"|"side">&{
+  props: Omit<Order, "id" | "createdAt"|"updatedAt"|"status"|"action">&{
     id?: string
     status?: OrderStatus,
     action?: Action,

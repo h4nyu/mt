@@ -1,5 +1,6 @@
 import axios from "axios";
-import { Symbol, Interval, Logger } from "@kgy/core";
+import { Interval, Logger } from "@kgy/core";
+import { SymbolId } from "@kgy/core/constants";
 import { Candle } from "@kgy/core/candle";
 import { Ticker } from "@kgy/core/ticker";
 import * as datefns from "date-fns";
@@ -33,7 +34,7 @@ const mapInterval = (value: Interval) => {
       return "1min";
   }
 };
-const decodeTicker = (str: string, symbol: Symbol):Ticker|Error => {
+const decodeTicker = (str: string, symbolId: SymbolId):Ticker|Error => {
   if(str.startsWith("ERR")) {
     return new Error(str);
   }
@@ -65,7 +66,7 @@ export const GmoCoin = (props?: {
     }
   };
   const candles = async (req: {
-    symbol: Symbol;
+    symbolId: SymbolId;
     interval: Interval;
     date: Date;
   }) => {
@@ -86,7 +87,7 @@ export const GmoCoin = (props?: {
       })();
       const res = await publicEndpoint.get("/v1/klines", {
         params: {
-          symbol: req.symbol,
+          symbol: req.symbolId,
           interval: mapInterval(req.interval),
           date: dateStirng,
         },
@@ -98,7 +99,7 @@ export const GmoCoin = (props?: {
           low: parseInt(x.high),
           close: parseInt(x.low),
           volume: parseInt(x.volume),
-          symbol: req.symbol,
+          symbolId: req.symbolId,
           interval: req.interval,
           date: new Date(parseInt(x.openTime)),
         });
@@ -108,16 +109,16 @@ export const GmoCoin = (props?: {
     }
   };
 
-  const ticker = async (req: { symbol: Symbol }) => {
+  const ticker = async (req: { symbolId: SymbolId }) => {
     try {
       const res = await publicEndpoint.get("/v1/ticker", {
         params: {
-          symbol: req.symbol,
+          symbol: req.symbolId,
         },
       });
       return res.data.data.map((x) => {
         return Ticker({
-          symbol: req.symbol,
+          symbolId: req.symbolId,
           ask: parseInt(x.ask),
           bid: parseInt(x.bid),
           last: parseInt(x.last),
@@ -132,7 +133,7 @@ export const GmoCoin = (props?: {
     }
   };
   const subscribe = (
-    symbol: Symbol,
+    symbolId: SymbolId,
     handler: (ticker: Ticker) => void,
   ) => {
     try {
@@ -140,14 +141,14 @@ export const GmoCoin = (props?: {
         const message = JSON.stringify({
           command: "subscribe",
           channel: "ticker",
-          symbol,
+          symbolId,
         });
         ws.send(message);
-        props?.logger?.info(`subscribed to ${symbol}`);
+        props?.logger?.info(`subscribed to ${symbolId}`);
       });
       ws.on("message", async (data) => {
-        props?.logger?.info(`received message for ${symbol} ${data}`);
-        const ticker = decodeTicker(data.toString(), symbol);
+        props?.logger?.info(`received message for ${symbolId} ${data}`);
+        const ticker = decodeTicker(data.toString(), symbolId);
         if(ticker instanceof Error) {
           return
         }
