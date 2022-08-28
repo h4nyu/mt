@@ -4,6 +4,7 @@ import { SymbolId } from "@kgy/core/constants";
 import { TickerStore } from "@kgy/server/ticker-store";
 import { Postgresql } from "@kgy/server/postgresql";
 import { CreateFn } from "@kgy/core/ticker/create";
+import { Trader } from "@kgy/core/trader/mock";
 import pino from "pino";
 
 export default {

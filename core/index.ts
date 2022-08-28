@@ -43,6 +43,7 @@ export type Exchange = {
 export type TickerStore = {
   create: (row: Ticker) => Promise<Ticker | Error>;
   find: (req: { symbolId: SymbolId; ts: Date }) => Promise<Ticker | Error>;
+  filter: (req: { symbolId: SymbolId; limit?: number }) => Promise<Ticker[] | Error>;
 };
 
 export type Logger = {

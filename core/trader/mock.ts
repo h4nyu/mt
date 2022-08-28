@@ -8,7 +8,7 @@ export const Trader = (option?: {
 }) => {
   const symbolId = option?.symbolId ?? SymbolId.BTC;
   const kind = option?.orderKind ?? OrderKind.MARKET;
-  const next = async (_) => {
+  const action = async (_) => {
     return Order({
       symbolId,
       kind: OrderKind.MARKET,
@@ -16,6 +16,6 @@ export const Trader = (option?: {
     })
   }
   return {
-    next
+    action
   }
 }
