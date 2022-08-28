@@ -141,7 +141,7 @@ export const GmoCoin = (props?: {
         const message = JSON.stringify({
           command: "subscribe",
           channel: "ticker",
-          symbolId,
+          symbol: symbolId,
         });
         ws.send(message);
         props?.logger?.info(`subscribed to ${symbolId}`);

@@ -1,6 +1,6 @@
 import { Argv } from "yargs";
 import { GmoCoin } from "@kgy/server/gmo-coin";
-import { Symbol } from "@kgy/core";
+import { SymbolId } from "@kgy/core/constants";
 import { TickerStore } from "@kgy/server/ticker-store";
 import { Postgresql } from "@kgy/server/postgresql";
 import { CreateFn } from "@kgy/core/ticker/create";
@@ -21,7 +21,7 @@ export default {
       logger
     });
     exchange.subscribe(
-      Symbol.BTC,
+      SymbolId.BTC,
       CreateFn({ store, logger })
     );
   },
