@@ -17,6 +17,10 @@ jobs:
             echo 'export DATABASE_VOLUME=./db-data' >> $BASH_ENV
             echo 'export WEB_PORT=8080' >> $BASH_ENV
 
+      - restore_cache:
+          keys:
+            - docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "kgy_nn/setup.py" }}
+
       - run:
           name: "Build images if needed"
           command: |
