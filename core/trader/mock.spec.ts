@@ -1,21 +1,22 @@
-import { Trader } from './mock';
+import { Trader } from "./mock";
+import { Action } from "@kgy/core/constants";
 
 describe("mock", () => {
   const setup = () => {
     const trader = Trader();
     return {
-      trader
-    }
-  }
+      trader,
+    };
+  };
   test("mock always returns the stay", async () => {
     const { trader } = setup();
     const order = await trader.action({
       position: [],
       tickers: [],
     });
-    if(order instanceof Error) {
-      throw order
+    if (order instanceof Error) {
+      throw order;
     }
-    expect(order.action).toBe("stay");
-  })
-})
+    expect(order.action).toBe(Action.STAY);
+  });
+});
