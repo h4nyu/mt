@@ -15,7 +15,7 @@ describe("order-store", () => {
     await sql.end({ timeout: 5 });
   });
 
-  test("create & find", async () => {
+  test.skip("create & find", async () => {
     const row = Ticker({
       symbolId: SymbolId.BTC_JPY,
       low: 9.0,
@@ -31,7 +31,7 @@ describe("order-store", () => {
     const filtered = await store.filter({ symbolId: row.symbolId });
     expect(filtered).toEqual([row]);
   });
-  test("find", async () => {
+  test.skip("find", async () => {
     const symbolId = SymbolId.BTC_JPY;
     const rows = [
       Ticker({

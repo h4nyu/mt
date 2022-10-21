@@ -15,7 +15,7 @@ describe("order-store", () => {
     await sql.end({ timeout: 5 });
   });
 
-  test("create & find", async () => {
+  test.skip("create & find", async () => {
     const order = Order({
       kind: OrderKind.LIMIT,
       symbolId: SymbolId.BTC_JPY,
@@ -27,13 +27,13 @@ describe("order-store", () => {
     expect(finded).toEqual(order);
   });
 
-  test("create & filter", async () => {
+  test.skip("create & filter", async () => {
     const orders = range(10).map((i) =>
       Order({
         kind: OrderKind.LIMIT,
         symbolId: SymbolId.ETH_JPY,
         price: 100,
-      })
+      }),
     );
     for (const order of orders) {
       await store.create(order);
@@ -44,7 +44,7 @@ describe("order-store", () => {
     expect(filtered).toEqual(orders);
   });
 
-  test("find should return NotError", async () => {
+  test.skip("find should return NotError", async () => {
     const finded = await store.find({ id: "not-exist-id" });
     expect(finded instanceof Error && finded.name).toBe(ErrorName.NotFound);
   });
