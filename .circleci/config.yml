@@ -15,11 +15,6 @@ jobs:
           command: |
             echo 'export COMPOSE_FILE=docker-compose.yaml' >> $BASH_ENV
 
-      - restore_cache:
-          keys:
-            - docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "kgy_nn/setup.py" }}
-
-
       - run:
           name: "Build images if needed"
           command: |
@@ -27,21 +22,13 @@ jobs:
               docker load < image.tar
             else
               docker-compose build app
-              docker save kaguya-dev > image.tar
+              docker save kaguya > image.tar
             fi
 
       - save_cache:
           key: docker-image-{{ .Environment.CACHE_VERSION }}-{{ checksum "Dockerfile" }}-{{ checksum "kgy_nn/setup.py" }}
           paths:
             - ./image.tar
-
-      - restore_cache:
-          keys:
-            - node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install node modules if needed
-          command: |
-            docker-compose run --rm app yarn install
 
       - save_cache:
           key: node-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
