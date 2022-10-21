@@ -9,7 +9,7 @@ describe("mock", () => {
   }
   test("mock always returns the stay", async () => {
     const { trader } = setup();
-    const order = await trader.next({
+    const order = await trader.action({
       position: [],
       tickers: [],
     });
