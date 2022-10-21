@@ -15,6 +15,7 @@ jobs:
           command: |
             echo 'export COMPOSE_FILE=docker-compose.yaml' >> $BASH_ENV
             echo 'export DATABASE_VOLUME=./db-data' >> $BASH_ENV
+            echo 'export WEB_PORT=8080' >> $BASH_ENV
 
       - run:
           name: "Build images if needed"
@@ -44,6 +45,7 @@ jobs:
       - run:
           name: Build
           command: |
+            docker-compose run app yarn install
             docker-compose run app yarn build
 
       - run:

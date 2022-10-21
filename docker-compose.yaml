@@ -5,7 +5,7 @@ x-env: &env
   GMO_COIN_API_KEY: &GMO_COIN_API_KEY ${GMO_COIN_API_KEY}
   GMO_COIN_SECRET_KEY: &GMO_COIN_SECRET_KEY ${GMO_COIN_SECRET_KEY}
   DATABASE_VOLUME: &DATABASE_VOLUME ${DATABASE_VOLUME:?}
-
+  WEB_PORTL: &WEB_PORT ${WEB_PORT:?}
 
   # internal
   DATABASE_URL: postgres://app:app@db/app
@@ -33,6 +33,26 @@ services:
       <<: *env
     depends_on:
       - db
+
+  server:
+    <<: *app
+    command: bash -c 'wait-for-it db:5432 -- db-migrate up && kgy start'
+    environment:
+      <<: *env
+    depends_on:
+      - db
+
+  web:
+    <<: *app
+    working_dir: /app/web
+    command: yarn dev
+    environment:
+      <<: *env
+    ports:
+      - "${WEB_PORT:?}:3000"
+    depends_on:
+      - server
+
   db:
     image: "timescale/timescaledb:latest-pg13"
     environment:
