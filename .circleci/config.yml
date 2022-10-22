@@ -55,7 +55,7 @@ jobs:
       - run:
           name: Test db migrate
           command: |
-            docker-compose run --rm app wait-for-it db:5432 -- yarn db-migrate up
+            docker-compose run --rm cli wait-for-it db:5432 -- yarn db-migrate up
 
       - run:
           name: Test
