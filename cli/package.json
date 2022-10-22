@@ -9,7 +9,7 @@
     "prepack": "yarn build",
     "postpack": "yarn clean",
     "test": "jest",
-    "cli": "ts-node index.ts"
+    "cli": "yarn clean && ts-node index.ts"
   },
   "bin": {
     "kgy": "bin/kaguya"
@@ -17,6 +17,8 @@
   "dependencies": {
     "@kgy/core": "0.1.0",
     "@kgy/server": "0.1.0",
+    "db-migrate": "^0.11.13",
+    "db-migrate-pg": "^1.2.2",
     "pino": "^7.10.0",
     "yargs": "^17.4.1"
   },

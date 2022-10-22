@@ -25,7 +25,8 @@ services:
 
   collector:
     <<: *app
-    command: bash -c 'wait-for-it db:5432 -- db-migrate up && yarn cli start collector'
+    working_dir: /app/cli
+    command: bash -c 'wait-for-it db:5432 -- yarn db-migrate up && yarn cli start collector'
     environment:
       <<: *env
     depends_on:
@@ -34,7 +35,7 @@ services:
   api:
     <<: *app
     working_dir: /app/cli
-    command: bash -c 'wait-for-it db:5432 -- db-migrate up && yarn cli start api'
+    command: bash -c 'wait-for-it db:5432 -- yarn db-migrate up && yarn cli start api'
     environment:
       <<: *env
     depends_on:

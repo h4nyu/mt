@@ -16,9 +16,5 @@
     "api",
     "cli"
   ],
-  "packageManager": "yarn@3.2.4",
-  "dependencies": {
-    "db-migrate": "^0.11.13",
-    "db-migrate-pg": "^1.2.2"
-  }
+  "packageManager": "yarn@3.2.4"
 }
