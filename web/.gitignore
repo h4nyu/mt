@@ -1,4 +1,4 @@
 tsconfig.tsbuildinfo
 .next
 next-env.d.ts
-!tailwind.config.js
+!*.config.js
