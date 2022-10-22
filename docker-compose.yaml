@@ -1,4 +1,4 @@
-version: '2.4'
+version: "2.4"
 
 x-env: &env
   CODECOV_TOKEN: &CODECOV_TOKEN ${CODECOV_TOKEN}
@@ -10,7 +10,6 @@ x-env: &env
   # internal
   DATABASE_URL: postgres://app:app@db/app
 
-
 x-app: &app
   image: "kaguya"
   build:
@@ -18,25 +17,24 @@ x-app: &app
   volumes:
     - .:/app
 
-
 services:
   app:
     <<: *app
     environment:
       <<: *env
 
-
-  server:
+  collector:
     <<: *app
-    command: bash -c 'wait-for-it db:5432 -- db-migrate up && kgy start'
+    command: bash -c 'wait-for-it db:5432 -- db-migrate up && yarn cli start collector'
     environment:
       <<: *env
     depends_on:
       - db
 
-  server:
+  api:
     <<: *app
-    command: bash -c 'wait-for-it db:5432 -- db-migrate up && kgy start'
+    working_dir: /app/cli
+    command: bash -c 'wait-for-it db:5432 -- db-migrate up && yarn cli start api'
     environment:
       <<: *env
     depends_on:
@@ -51,12 +49,12 @@ services:
     ports:
       - "${WEB_PORT:?}:3000"
     depends_on:
-      - server
+      - api
 
   db:
     image: "timescale/timescaledb:latest-pg13"
     environment:
       POSTGRES_PASSWORD: app
       POSTGRES_USER: app
-    volumes: 
+    volumes:
       - ${DATABASE_VOLUME}:/var/lib/postgresql/data

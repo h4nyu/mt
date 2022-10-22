@@ -8,7 +8,7 @@ import { Trader } from "@kgy/core/trader/mock";
 import pino from "pino";
 
 export default {
-  command: "start",
+  command: "collector",
   builder: (yargs: Argv) => {
     return yargs;
   },
@@ -19,11 +19,8 @@ export default {
       ticker: TickerStore(sql),
     };
     const exchange = GmoCoin({
-      logger
+      logger,
     });
-    exchange.subscribe(
-      SymbolId.BTC,
-      CreateFn({ store, logger })
-    );
+    exchange.subscribe(SymbolId.BTC, CreateFn({ store, logger }));
   },
 };
