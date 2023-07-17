@@ -1,11 +1,11 @@
 version: "2.4"
 
 x-env: &env
-  CODECOV_TOKEN: &CODECOV_TOKEN ${CODECOV_TOKEN}
-  GMO_COIN_API_KEY: &GMO_COIN_API_KEY ${GMO_COIN_API_KEY}
-  GMO_COIN_SECRET_KEY: &GMO_COIN_SECRET_KEY ${GMO_COIN_SECRET_KEY}
-  DATABASE_VOLUME: &DATABASE_VOLUME ${DATABASE_VOLUME:?}
-  WEB_PORTL: &WEB_PORT ${WEB_PORT:?}
+  CODECOV_TOKEN: &CODECOV_TOKEN ${CODECOV_TOKEN:-}
+  GMO_COIN_API_KEY: &GMO_COIN_API_KEY ${GMO_COIN_API_KEY:-}
+  GMO_COIN_SECRET_KEY: &GMO_COIN_SECRET_KEY ${GMO_COIN_SECRET_KEY:-}
+  DATABASE_VOLUME: &DATABASE_VOLUME ${DATABASE_VOLUME:-./data/db}
+  WEB_PORTL: &WEB_PORT ${WEB_PORT:-3000}
 
   # internal
   DATABASE_URL: postgres://app:app@db/app
@@ -48,7 +48,8 @@ services:
     environment:
       <<: *env
     ports:
-      - "${WEB_PORT:?}:3000"
+      - target: 3000
+        published: *WEB_PORT
     depends_on:
       - api
 
@@ -58,4 +59,6 @@ services:
       POSTGRES_PASSWORD: app
       POSTGRES_USER: app
     volumes:
-      - ${DATABASE_VOLUME}:/var/lib/postgresql/data
+      - type: bind
+        source: *DATABASE_VOLUME
+        target: /var/lib/postgresql/data
