@@ -33,6 +33,9 @@ RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - \
     && npm install --global yarn \
     && pip install --no-cache-dir torch==1.10.2+cu113 torchvision==0.11.3+cu113 -f https://download.pytorch.org/whl/torch_stable.html
 
+COPY notebook/requirements.txt /app/notebook/requirements.txt
+RUN pip install -r /app/notebook/requirements.txt
+
 
 WORKDIR /app
 COPY . .

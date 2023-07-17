@@ -6,6 +6,7 @@ x-env: &env
   GMO_COIN_SECRET_KEY: &GMO_COIN_SECRET_KEY ${GMO_COIN_SECRET_KEY:-}
   DATABASE_VOLUME: &DATABASE_VOLUME ${DATABASE_VOLUME:-./data/db}
   WEB_PORTL: &WEB_PORT ${WEB_PORT:-3000}
+  NOTEBOOK_PORT: &NOTEBOOK_PORT ${NOTEBOOK_PORT:-8888}
 
   # internal
   DATABASE_URL: postgres://app:app@db/app
@@ -62,3 +63,12 @@ services:
       - type: bind
         source: *DATABASE_VOLUME
         target: /var/lib/postgresql/data
+
+  notebook:
+    <<: *app
+    command: jupyter notebook --ip 0.0.0.0 --port 8888 --allow-root --NotebookApp.password='' --NotebookApp.token='' --NotebookApp.notebook_dir='/app/notebooks'
+    ports:
+      - target: 8888
+        published: *NOTEBOOK_PORT
+    profiles:
+      - experiment
