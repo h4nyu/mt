@@ -48,3 +48,8 @@ docker compose run --rm app yarn install
 - soltia48
 - tkgstrator
 - h4nyu
+
+
+4. Port forward kabusapi server
+```sh
+netsh interface portproxy add v4tov4 listenport=18080 listenaddress=
