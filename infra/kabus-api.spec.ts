@@ -40,7 +40,7 @@ describe('parser', () => {
     expect(board.symbol).toBe('5401')
     expect(board.sell.length).toBe(10)
     expect(board.buy.length).toBe(10)
-    expect(board.buy[0].sign).toBe(Sign.GENERAL_QUOTATION)
+    expect(board.buySign).toBe(Sign.GENERAL_QUOTATION)
     expect(board.overSellQuantity).toBe(974900)
     expect(board.underBuyQuantity).toBe(756000)
   })

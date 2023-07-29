@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output = "./client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Board {
+  symbol       String
+  exchange     String?
+  currentTime  DateTime
+  currentPrice Float
+  currentSign  String?
+  createdAt    DateTime @default(now())
+
+  sellSign         String?
+  buySign          String?
+  BoardRow         BoardRow[]
+  overSellQuantity Int?
+  underBuyQuantity Int?
+  @@id([symbol, currentTime])
+}
+
+model BoardRow {
+  symbol      String
+  currentTime DateTime
+  price       Float?
+  quantity    Int?
+  kind        String
+  order       Int
+  board       Board    @relation(fields: [symbol, currentTime], references: [symbol, currentTime])
+
+  @@id([symbol, currentTime, kind, order])
+}
