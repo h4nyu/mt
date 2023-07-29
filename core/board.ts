@@ -1,6 +1,8 @@
+import { Sign } from './constants'
 export type BoardRow = {
   price: number;
-  amount: number;
+  quantity: number;
+  sign?: Sign;
 }
 export type Board = {
   symbol: string;
@@ -10,31 +12,20 @@ export type Board = {
   current: {
     price: number;
     time: Date;
+    sign?: Sign;
   },
-  over?: {
-    sellAmount: number;
-    buyAmount: number;
-    sign: number;
-  },
-  ask?: {
-    amount: number;
-    price: number;
-    time: Date;
-  },
-  bid?: {
-    amount: number;
-    price: number;
-    time: Date;
-  }
+  overSellQuantity?: number;
+  underBuyQuantity?: number;
 }
+
 export const Board = (props: Board) => {
-  const { symbol, exchange, sell, buy, current, over, ask, bid } = props
+  const { symbol, exchange, sell, buy, current, overSellQuantity, underBuyQuantity } = props
   return {
     symbol,
     sell,
     buy,
     current,
-    ask, 
-    bid,
+    overSellQuantity,
+    underBuyQuantity,
   }
 }

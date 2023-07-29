@@ -6,7 +6,7 @@ import { Board } from "@kgy/core/board"
 export const parseBoardRow = (raw: any) => {
   return {
     price: raw.Price,
-    amount: raw.Qty,
+    quantity: raw.Qty,
   }
 }
 export const parseBoard = (raw: any) => {
@@ -18,6 +18,8 @@ export const parseBoard = (raw: any) => {
     },
     sell:[raw.Sell1, raw.Sell2, raw.Sell3, raw.Sell4, raw.Sell5, raw.Sell6, raw.Sell7, raw.Sell8, raw.Sell9, raw.Sell10].map(parseBoardRow),
     buy:[raw.Buy1, raw.Buy2, raw.Buy3, raw.Buy4, raw.Buy5, raw.Buy6, raw.Buy7, raw.Buy8, raw.Buy9, raw.Buy10].map(parseBoardRow),
+    overSellQuantity: raw.OverSellQty,
+    underBuyQuantity: raw.UnderBuyQty,
   })
 }
 
