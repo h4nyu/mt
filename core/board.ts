@@ -2,11 +2,12 @@ import { Sign } from './constants'
 export type BoardRow = {
   price: number;
   quantity: number;
-  sign?: Sign;
 }
 export type Board = {
   symbol: string;
   exchange?: string;
+  sellSign?: Sign;
+  buySign?: Sign;
   sell: BoardRow[];
   buy: BoardRow[];
   current: {
@@ -19,11 +20,13 @@ export type Board = {
 }
 
 export const Board = (props: Board) => {
-  const { symbol, exchange, sell, buy, current, overSellQuantity, underBuyQuantity } = props
+  const { symbol, exchange, sell, buy, current, overSellQuantity, underBuyQuantity, sellSign, buySign } = props
   return {
     symbol,
     sell,
+    sellSign,
     buy,
+    buySign,
     current,
     overSellQuantity,
     underBuyQuantity,

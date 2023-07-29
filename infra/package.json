@@ -7,12 +7,15 @@
   "scripts": {
     "clean": "tsc --build --clean",
     "build": "tsc --noEmit false",
+    "generate": "prisma generate",
     "prepack": "yarn build",
     "postpack": "yarn clean",
     "test": "jest"
   },
   "dependencies": {
     "@kgy/core": "0.1.0",
+    "@prisma/client": "5.0.0",
+    "@yarnpkg/pnpify": "^4.0.0-rc.48",
     "axios": "^0.26.1",
     "date-fns": "^2.28.0",
     "fastify": "^4.9.2",
