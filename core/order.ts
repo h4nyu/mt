@@ -1,26 +1,21 @@
 import { nanoid } from 'nanoid';
-import { Action, OrderKind, SymbolId } from "@kgy/core/constants";
+import { Action, OrderKind } from "@kgy/core/constants";
 
 
-// TODO
-export enum OrderStatus {
-  New = 'New',
-  Canceled = 'Canceled',
-}
+
 
 export type Order = {
   id: string
-  symbolId: SymbolId,
-  contractPrice?: number,
-  status: OrderStatus,
-  action: Action,
-  createdAt: Date,
-  updatedAt: Date
-  kind: OrderKind
-  price?: number
+  symbol: string,
+  kind: "MARKET" | "LIMIT", // 指値か成行か
+  side: "BUY" | "SELL", // 買いか売りか
+  price?: number // 指値の場合の価格
+  quantity: number // 数量
+  placedAt: Date // 注文した日時
 }
+
 export const Order = (
-  props: Omit<Order, "id" | "createdAt"|"updatedAt"|"status"|"action">&{
+  props: Omit<Order, "id" | "createdAt"|"updatedAt"|"status"|"kind">&{
     id?: string
     status?: OrderStatus,
     action?: Action,
@@ -28,12 +23,8 @@ export const Order = (
     updatedAt?: Date
   }
 ): Order => {
-  const id = props.id ?? nanoid();
-  const createdAt = props.createdAt ?? new Date();
-  const updatedAt = props.updatedAt ?? createdAt;
-  const status = props.status ?? OrderStatus.New;
-  const action = props.action ?? Action.STAY;
-  const { kind, price, symbolId } = props;
+  const id = props.id || nanoid()
+  const { symbol: symbolId, status, action, createdAt, updatedAt } = props
   return {
     id,
     symbolId,

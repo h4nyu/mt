@@ -5,11 +5,6 @@ export enum Action {
   STAY='STAY',
 }
 
-export enum OrderKind {
-  LIMIT = 'LIMIT',
-  MARKET = 'MARKET',
-  STOP = 'STOP',
-}
 
 export enum SymbolId {
   BTC = "BTC",
