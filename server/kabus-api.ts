@@ -7,6 +7,7 @@ export const parseBoardRow = (raw: any) => {
   return {
     price: raw.Price,
     quantity: raw.Qty,
+    sign: raw.Sign,
   }
 }
 export const parseBoard = (raw: any) => {
