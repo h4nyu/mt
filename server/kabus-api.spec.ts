@@ -1,4 +1,5 @@
-import { KabusApi } from './kabus-api'
+import { KabusApi, parseBoard } from './kabus-api'
+import fs from 'fs'
 
 
 describe('KabusApi', () => {
@@ -22,5 +23,21 @@ describe('KabusApi', () => {
       symbols: ['9433', '9437'] // 任天堂, グリー
     })
     if(res instanceof Error) throw res
+  })
+
+})
+
+describe('parser', () => {
+  const setup = () => {
+    const jsonText = fs.readFileSync('../test-data/kabus-api/board.json', 'utf-8')
+    const json = JSON.parse(jsonText)
+    return { json }
+  }
+  test("parseBoard", () => {
+    const { json } = setup()
+    const board = parseBoard(json)
+    expect(board.symbol).toBe('5401')
+    expect(board.sell.length).toBe(10)
+    expect(board.buy.length).toBe(10)
   })
 })
