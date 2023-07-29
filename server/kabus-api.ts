@@ -3,7 +3,6 @@ import { Logger } from "@kgy/core/logger"
 export const KabusApi = (props?: {
   logger?: Logger
 }) => {
-  console.log(process.env.KABUSAPI_URL)
   const http = axios.create({
     baseURL: `${process.env.KABUSAPI_URL}`,
   })
