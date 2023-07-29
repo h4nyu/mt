@@ -1152,7 +1152,7 @@ __metadata:
   resolution: "@kgy/cli@workspace:cli"
   dependencies:
     "@kgy/core": 0.1.0
-    "@kgy/server": 0.1.0
+    "@kgy/infra": 0.1.0
     "@types/node": ^17.0.35
     db-migrate: ^0.11.13
     db-migrate-pg: ^1.2.2
@@ -1179,9 +1179,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@kgy/server@0.1.0, @kgy/server@workspace:server":
+"@kgy/infra@0.1.0, @kgy/infra@workspace:infra":
   version: 0.0.0-use.local
-  resolution: "@kgy/server@workspace:server"
+  resolution: "@kgy/infra@workspace:infra"
   dependencies:
     "@kgy/core": 0.1.0
     "@types/jest": ^27.5.1
@@ -1193,6 +1193,7 @@ __metadata:
     jest: ^28.1.0
     lodash: ^4.17.21
     postgres: ^2.0.0-beta.11
+    prisma: ^5.0.0
     ts-jest: ^28.0.2
     typescript: ^4.6.4
     ws: ^8.9.0
@@ -1361,6 +1362,13 @@ __metadata:
     mkdirp: ^1.0.4
     rimraf: ^3.0.2
   checksum: 1388777b507b0c592d53f41b9d182e1a8de7763bc625fc07999b8edbc22325f074e5b3ec90af79c89d6987fdb2325bc66d59f483258543c14a43661621f841b0
+  languageName: node
+  linkType: hard
+
+"@prisma/engines@npm:5.0.0":
+  version: 5.0.0
+  resolution: "@prisma/engines@npm:5.0.0"
+  checksum: 31271d85c29709059f91051d4cef7acf874014ba0128b674ca2f842e5fac61d3011e9db246dfa67ba4803081d36dbc9e31492716bab677128588343c92117b2b
   languageName: node
   linkType: hard
 
@@ -6002,6 +6010,17 @@ __metadata:
     ansi-styles: ^5.0.0
     react-is: ^18.0.0
   checksum: d192cbd3dee72e9b60764629d1f098d60fddc3fc9435f44774a01dd1c5794f36a81fa6a7377a527f994317950d8fc6c5bf9c9915387c5d32f107525996e32a1c
+  languageName: node
+  linkType: hard
+
+"prisma@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "prisma@npm:5.0.0"
+  dependencies:
+    "@prisma/engines": 5.0.0
+  bin:
+    prisma: build/index.js
+  checksum: fdc62377853d25b4db664c736fd0b08d2b0c6db5752e6f6c6ec3bda77634cfb79e6f49d52d4b8f54ddb8ec9c28fc3fb0c13f95caf61085447d0929e258af9284
   languageName: node
   linkType: hard
 
