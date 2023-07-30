@@ -35,4 +35,6 @@ jobs:
           fi
 
       - name: Build
-        run: docker compose run --rm app yarn build
+        run: |
+          docker compose run --rm app yarn install
+          docker compose run --rm app yarn build
