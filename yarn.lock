@@ -1203,6 +1203,7 @@ __metadata:
     fastify: ^4.9.2
     jest: ^28.1.0
     lodash: ^4.17.21
+    nanoid: 3.3.1
     postgres: ^2.0.0-beta.11
     prisma: ^5.0.0
     ts-jest: ^28.0.2
@@ -5759,7 +5760,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.3.1":
+"nanoid@npm:3.3.1, nanoid@npm:^3.3.1":
   version: 3.3.1
   resolution: "nanoid@npm:3.3.1"
   bin:
