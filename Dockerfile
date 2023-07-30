@@ -1,6 +1,6 @@
 FROM debian:bookworm-slim
 
-ENV PATH=$PATH:/app/cli/bin
+ENV PATH=$PATH:/app/cli/bin:/app/node_modules/.bin
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         nodejs \

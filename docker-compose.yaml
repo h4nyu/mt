@@ -26,36 +26,8 @@ services:
     <<: *app
     environment:
       <<: *env
-
-  collector:
-    <<: *app
-    working_dir: /app/cli
-    command: bash -c 'wait-for-it db:5432 -- yarn db-migrate up && yarn cli start collector'
-    environment:
-      <<: *env
-    depends_on:
-      - db
-
-  api:
-    <<: *app
-    working_dir: /app/cli
-    command: bash -c 'wait-for-it db:5432 -- yarn db-migrate up && yarn cli start api'
-    environment:
-      <<: *env
-    depends_on:
-      - db
-
-  web:
-    <<: *app
-    working_dir: /app/web
-    command: yarn dev
-    environment:
-      <<: *env
-    ports:
-      - target: 3000
-        published: *WEB_PORT
-    depends_on:
-      - api
+    profiles:
+      - development
 
   db:
     image: "timescale/timescaledb:latest-pg13"
@@ -66,6 +38,20 @@ services:
       - type: bind
         source: *DATABASE_VOLUME
         target: /var/lib/postgresql/data
+    profiles:
+      - production
+      - development
+
+  collector:
+    <<: *app
+    working_dir: /app/cli
+    command: bash -c 'wait-for-it db:5432 -- prisma migrate deploy && kgy collect'
+    environment:
+      <<: *env
+    profiles:
+      - production
+    depends_on:
+      - db
 
   notebook:
     <<: *app
@@ -74,4 +60,4 @@ services:
       - target: 8888
         published: *NOTEBOOK_PORT
     profiles:
-      - experiment
+      - development
