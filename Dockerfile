@@ -1,4 +1,4 @@
-FROM python:3.9-bullseye
+FROM debian:bookworm-slim
 
 RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt-get update \
