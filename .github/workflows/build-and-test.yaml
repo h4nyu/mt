@@ -30,8 +30,9 @@ jobs:
           if test -f image.tar; then
             docker load < image.tar
           else
-            docker-compose build app
+            docker compose build app
             docker save kgy > image.tar
           fi
 
-      - name: Run the tests
+      - name: Build
+        run: docker compose run --rm app yarn build
