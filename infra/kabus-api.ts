@@ -1,6 +1,5 @@
 import axios from "axios";
 import { Logger } from "@kgy/core/logger";
-
 import { Board } from "@kgy/core/board";
 import WebSocket from "ws";
 
@@ -112,33 +111,31 @@ export const KabusApi = (props?: { logger?: Logger }) => {
       message: `Register ${symbols.join(", ")}`,
     });
 
-    const socket = new WebSocket(`${process.env.KABUSAPI_WS_URL}`);
+    const ws = new WebSocket(process.env.KABUSAPI_WS_URL ?? "");
+
     return new Promise((resolve, reject) => {
-      socket.on("open", () => {
+      ws.on("open", () => {
         props?.logger?.info({
           module: "KabusApi",
           message: `Connect to ${process.env.KABUSAPI_WS_URL}`,
         });
       });
-      socket.on("message", (data) => {
+      ws.on("message", (data) => {
         const board = parseBoard(JSON.parse(data.toString()));
         handler(board);
       });
-      socket.on("close", () => {
+      ws.on("close", () => {
         props?.logger?.info({
           module: "KabusApi",
           message: `Disconnect from ${process.env.KABUSAPI_WS_URL} and reconnecting...`,
         });
-        subscribe(req);
       });
-      socket.on("error", (err) => {
+      ws.on("error", (err) => {
         props?.logger?.error({
           module: "KabusApi",
           message: `Error from ${process.env.KABUSAPI_WS_URL}, ${err}`,
         });
-        reject(err);
       });
-      console.log("resolve");
     });
   };
 
