@@ -1,89 +1,150 @@
-import axios from 'axios'
-import { Logger } from "@kgy/core/logger"
+import axios from "axios";
+import { Logger } from "@kgy/core/logger";
 
-import { Board } from "@kgy/core/board"
+import { Board } from "@kgy/core/board";
+import WebSocket from "ws";
 
 export const parseBoardRow = (raw: any) => {
   return {
     price: raw.Price,
     quantity: raw.Qty,
-  }
-}
+  };
+};
 export const parseBoard = (raw: any) => {
   return Board({
     symbol: raw.Symbol,
     price: raw.CurrentPrice,
     time: new Date(raw.CurrentPriceTime),
     sign: raw.CurrentSign ?? undefined,
-    asks:[raw.Sell1, raw.Sell2, raw.Sell3, raw.Sell4, raw.Sell5, raw.Sell6, raw.Sell7, raw.Sell8, raw.Sell9, raw.Sell10].map(parseBoardRow),
+    asks: [
+      raw.Sell1,
+      raw.Sell2,
+      raw.Sell3,
+      raw.Sell4,
+      raw.Sell5,
+      raw.Sell6,
+      raw.Sell7,
+      raw.Sell8,
+      raw.Sell9,
+      raw.Sell10,
+    ].map(parseBoardRow),
     askSign: raw.AskSign,
-    bids:[raw.Buy1, raw.Buy2, raw.Buy3, raw.Buy4, raw.Buy5, raw.Buy6, raw.Buy7, raw.Buy8, raw.Buy9, raw.Buy10].map(parseBoardRow),
+    bids: [
+      raw.Buy1,
+      raw.Buy2,
+      raw.Buy3,
+      raw.Buy4,
+      raw.Buy5,
+      raw.Buy6,
+      raw.Buy7,
+      raw.Buy8,
+      raw.Buy9,
+      raw.Buy10,
+    ].map(parseBoardRow),
     bidSign: raw.BidSign,
     overQuantity: raw.OverSellQty,
     underQuantity: raw.UnderBuyQty,
-  })
-}
+  });
+};
 
-export const Auth = (props?: {
-  logger?: Logger
-}) => {
+export const Auth = (props?: { logger?: Logger }) => {
   const http = axios.create({
     baseURL: `${process.env.KABUSAPI_URL}`,
-  })
+  });
   props?.logger?.info({
-    module: 'KabusApi',
-    message: `Connect to ${process.env.KABUSAPI_URL}`
-  })
+    module: "KabusApi",
+    message: `Connect to ${process.env.KABUSAPI_URL}`,
+  });
   const refleshToken = async () => {
-    try{
-      const res = await http.post('/token', {
+    try {
+      const res = await http.post("/token", {
         APIPassword: process.env.KABUSAPI_PASSWORD,
-      })
-      http.defaults.headers.common['X-API-KEY'] = res.data.Token
-    }catch(e){
-      return e
+      });
+      http.defaults.headers.common["X-API-KEY"] = res.data.Token;
+    } catch (e) {
+      return e;
     }
-  }
+  };
   const getClient = async () => {
-    if(!http.defaults.headers.common['X-API-KEY']){
-      const err = await refleshToken()
-      if(err) return err
+    if (!http.defaults.headers.common["X-API-KEY"]) {
+      const err = await refleshToken();
+      if (err) return err;
     }
-    return http
-  }
+    return http;
+  };
   return {
     getClient,
     refleshToken,
     http,
-  }
-}
-export const KabusApi = (props?: {
-  logger?: Logger
-}) => {
-  const auth = Auth(props)
-  const register = async (req: {
-    symbols: string[]
-  }) => {
-    const { symbols } = req
-    const http = await auth.getClient()
-    if(http instanceof Error) return http
-    try{
-      const res = await http.put('/register', { 
+  };
+};
+export const KabusApi = (props?: { logger?: Logger }) => {
+  const auth = Auth(props);
+  const register = async (req: { symbols: string[] }) => {
+    const { symbols } = req;
+    const http = await auth.getClient();
+    if (http instanceof Error) return http;
+    try {
+      const res = await http.put("/register", {
         Symbols: symbols.map((symbol) => {
           return {
             Symbol: symbol,
             Exchange: 1, // 東証
-          }
+          };
         }),
-      })
-      return
+      });
+      return;
+    } catch (e) {
+      return e;
     }
-    catch(e){
-      return e
-    }
-  }
+  };
+  type SubscribeFn = (req: Board) => void;
+
+  const subscribe = async (req: {
+    symbols: string[];
+    handler: SubscribeFn;
+  }) => {
+    const { symbols, handler } = req;
+    const regErr = await register({ symbols });
+    if (regErr) return regErr;
+    props?.logger?.info({
+      module: "KabusApi",
+      message: `Register ${symbols.join(", ")}`,
+    });
+
+    const socket = new WebSocket(`${process.env.KABUSAPI_WS_URL}`);
+    return new Promise((resolve, reject) => {
+      socket.on("open", () => {
+        props?.logger?.info({
+          module: "KabusApi",
+          message: `Connect to ${process.env.KABUSAPI_WS_URL}`,
+        });
+      });
+      socket.on("message", (data) => {
+        const board = parseBoard(JSON.parse(data.toString()));
+        handler(board);
+      });
+      socket.on("close", () => {
+        props?.logger?.info({
+          module: "KabusApi",
+          message: `Disconnect from ${process.env.KABUSAPI_WS_URL} and reconnecting...`,
+        });
+        subscribe(req);
+      });
+      socket.on("error", (err) => {
+        props?.logger?.error({
+          module: "KabusApi",
+          message: `Error from ${process.env.KABUSAPI_WS_URL}, ${err}`,
+        });
+        reject(err);
+      });
+      console.log("resolve");
+    });
+  };
+
   return {
     register,
+    subscribe,
     auth,
-  }
-}
+  };
+};

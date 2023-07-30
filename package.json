@@ -12,6 +12,7 @@
   "workspaces": [
     "core",
     "infra",
+    "usecase",
     "api",
     "cli"
   ],

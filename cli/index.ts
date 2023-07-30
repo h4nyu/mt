@@ -1,7 +1,5 @@
 import yargs from "yargs";
-import startApi from "./start.api";
+import collect from "./collect";
 
-const root = yargs.scriptName("kgy").command("start", "start", (yargs) => {
-  yargs.command(startApi).demandCommand();
-});
+const root = yargs.scriptName("kgy").command(collect);
 root.demandCommand().strictCommands().help().argv;

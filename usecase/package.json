@@ -1,26 +1,18 @@
 {
-  "name": "@kgy/cli",
+  "name": "@kgy/usecase",
   "version": "0.1.0",
+  "main": "index.js",
   "license": "MIT",
   "types": "index.ts",
   "scripts": {
     "clean": "tsc --build --clean",
-    "build": "tsc --noEmit false",
+    "build": "yarn generate && tsc --noEmit false",
     "prepack": "yarn build",
     "postpack": "yarn clean",
-    "test": "jest",
-    "cli": "yarn clean && ts-node index.ts"
-  },
-  "bin": {
-    "kgy": "bin/kgy"
+    "test": "jest"
   },
   "dependencies": {
-    "@kgy/core": "0.1.0",
-    "@kgy/infra": "0.1.0",
-    "db-migrate": "^0.11.13",
-    "db-migrate-pg": "^1.2.2",
-    "pino": "^8.14.2",
-    "yargs": "^17.7.2"
+    "@kgy/core": "0.1.0"
   },
   "jest": {
     "transform": {
@@ -30,10 +22,11 @@
     "testRegex": ".*\\.(test|spec)?\\.(ts|tsx)$"
   },
   "devDependencies": {
+    "@types/jest": "^27.5.1",
     "@types/node": "^17.0.35",
+    "@types/ws": "^8.5.3",
     "jest": "^28.1.0",
-    "ts-jest": "^29.0.3",
-    "ts-node": "^10.7.0",
+    "ts-jest": "^28.0.2",
     "typescript": "^4.6.4"
   }
 }

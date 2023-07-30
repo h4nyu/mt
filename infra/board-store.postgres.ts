@@ -4,7 +4,7 @@ import { Board, BoardRow } from "@kgy/core/board";
 import { BoardStore as IBoardStore } from "@kgy/core/interfaces";
 
 export const BoardStore = (props: { prisma: PrismaClient }) => {
-  const write: IBoardStore["create"] = async (req) => {
+  const write: IBoardStore["write"] = async (req) => {
     const rows: Prisma.BoardCreateManyInput[] = req.map((board: Board) => {
       return {
         symbol: board.symbol,

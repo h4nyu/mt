@@ -1,11 +1,11 @@
-import { Board } from './board'
+import { Board } from "./board";
 
 export type BoardStore = {
-  create: (boards: Board[]) => Promise<void|Error>
+  write: (boards: Board[]) => Promise<void | Error>;
   read: (req: {
-    symbols: string[]
-    from?: Date
-    to?: Date
-    limit?: number
-  }) => Promise<void|Error>
-}
+    symbols: string[];
+    from?: Date;
+    to?: Date;
+    limit?: number;
+  }) => Promise<void | Error>;
+};
