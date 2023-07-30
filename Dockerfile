@@ -1,7 +1,6 @@
 FROM debian:bookworm-slim
 
-RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - \
-    && apt-get update \
+RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         nodejs \
         npm \
