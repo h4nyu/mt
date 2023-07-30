@@ -1,5 +1,5 @@
 import { Argv } from "yargs";
-import { App } from "@kgy/server/http";
+import { App } from "@kgy/infra/http";
 import pino from "pino";
 
 export default {
