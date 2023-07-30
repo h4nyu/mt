@@ -1,12 +1,13 @@
-import { Sign } from './constants'
+import { Sign } from "./constants";
 export type BoardRow = {
   price: number;
+
   quantity: number;
-}
+};
 export const BoardRow = (props: BoardRow) => {
-  const { price, quantity } = props
-  return { price, quantity }
-}
+  const { price, quantity } = props;
+  return { price, quantity };
+};
 export type Board = {
   symbol: string;
   exchange?: string;
@@ -19,12 +20,22 @@ export type Board = {
   sign?: Sign;
   overQuantity?: number;
   underQuantity?: number;
-}
+};
 
 export const Board = (props: Board) => {
-  const { symbol, exchange, overQuantity, underQuantity, askSign, bidSign, price, time, sign } = props
-  const asks = props.asks.map(BoardRow)
-  const bids = props.bids.map(BoardRow)
+  const {
+    symbol,
+    exchange,
+    overQuantity,
+    underQuantity,
+    askSign,
+    bidSign,
+    price,
+    time,
+    sign,
+  } = props;
+  const asks = props.asks.map(BoardRow);
+  const bids = props.bids.map(BoardRow);
   return {
     symbol,
     asks,
@@ -36,5 +47,5 @@ export const Board = (props: Board) => {
     sign,
     overQuantity,
     underQuantity,
-  }
-}
+  };
+};
