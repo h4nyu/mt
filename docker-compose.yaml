@@ -14,7 +14,7 @@ x-env: &env
   DATABASE_URL: postgres://app:app@db/app
 
 x-app: &app
-  image: "kaguya"
+  image: "kgy"
   build:
     context: .
   volumes:
