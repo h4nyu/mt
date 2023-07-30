@@ -19,7 +19,17 @@ export default {
     };
     const kabusApi = KabusApi({ logger });
     const res = await kabusApi.subscribe({
-      symbols: ["9433"],
+      symbols: [
+        "8035",
+        "9984",
+        "9983",
+        "9987",
+        "9986",
+        "9989",
+        "9988",
+        "1570",
+        "1580",
+      ], // TODO: pass from args
       handler: Run({
         task: SaveBoardFn({ store }),
         logger,
