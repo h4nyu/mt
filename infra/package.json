@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "tsc --build --clean",
     "build": "tsc --noEmit false",
-    "generate": "prisma generate",
+    "generate": "pnpify prisma generate",
     "prepack": "yarn build",
     "postpack": "yarn clean",
     "test": "jest"
@@ -20,6 +20,7 @@
     "date-fns": "^2.28.0",
     "fastify": "^4.9.2",
     "lodash": "^4.17.21",
+    "nanoid": "3.3.1",
     "postgres": "^2.0.0-beta.11",
     "prisma": "^5.0.0",
     "ws": "^8.9.0"

@@ -9,6 +9,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Board {
@@ -19,20 +20,20 @@ model Board {
   currentSign  String?
   createdAt    DateTime @default(now())
 
-  sellSign         String?
-  buySign          String?
+  askSign         String?
+  bidSign          String?
   BoardRow         BoardRow[]
-  overSellQuantity Int?
-  underBuyQuantity Int?
+  overQuantity Int?
+  underQuantity Int?
   @@id([symbol, currentTime])
 }
 
 model BoardRow {
   symbol      String
   currentTime DateTime
-  price       Float?
-  quantity    Int?
-  kind        String
+  price       Float
+  quantity    Int
+  kind        String  // ASK or BID
   order       Int
   board       Board    @relation(fields: [symbol, currentTime], references: [symbol, currentTime])
 
