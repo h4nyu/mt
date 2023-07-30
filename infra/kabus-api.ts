@@ -97,7 +97,7 @@ export const KabusApi = (props?: { logger?: Logger }) => {
       return e;
     }
   };
-  type SubscribeFn = (req: Board) => void;
+  type SubscribeFn = (req: { board: Board }) => void;
 
   const subscribe = async (req: {
     symbols: string[];
@@ -122,7 +122,7 @@ export const KabusApi = (props?: { logger?: Logger }) => {
       });
       ws.on("message", (data) => {
         const board = parseBoard(JSON.parse(data.toString()));
-        handler(board);
+        handler({ board });
       });
       ws.on("close", () => {
         props?.logger?.info({

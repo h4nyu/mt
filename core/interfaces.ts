@@ -9,3 +9,11 @@ export type BoardStore = {
     limit?: number;
   }) => Promise<void | Error>;
 };
+export enum TaskKind {
+  SAVE_BOARD = "SAVE_BOARD",
+}
+
+export type Task = {
+  kind: TaskKind.SAVE_BOARD;
+  run: (req: { board: Board }) => Promise<void | Error>;
+};
