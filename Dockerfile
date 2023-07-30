@@ -6,7 +6,8 @@ RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - \
         nodejs \
         python3-minimal \
         python3-pip \
-        wait-for-it 
+        wait-for-it \
+     && npm install -g yarn
 
 COPY notebook/requirements.txt /app/notebook/requirements.txt
 RUN pip install -r /app/notebook/requirements.txt

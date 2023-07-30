@@ -6,7 +6,7 @@
   "types": "index.ts",
   "scripts": {
     "clean": "tsc --build --clean",
-    "build": "tsc --noEmit false",
+    "build": "yarn generate && tsc --noEmit false",
     "generate": "pnpify prisma generate",
     "prepack": "yarn build",
     "postpack": "yarn clean",

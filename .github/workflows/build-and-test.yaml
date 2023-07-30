@@ -33,3 +33,5 @@ jobs:
             docker-compose build app
             docker save kgy > image.tar
           fi
+
+      - name: Run the tests
