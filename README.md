@@ -4,14 +4,12 @@ A automated currency exchange system with machine learning
 
 # Packages
 
-| Packages                    | Description  |
-| :---------------------------| :----------- |
-| **[kgy_nn](./kgy_nn)**   | ML           |
-| **[@kgy/core](./core)**     | Domain       |
-| **[@kgy/web](./web)**       | Web frontend |
-| **[@kgy/server](./server)** | Backend      |
-| **[@kgy/api](./api)**       | Client       |
-| **[@kgy/cli](./cli)**       | CLI          |
+| Packages                   | Description |
+| :------------------------- | :---------- |
+| **[@kgy/core](./core)**    | Domain      |
+| **[@kgy/infra](./server)** | Backend     |
+| **[@kgy/api](./api)**      | Client      |
+| **[@kgy/cli](./cli)**      | CLI         |
 
 # Setup
 
