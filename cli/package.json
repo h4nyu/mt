@@ -18,7 +18,6 @@
     "@kgy/core": "0.1.0",
     "@kgy/infra": "0.1.0",
     "@kgy/usecase": "0.1.0",
-    "pino": "^8.14.2",
     "yargs": "^17.7.2"
   },
   "jest": {

@@ -1,6 +1,6 @@
 import { Argv } from "yargs";
 import { App } from "@kgy/infra/http";
-import pino from "pino";
+import { Logger } from "@kgy/infra/logger";
 
 export default {
   command: "api",
@@ -8,7 +8,7 @@ export default {
     return yargs;
   },
   handler: () => {
-    const logger = pino();
+    const logger = Logger();
     const app = App({ logger });
     app.listen(3000, "0.0.0.0", (err, address) => {
       if (err) {

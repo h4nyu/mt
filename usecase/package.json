@@ -6,7 +6,7 @@
   "types": "index.ts",
   "scripts": {
     "clean": "tsc --build --clean",
-    "build": "yarn generate && tsc --noEmit false",
+    "build": "tsc --noEmit false",
     "prepack": "yarn build",
     "postpack": "yarn clean",
     "test": "jest"
