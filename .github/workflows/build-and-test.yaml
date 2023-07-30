@@ -6,8 +6,6 @@ on:
   pull_request:
     branches: ["main"]
 
-env:
-
 concurrency:
   group: ${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
