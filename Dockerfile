@@ -10,28 +10,9 @@ RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
         nodejs \
-        gnupg2 \
-        libc-dev \
-        libjpeg-dev \
-        zlib1g-dev \
-        curl \
         ca-certificates \
         unzip \
-        graphviz \
-        graphviz-dev \
         wait-for-it \
-        git \
-    && wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb \
-    && dpkg -i cuda-keyring_1.0-1_all.deb \
-    && rm cuda-keyring_1.0-1_all.deb \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends \
-        cuda-cudart-11-3=11.3.109-1 \
-        cuda-compat-11-3 \
-    && ln -s cuda-11.3 /usr/local/cuda \
-    && rm -rf /var/lib/apt/lists/* \
-    && npm install --global yarn \
-    && pip install --no-cache-dir torch==1.10.2+cu113 torchvision==0.11.3+cu113 -f https://download.pytorch.org/whl/torch_stable.html
 
 COPY notebook/requirements.txt /app/notebook/requirements.txt
 RUN pip install -r /app/notebook/requirements.txt
@@ -39,4 +20,3 @@ RUN pip install -r /app/notebook/requirements.txt
 
 WORKDIR /app
 COPY . .
-RUN pip install -e kgy_nn[dev]
