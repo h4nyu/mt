@@ -52,7 +52,7 @@ services:
       - production
     depends_on:
       - db
-    restart: always
+    restart: unless-stopped
 
   notebook:
     <<: *app
