@@ -1,4 +1,0 @@
-tsconfig.tsbuildinfo
-.next
-next-env.d.ts
-!*.config.js
