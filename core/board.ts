@@ -14,17 +14,15 @@ export type Board = {
   bidSign?: Sign;
   asks: BoardRow[];
   bids: BoardRow[];
-  current: {
-    price: number;
-    time: Date;
-    sign?: Sign;
-  },
+  price: number;
+  time: Date;
+  sign?: Sign;
   overQuantity?: number;
   underQuantity?: number;
 }
 
 export const Board = (props: Board) => {
-  const { symbol, exchange, current, overQuantity, underQuantity, askSign, bidSign } = props
+  const { symbol, exchange, overQuantity, underQuantity, askSign, bidSign, price, time, sign } = props
   const asks = props.asks.map(BoardRow)
   const bids = props.bids.map(BoardRow)
   return {
@@ -33,7 +31,9 @@ export const Board = (props: Board) => {
     askSign,
     bids,
     bidSign,
-    current,
+    price,
+    time,
+    sign,
     overQuantity,
     underQuantity,
   }

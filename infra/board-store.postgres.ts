@@ -10,8 +10,9 @@ export const BoardStore = (props: {
       return { 
         symbol: board.symbol,
         exchange: board.exchange ?? null,
-        currentTime: board.current.time,
-        currentPrice: board.current.price,
+        currentTime: board.time,
+        currentPrice: board.price,
+        currentSign: board.sign ?? null,
         askSign: board.askSign,
         bidSign: board.bidSign,
         overQuantity: board.overQuantity,
@@ -27,7 +28,7 @@ export const BoardStore = (props: {
             kind:"ASK",
             order: i,
             symbol: board.symbol,
-            currentTime: board.current.time
+            currentTime: board.time
           }
         }),
         ...board.bids.map((x, i) => {
@@ -37,7 +38,7 @@ export const BoardStore = (props: {
             kind:"BID",
             order: i,
             symbol: board.symbol,
-            currentTime: board.current.time
+            currentTime: board.time
           }
         })
       ]
@@ -70,7 +71,11 @@ export const BoardStore = (props: {
         },
         take: limit,
         include: {
-          BoardRow: true
+          BoardRow: {
+            orderBy: {
+              order: 'asc',
+            },
+          }
         }
       })
       const res:Board[] = []
@@ -78,31 +83,26 @@ export const BoardStore = (props: {
         const asks:BoardRow[] = []
         const bids:BoardRow[] = []
         for(const boardRow of row.BoardRow){
-          console.log(boardRow)
-          switch(boardRow.kind){
-            case "ASK":
-              asks.push(BoardRow({ price: boardRow.price, quantity: boardRow.quantity }))
-            case "BID":
-              bids.push(BoardRow({ price: boardRow.price, quantity: boardRow.quantity }))
-            default:
-              ;
+          const { kind, price, quantity } = boardRow
+          if(kind === "ASK"){
+            asks.push(BoardRow({ price, quantity }))
+          }else if(kind === "BID"){
+            bids.push(BoardRow({ price, quantity }))
           }
-          res.push(Board({
-            symbol: row.symbol,
-            exchange: row.exchange ?? undefined,
-            current: {
-              price: row.currentPrice,
-              time: row.currentTime,
-              sign: row.currentSign as Board["current"]["sign"]?? undefined,
-            },
-            askSign: row.askSign as Board["askSign"]?? undefined ,
-            bidSign: row.bidSign as Board["bidSign"]?? undefined ,
-            asks,
-            bids,
-            overQuantity: row.overQuantity ?? undefined,
-            underQuantity: row.underQuantity ?? undefined,
-          }))
         }
+        res.push(Board({
+          symbol: row.symbol,
+          exchange: row.exchange ?? undefined,
+          price: row.currentPrice ?? undefined,
+          time: row.currentTime ?? undefined,
+          sign: row.currentSign as Board["sign"] ?? undefined,
+          askSign: row.askSign as Board["askSign"]?? undefined ,
+          bidSign: row.bidSign as Board["bidSign"]?? undefined ,
+          asks,
+          bids,
+          overQuantity: row.overQuantity ?? undefined,
+          underQuantity: row.underQuantity ?? undefined,
+        }))
       }
       return res
     }catch(e){

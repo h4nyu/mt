@@ -2,6 +2,7 @@ import { PrismaClient } from "./prisma/client"
 import {nanoid} from 'nanoid'
 import { BoardStore } from "./board-store.postgres"
 import { Board } from "@kgy/core/board"
+import { Sign } from "@kgy/core/constants"
 
 describe("BoardStore", () => {
   const setup = () => {
@@ -14,18 +15,28 @@ describe("BoardStore", () => {
     const { boardStore, symbol } = setup()
     const board = Board({ 
       symbol,
-      current: {
-        price: 300.0,
-        time: new Date(),
-      },
+      price: 300.0,
+      time: new Date(),
+      askSign: Sign.UP,
+      bidSign: Sign.DOWN,
       asks: [{
         price: 100,
         quantity: 10,
-      }],
-      bids: [{
-        price: 100,
-        quantity: 100,
-      }]
+      }, {
+        price: 101,
+        quantity: 11,
+      }
+      ],
+      bids: [
+        {
+          price: 100,
+          quantity: 100,
+        },
+        {
+          price: 99,
+          quantity: 101,
+        }
+      ]
     })
     const wErr = await boardStore.write([board])
     if(wErr instanceof Error) throw wErr;
@@ -33,7 +44,6 @@ describe("BoardStore", () => {
       symbols: [symbol],
     })
     if(read instanceof Error) throw read;
-    console.log(JSON.stringify(read, null, 2))
     expect(read).toEqual([board])
   })
 })

@@ -12,10 +12,9 @@ export const parseBoardRow = (raw: any) => {
 export const parseBoard = (raw: any) => {
   return Board({
     symbol: raw.Symbol,
-    current: {
-      price: raw.CurrentPrice,
-      time: new Date(raw.CurrentPriceTime),
-    },
+    price: raw.CurrentPrice,
+    time: new Date(raw.CurrentPriceTime),
+    sign: raw.CurrentSign ?? undefined,
     asks:[raw.Sell1, raw.Sell2, raw.Sell3, raw.Sell4, raw.Sell5, raw.Sell6, raw.Sell7, raw.Sell8, raw.Sell9, raw.Sell10].map(parseBoardRow),
     askSign: raw.AskSign,
     bids:[raw.Buy1, raw.Buy2, raw.Buy3, raw.Buy4, raw.Buy5, raw.Buy6, raw.Buy7, raw.Buy8, raw.Buy9, raw.Buy10].map(parseBoardRow),
