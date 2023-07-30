@@ -4,6 +4,7 @@ RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
         nodejs \
+        npm \
         python3-minimal \
         python3-pip \
         wait-for-it \
