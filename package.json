@@ -12,7 +12,7 @@
   "workspaces": [
     "core",
     "web",
-    "server",
+    "infra",
     "api",
     "cli"
   ],
