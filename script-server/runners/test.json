@@ -1,7 +1,0 @@
-{
-  "name": "ls",
-  "description": "ls",
-  "script_path": "kgy --help",
-  "output_format": "terminal",
-  "parameters": []
-}
