@@ -15,7 +15,7 @@ export type Board = {
   bidSign?: Sign;
   asks: BoardRow[];
   bids: BoardRow[];
-  price: number;
+  price?: number;
   time: Date;
   sign?: Sign;
   overQuantity?: number;
