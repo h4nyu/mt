@@ -6,7 +6,7 @@ export const Prisma = (props?: { logger: Logger }) => {
   const prisma = new PrismaClient({
     log:
       process.env.ENVIRONMENT === "development"
-        ? [{ emit: "event", level: "query" }, "info", "warn", "error"]
+        ? [{ emit: "event", level: "query" }]
         : [],
   });
   if (props?.logger) {

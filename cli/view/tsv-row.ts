@@ -1,6 +1,6 @@
 import { chain, flow } from "lodash";
 
-export const PropertyRow = (props: {
+export const TsvRow = (props: {
   row: object | string;
   columns?: string[];
   truncateLength?: number;

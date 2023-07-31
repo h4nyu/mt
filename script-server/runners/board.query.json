@@ -1,0 +1,14 @@
+{
+  "name": "query board",
+  "description": "query board",
+  "script_path": "kgy board query",
+  "output_format": "terminal",
+  "parameters": [
+    {
+      "name": "symbol",
+      "param": "--symbol",
+      "required": true,
+      "type": "string"
+    }
+  ]
+}

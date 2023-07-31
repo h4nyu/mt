@@ -11,7 +11,7 @@ export const ReadBoardFn = (props: {
   chunkSize?: number;
 }) => {
   const chunkSize = props.chunkSize || 100;
-  const run = async (req: { symbols: string[] }) => {
+  const run = async (req: { symbol: string }) => {
     const paginate = Paginate({
       chunkSize,
       fn: async (x) =>
@@ -19,11 +19,9 @@ export const ReadBoardFn = (props: {
           ...req,
           ...x,
         }),
-      getCursor: (x: Board) => ({
-        symbol: x.symbol,
-        time: x.time,
-      }),
+      getCursor: (x: Board) => x.time,
     });
+    return paginate();
   };
   return {
     run,

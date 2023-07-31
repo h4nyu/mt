@@ -25,12 +25,12 @@ export default {
       board: BoardStore({ prisma }),
     };
     const kabusApi = KabusApi({ logger });
+    const saveBoard = SaveBoardFn({ store });
     const res = await kabusApi.subscribe({
       symbols: argv.symbols,
-      handler: Run({
-        task: SaveBoardFn({ store }),
-        logger,
-      }),
+      handler: ({ board }) => {
+        saveBoard.run({ board });
+      },
     });
     if (res instanceof Error) {
       logger.error(res);
