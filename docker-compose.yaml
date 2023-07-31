@@ -58,6 +58,8 @@ services:
 
   script-server:
     <<: *app
+    environment:
+      <<: *env
     command: ./start.sh
     working_dir: /app/script-server
     ports:

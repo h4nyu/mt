@@ -14,12 +14,19 @@ export default {
   command: "query",
   description: "Query boards",
   builder: (yargs: Argv) => {
-    return yargs.option("symbol", {
-      type: "string",
-      alias: "s",
-      description: "Symbol",
-      demandOption: true,
-    });
+    return yargs
+      .option("symbol", {
+        type: "string",
+        alias: "s",
+        description: "Symbol",
+        demandOption: true,
+      })
+      .option("limit", {
+        type: "number",
+        alias: "l",
+        description: "Limit",
+        demandOption: false,
+      });
   },
   handler: async (argv) => {
     const prisma = Prisma();
@@ -30,6 +37,7 @@ export default {
     const out = process.stdout;
     const iter = await ReadBoardFn({ store, logger }).run({
       symbol: argv.symbol,
+      limit: argv.limit,
     });
     const columns = [
       "symbol",

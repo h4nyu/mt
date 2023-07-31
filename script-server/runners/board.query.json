@@ -9,6 +9,12 @@
       "param": "--symbol",
       "required": true,
       "type": "string"
+    },
+    {
+      "name": "limit",
+      "param": "--limit",
+      "required": false,
+      "type": "int"
     }
   ]
 }
