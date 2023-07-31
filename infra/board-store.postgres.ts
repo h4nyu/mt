@@ -9,7 +9,7 @@ export const BoardStore = (props: { prisma: PrismaClient }) => {
       symbol: board.symbol,
       exchange: board.exchange ?? null,
       currentTime: board.time,
-      currentPrice: board.price,
+      currentPrice: board.price ?? null,
       currentSign: board.sign ?? null,
       askSign: board.askSign,
       bidSign: board.bidSign,

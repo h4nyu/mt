@@ -16,7 +16,7 @@ model Board {
   symbol       String
   exchange     String?
   currentTime  DateTime
-  currentPrice Float
+  currentPrice Float?
   currentSign  String?
   createdAt    DateTime @default(now())
 

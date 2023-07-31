@@ -51,7 +51,7 @@ describe("BoardStore", () => {
 
     const overwrite = await boardStore.write({
       ...board,
-      price: board.price + 1,
+      price: (board.price ?? 0) + 1,
     });
     if (overwrite instanceof Error) throw overwrite;
 
@@ -62,7 +62,7 @@ describe("BoardStore", () => {
     expect(read).toEqual([
       {
         ...board,
-        price: board.price + 1,
+        price: (board.price ?? 0) + 1,
       },
     ]);
   });
