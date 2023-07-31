@@ -1,5 +1,6 @@
 import { PrismaClient, Prisma } from "./prisma/client";
 import { Board, BoardRow } from "@kgy/core/board";
+import { max } from "lodash";
 
 import { BoardStore as IBoardStore } from "@kgy/core/interfaces";
 
@@ -65,17 +66,23 @@ export const BoardStore = (props: { prisma: PrismaClient }) => {
     }
   };
   const read: IBoardStore["read"] = async (req) => {
-    const { symbols, from, to, limit } = req;
+    const { symbol, from, to, limit, cursor } = req;
+
+    const currentTime = (() => {
+      const base = {
+        gt: from,
+        lte: to,
+      };
+      if (cursor) {
+        base.gt = max([cursor, from]) ?? from;
+      }
+      return base;
+    })();
     try {
       const rows = await props.prisma.board.findMany({
         where: {
-          symbol: {
-            in: symbols,
-          },
-          currentTime: {
-            gte: from,
-            lte: to ?? new Date(),
-          },
+          symbol,
+          currentTime,
         },
         take: limit,
         include: {
@@ -84,6 +91,9 @@ export const BoardStore = (props: { prisma: PrismaClient }) => {
               order: "asc",
             },
           },
+        },
+        orderBy: {
+          currentTime: "asc",
         },
       });
       const res: Board[] = [];

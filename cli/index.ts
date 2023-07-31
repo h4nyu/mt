@@ -1,5 +1,8 @@
 import yargs from "yargs";
-import collect from "./collect";
+import board from "./board";
 
-const root = yargs.scriptName("kgy").command(collect);
-root.demandCommand().strictCommands().help().argv;
+yargs(process.argv.slice(2))
+  .scriptName("kgy")
+  .command(board.command, board.description, board)
+  .demandCommand()
+  .help().argv;

@@ -1,13 +1,20 @@
 import { Prisma as _Prisma, PrismaClient } from "./client";
 import { Err, ErrorName } from "@kgy/core/error";
+import { Logger } from "@kgy/core/logger";
 
-export const Prisma = () => {
-  return new PrismaClient({
+export const Prisma = (props?: { logger: Logger }) => {
+  const prisma = new PrismaClient({
     log:
-      process.env.ENVIRONMENT === "debug"
-        ? ["query", "info", "warn", "error"]
+      process.env.ENVIRONMENT === "development"
+        ? [{ emit: "event", level: "query" }, "info", "warn", "error"]
         : [],
   });
+  if (props?.logger) {
+    prisma.$on("query", (e) => {
+      props.logger.debug(e);
+    });
+  }
+  return prisma;
 };
 
 export const handleError = (e: Error): Error => {

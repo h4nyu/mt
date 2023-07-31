@@ -8,10 +8,17 @@ import { Logger } from "@kgy/infra/logger";
 
 export default {
   command: "collect",
+  description: "Collect boards",
   builder: (yargs: Argv) => {
-    return yargs;
+    return yargs.option("symbols", {
+      type: "array",
+      alias: "s",
+      demandOption: true,
+      description: "Symbols to collect",
+      default: ["8035", "9984", "9983", "9987", "9986", "9989", "1570", "1580"],
+    });
   },
-  handler: async () => {
+  handler: async (argv) => {
     const prisma = Prisma();
     const logger = Logger();
     const store = {
@@ -19,7 +26,7 @@ export default {
     };
     const kabusApi = KabusApi({ logger });
     const res = await kabusApi.subscribe({
-      symbols: ["8035", "9984", "9983", "9987", "9986", "9989", "1570", "1580"], // TODO: pass from args
+      symbols: argv.symbols,
       handler: Run({
         task: SaveBoardFn({ store }),
         logger,
