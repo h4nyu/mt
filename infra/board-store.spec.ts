@@ -41,12 +41,29 @@ describe("BoardStore", () => {
         },
       ],
     });
-    const wErr = await boardStore.write([board]);
+    const wErr = await boardStore.write(board);
     if (wErr instanceof Error) throw wErr;
-    const read = await boardStore.read({
+    let read = await boardStore.read({
       symbols: [symbol],
     });
     if (read instanceof Error) throw read;
     expect(read).toEqual([board]);
+
+    const overwrite = await boardStore.write({
+      ...board,
+      price: board.price + 1,
+    });
+    if (overwrite instanceof Error) throw overwrite;
+
+    read = await boardStore.read({
+      symbols: [symbol],
+    });
+    if (read instanceof Error) throw read;
+    expect(read).toEqual([
+      {
+        ...board,
+        price: board.price + 1,
+      },
+    ]);
   });
 });

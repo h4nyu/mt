@@ -4,53 +4,60 @@ import { Board, BoardRow } from "@kgy/core/board";
 import { BoardStore as IBoardStore } from "@kgy/core/interfaces";
 
 export const BoardStore = (props: { prisma: PrismaClient }) => {
-  const write: IBoardStore["write"] = async (req) => {
-    const rows: Prisma.BoardCreateManyInput[] = req.map((board: Board) => {
-      return {
-        symbol: board.symbol,
-        exchange: board.exchange ?? null,
-        currentTime: board.time,
-        currentPrice: board.price,
-        currentSign: board.sign ?? null,
-        askSign: board.askSign,
-        bidSign: board.bidSign,
-        overQuantity: board.overQuantity,
-        underQuantity: board.underQuantity,
-      };
-    });
-    const boardRows: Prisma.BoardRowCreateManyInput[] = req.flatMap(
-      (board: Board) => {
-        return [
-          ...board.asks.map((x, i) => {
-            return {
-              price: x.price,
-              quantity: x.quantity,
-              kind: "ASK",
-              order: i,
-              symbol: board.symbol,
-              currentTime: board.time,
-            };
-          }),
-          ...board.bids.map((x, i) => {
-            return {
-              price: x.price,
-              quantity: x.quantity,
-              kind: "BID",
-              order: i,
-              symbol: board.symbol,
-              currentTime: board.time,
-            };
-          }),
-        ];
-      },
-    );
+  const write: IBoardStore["write"] = async (board) => {
+    const boardData = {
+      symbol: board.symbol,
+      exchange: board.exchange ?? null,
+      currentTime: board.time,
+      currentPrice: board.price,
+      currentSign: board.sign ?? null,
+      askSign: board.askSign,
+      bidSign: board.bidSign,
+      overQuantity: board.overQuantity,
+      underQuantity: board.underQuantity,
+    };
+    const boardRowData: Prisma.BoardRowCreateManyInput[] = [
+      ...board.asks.map((x, i) => {
+        return {
+          price: x.price,
+          quantity: x.quantity,
+          kind: "ASK",
+          order: i,
+          symbol: board.symbol,
+          currentTime: board.time,
+        };
+      }),
+      ...board.bids.map((x, i) => {
+        return {
+          price: x.price,
+          quantity: x.quantity,
+          kind: "BID",
+          order: i,
+          symbol: board.symbol,
+          currentTime: board.time,
+        };
+      }),
+    ];
     try {
       await props.prisma.$transaction(async (tx) => {
-        await tx.board.createMany({
-          data: rows,
+        await tx.board.upsert({
+          where: {
+            symbol_currentTime: {
+              currentTime: boardData.currentTime,
+              symbol: boardData.symbol,
+            },
+          },
+          create: boardData,
+          update: boardData,
+        });
+        await tx.boardRow.deleteMany({
+          where: {
+            currentTime: boardData.currentTime,
+            symbol: boardData.symbol,
+          },
         });
         await tx.boardRow.createMany({
-          data: boardRows,
+          data: boardRowData,
         });
       });
     } catch (e) {

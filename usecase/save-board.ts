@@ -10,7 +10,7 @@ export const SaveBoardFn = (props: {
 }) => {
   const run = async (req: { board: Board }) => {
     const { board } = req;
-    const err = await props.store.board.write([board]);
+    const err = await props.store.board.write(board);
     if (err instanceof Error) return err;
   };
   return {

@@ -1,7 +1,7 @@
 import { Board } from "./board";
 
 export type BoardStore = {
-  write: (boards: Board[]) => Promise<void | Error>;
+  write: (board: Board) => Promise<void | Error>;
   read: (req: {
     symbols: string[];
     from?: Date;
