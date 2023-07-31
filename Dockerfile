@@ -7,9 +7,18 @@ RUN apt-get update \
         npm \
         python3-minimal \
         python3-pip \
+        wget \
+        unzip \
         wait-for-it \
      && npm install -g yarn \
+     && ln -s /usr/bin/python3.11 /usr/bin/python \
      && rm /usr/lib/python3.11/EXTERNALLY-MANAGED
+
+WORKDIR /script-server
+RUN wget https://github.com/bugy/script-server/releases/download/1.17.1/script-server.zip \
+    && unzip script-server.zip \
+    && rm script-server.zip \
+    && pip install -r requirements.txt
 
 COPY notebook/requirements.txt /app/notebook/requirements.txt
 RUN pip install -r /app/notebook/requirements.txt

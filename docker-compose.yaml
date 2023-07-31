@@ -10,6 +10,7 @@ x-env: &env
   KABUSAPI_URL: &KABUSAPI_URL ${KABUSAPI_URL:-}
   KABUSAPI_WS_URL: &KABUSAPI_WS_URL ${KABUSAPI_WS_URL:-}
   KABUSAPI_PASSWORD: &KABUSAPI_PASSWORD ${KABUSAPI_PASSWORD:-}
+  SCRIPT_SERVER_PORT: &SCRIPT_SERVER_PORT ${SCRIPT_SERVER_PORT:-5000}
 
   # internal
   DATABASE_URL: postgres://app:app@db/app
@@ -53,6 +54,17 @@ services:
     depends_on:
       - db
     restart: unless-stopped
+
+  script-server:
+    <<: *app
+    command: ./start.sh
+    working_dir: /app/script-server
+    ports:
+      - target: 5000
+        published: *SCRIPT_SERVER_PORT
+    profiles:
+      - production
+      - development
 
   notebook:
     <<: *app
