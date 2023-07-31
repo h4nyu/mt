@@ -10,6 +10,8 @@ x-env: &env
   KABUSAPI_URL: &KABUSAPI_URL ${KABUSAPI_URL:-}
   KABUSAPI_WS_URL: &KABUSAPI_WS_URL ${KABUSAPI_WS_URL:-}
   KABUSAPI_PASSWORD: &KABUSAPI_PASSWORD ${KABUSAPI_PASSWORD:-}
+  SCRIPT_SERVER_PORT: &SCRIPT_SERVER_PORT ${SCRIPT_SERVER_PORT:-5000}
+  ENVIRONMENT: &ENVIRONMENT ${ENVIRONMENT:-development}
 
   # internal
   DATABASE_URL: postgres://app:app@db/app
@@ -45,7 +47,7 @@ services:
   collector:
     <<: *app
     working_dir: /app/cli
-    command: bash -c 'wait-for-it db:5432 -- kgy collect'
+    command: bash -c 'wait-for-it db:5432 -- kgy board collect'
     environment:
       <<: *env
     profiles:
@@ -53,6 +55,19 @@ services:
     depends_on:
       - db
     restart: unless-stopped
+
+  script-server:
+    <<: *app
+    environment:
+      <<: *env
+    command: ./start.sh
+    working_dir: /app/script-server
+    ports:
+      - target: 5000
+        published: *SCRIPT_SERVER_PORT
+    profiles:
+      - production
+      - development
 
   notebook:
     <<: *app
