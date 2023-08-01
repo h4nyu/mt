@@ -2,6 +2,7 @@ export enum ErrorName {
   NotFound = "NotFound",
   AlreadyExists = "AlreadyExists",
   RetryableError = "RetryableError",
+  ValidationError = "ValidationError",
 }
 
 export const Err = (req: {

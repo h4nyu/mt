@@ -10,10 +10,10 @@ describe("BoardStore", () => {
   const setup = () => {
     const prisma = Prisma({ logger: console });
     const boardStore = BoardStore({ prisma });
-    const symbol = nanoid();
+    const code = nanoid();
     const genBoard = () =>
       Board({
-        symbol,
+        code,
         price: 1,
         time: new Date(),
         askSign: Sign.UP,
@@ -21,15 +21,15 @@ describe("BoardStore", () => {
         asks: range(2).map((x) => ({ price: x, quantity: x })),
         bids: range(1).map((x) => ({ price: x, quantity: x })),
       });
-    return { prisma, boardStore, symbol, genBoard };
+    return { prisma, boardStore, code, genBoard };
   };
   test("write & read", async () => {
-    const { boardStore, symbol, genBoard } = setup();
+    const { boardStore, code, genBoard } = setup();
     const board = genBoard();
     const wErr = await boardStore.write(board);
     if (wErr instanceof Error) throw wErr;
     let read = await boardStore.read({
-      symbol,
+      code,
     });
     if (read instanceof Error) throw read;
     expect(read).toEqual([board]);
@@ -41,7 +41,7 @@ describe("BoardStore", () => {
     if (overwrite instanceof Error) throw overwrite;
 
     read = await boardStore.read({
-      symbol,
+      code,
     });
     if (read instanceof Error) throw read;
     expect(read).toEqual([
@@ -53,7 +53,7 @@ describe("BoardStore", () => {
   });
 
   test("cursor", async () => {
-    const { boardStore, symbol, genBoard } = setup();
+    const { boardStore, code, genBoard } = setup();
     const boards = range(9).map((x) =>
       Board({
         ...genBoard(),
@@ -61,24 +61,23 @@ describe("BoardStore", () => {
       }),
     );
     const otherBoards = range(5).map((x) =>
-      Board({ ...genBoard(), symbol: nanoid() }),
+      Board({ ...genBoard(), code: nanoid() }),
     );
     for (const board of [...boards, ...otherBoards]) {
       await boardStore.write(board);
     }
     let read = await boardStore.read({
-      symbol,
+      code,
       cursor: new Date("2021-01-01T00:00:03.000Z"),
       limit: 2,
     });
     if (read instanceof Error) throw read;
     read = await boardStore.read({
-      symbol,
+      code,
       cursor: new Date("2021-01-01T00:00:03.100Z"),
       limit: 2,
     });
     if (read instanceof Error) throw read;
-    console.log(read.map((x) => `${x.time.toISOString()} ${x.symbol}`));
     expect(read).toEqual([boards[4], boards[5]]);
   });
 });

@@ -7,11 +7,10 @@ import { BoardStore as IBoardStore } from "@kgy/core/interfaces";
 export const BoardStore = (props: { prisma: PrismaClient }) => {
   const write: IBoardStore["write"] = async (board) => {
     const boardData = {
-      symbol: board.symbol,
-      exchange: board.exchange ?? null,
-      currentTime: board.time,
-      currentPrice: board.price ?? null,
-      currentSign: board.sign ?? null,
+      code: board.code,
+      time: board.time,
+      price: board.price ?? null,
+      sign: board.sign ?? null,
       askSign: board.askSign,
       bidSign: board.bidSign,
       overQuantity: board.overQuantity,
@@ -24,8 +23,8 @@ export const BoardStore = (props: { prisma: PrismaClient }) => {
           quantity: x.quantity,
           kind: "ASK",
           order: i,
-          symbol: board.symbol,
-          currentTime: board.time,
+          code: board.code,
+          time: board.time,
         };
       }),
       ...board.bids.map((x, i) => {
@@ -34,8 +33,8 @@ export const BoardStore = (props: { prisma: PrismaClient }) => {
           quantity: x.quantity,
           kind: "BID",
           order: i,
-          symbol: board.symbol,
-          currentTime: board.time,
+          code: board.code,
+          time: board.time,
         };
       }),
     ];
@@ -43,9 +42,9 @@ export const BoardStore = (props: { prisma: PrismaClient }) => {
       await props.prisma.$transaction(async (tx) => {
         await tx.board.upsert({
           where: {
-            symbol_currentTime: {
-              currentTime: boardData.currentTime,
-              symbol: boardData.symbol,
+            code_time: {
+              time: boardData.time,
+              code: boardData.code,
             },
           },
           create: boardData,
@@ -53,8 +52,8 @@ export const BoardStore = (props: { prisma: PrismaClient }) => {
         });
         await tx.boardRow.deleteMany({
           where: {
-            currentTime: boardData.currentTime,
-            symbol: boardData.symbol,
+            time: boardData.time,
+            code: boardData.code,
           },
         });
         await tx.boardRow.createMany({
@@ -66,9 +65,9 @@ export const BoardStore = (props: { prisma: PrismaClient }) => {
     }
   };
   const read: IBoardStore["read"] = async (req) => {
-    const { symbol, from, to, limit, cursor } = req;
+    const { code, from, to, limit, cursor } = req;
 
-    const currentTime = (() => {
+    const time = (() => {
       const base = {
         gt: from,
         lte: to,
@@ -81,8 +80,8 @@ export const BoardStore = (props: { prisma: PrismaClient }) => {
     try {
       const rows = await props.prisma.board.findMany({
         where: {
-          symbol,
-          currentTime,
+          code,
+          time,
         },
         take: limit,
         include: {
@@ -93,7 +92,7 @@ export const BoardStore = (props: { prisma: PrismaClient }) => {
           },
         },
         orderBy: {
-          currentTime: "asc",
+          time: "asc",
         },
       });
       const res: Board[] = [];
@@ -110,11 +109,10 @@ export const BoardStore = (props: { prisma: PrismaClient }) => {
         }
         res.push(
           Board({
-            symbol: row.symbol,
-            exchange: row.exchange ?? undefined,
-            price: row.currentPrice ?? undefined,
-            time: row.currentTime ?? undefined,
-            sign: (row.currentSign as Board["sign"]) ?? undefined,
+            code: row.code,
+            price: row.price ?? undefined,
+            time: row.time ?? undefined,
+            sign: (row.sign as Board["sign"]) ?? undefined,
             askSign: (row.askSign as Board["askSign"]) ?? undefined,
             bidSign: (row.bidSign as Board["bidSign"]) ?? undefined,
             asks,

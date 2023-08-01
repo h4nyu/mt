@@ -1,7 +1,6 @@
 import { Sign } from "./constants";
 export type BoardRow = {
   price: number;
-
   quantity: number;
 };
 export const BoardRow = (props: BoardRow) => {
@@ -9,7 +8,7 @@ export const BoardRow = (props: BoardRow) => {
   return { price, quantity };
 };
 export type Board = {
-  symbol: string;
+  code: string;
   exchange?: string;
   askSign?: Sign;
   bidSign?: Sign;
@@ -24,7 +23,7 @@ export type Board = {
 
 export const Board = (props: Board) => {
   const {
-    symbol,
+    code,
     exchange,
     overQuantity,
     underQuantity,
@@ -37,7 +36,7 @@ export const Board = (props: Board) => {
   const asks = props.asks.map(BoardRow);
   const bids = props.bids.map(BoardRow);
   return {
-    symbol,
+    code,
     asks,
     askSign,
     bids,

@@ -15,7 +15,7 @@ export default {
   description: "Query boards",
   builder: (yargs: Argv) => {
     return yargs
-      .option("symbol", {
+      .option("code", {
         type: "string",
         alias: "s",
         description: "Symbol",
@@ -36,11 +36,11 @@ export default {
     };
     const out = process.stdout;
     const iter = await ReadBoardFn({ store, logger }).run({
-      symbol: argv.symbol,
+      code: argv.symbol,
       limit: argv.limit,
     });
     const columns = [
-      "symbol",
+      "code",
       "time",
       "price",
       "underQuantity",

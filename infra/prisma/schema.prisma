@@ -3,39 +3,39 @@
 
 generator client {
   provider = "prisma-client-js"
-  output = "./client"
+  output   = "./client"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
 model Board {
-  symbol       String
-  exchange     String?
-  currentTime  DateTime
-  currentPrice Float?
-  currentSign  String?
-  createdAt    DateTime @default(now())
+  code      String
+  time      DateTime
+  price     Float?
+  sign      String?
+  createdAt DateTime @default(now())
 
-  askSign         String?
-  bidSign          String?
-  BoardRow         BoardRow[]
-  overQuantity Int?
+  askSign       String?
+  bidSign       String?
+  BoardRow      BoardRow[]
+  overQuantity  Int?
   underQuantity Int?
-  @@id([symbol, currentTime])
+
+  @@id([code, time])
 }
 
 model BoardRow {
-  symbol      String
-  currentTime DateTime
-  price       Float
-  quantity    Int
-  kind        String  // ASK or BID
-  order       Int
-  board       Board    @relation(fields: [symbol, currentTime], references: [symbol, currentTime])
+  code     String
+  time     DateTime
+  price    Float
+  quantity Int
+  kind     String // ASK or BID
+  order    Int
+  board    Board    @relation(fields: [code, time], references: [code, time])
 
-  @@id([symbol, currentTime, kind, order])
+  @@id([code, time, kind, order])
 }

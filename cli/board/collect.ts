@@ -10,12 +10,21 @@ export default {
   command: "collect",
   description: "Collect boards",
   builder: (yargs: Argv) => {
-    return yargs.option("symbols", {
+    return yargs.option("codes", {
       type: "array",
       alias: "s",
       demandOption: true,
       description: "Symbols to collect",
-      default: ["8035", "9984", "9983", "9987", "1570", "1580"],
+      default: [
+        "8035.T",
+        "9984.T",
+        "6701.T",
+        "7203.T",
+        "7267.T",
+        "7974.T",
+        "9983.T",
+        "9983.T",
+      ],
     });
   },
   handler: async (argv) => {
@@ -26,14 +35,18 @@ export default {
     };
     const kabusApi = KabusApi({ logger });
     const saveBoard = SaveBoardFn({ store });
+    const unregErr = await kabusApi.unregisterAll();
+    if (unregErr instanceof Error) {
+      logger.error(unregErr.message);
+    }
     const res = await kabusApi.subscribe({
-      symbols: argv.symbols,
+      codes: argv.codes,
       handler: ({ board }) => {
         saveBoard.run({ board });
       },
     });
     if (res instanceof Error) {
-      logger.error(res);
+      logger.error(res.message);
     }
   },
 };

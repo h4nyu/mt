@@ -11,7 +11,7 @@ export const ReadBoardFn = (props: {
   chunkSize?: number;
 }) => {
   const chunkSize = props.chunkSize || 100;
-  const run = async (req: { symbol: string; limit?: number }) => {
+  const run = async (req: { code: string; limit?: number }) => {
     const paginate = Paginate({
       chunkSize,
       fn: async (x) =>

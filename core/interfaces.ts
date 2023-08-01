@@ -4,7 +4,7 @@ import { Paginate } from "./paginate";
 export type BoardStore = {
   write: (board: Board) => Promise<void | Error>;
   read: (req: {
-    symbol: string;
+    code: string;
     from?: Date;
     to?: Date;
     cursor?: Board["time"];
@@ -23,5 +23,5 @@ export type Task =
     }
   | {
       kind: TaskKind.READ_BOARD;
-      run: (req: { symbol: string }) => Promise<Paginate<Board>>;
+      run: (req: { code: string }) => Promise<Paginate<Board>>;
     };
