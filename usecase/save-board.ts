@@ -15,6 +15,6 @@ export const SaveBoardFn = (props: {
   };
   return {
     run,
-    kind: TaskKind.SAVE_BOARD,
+    kind: TaskKind.SAVE_BOARD as const,
   };
 };

@@ -42,7 +42,10 @@ export default {
     const res = await kabusApi.subscribe({
       codes: argv.codes,
       handler: ({ board }) => {
-        saveBoard.run({ board });
+        Run({
+          logger,
+          task: SaveBoardFn({ store }),
+        })({ board });
       },
     });
     if (res instanceof Error) {
