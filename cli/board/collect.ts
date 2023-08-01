@@ -15,7 +15,7 @@ export default {
       alias: "s",
       demandOption: true,
       description: "Symbols to collect",
-      default: ["8035", "9984", "9983", "9987", "9986", "9989", "1570", "1580"],
+      default: ["8035", "9984", "9983", "9987", "1570", "1580"],
     });
   },
   handler: async (argv) => {
