@@ -5,8 +5,8 @@
   "output_format": "terminal",
   "parameters": [
     {
-      "name": "symbol",
-      "param": "--symbol",
+      "name": "code",
+      "param": "--code",
       "required": true,
       "type": "string"
     },

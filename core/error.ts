@@ -3,6 +3,9 @@ export enum ErrorName {
   AlreadyExists = "AlreadyExists",
   RetryableError = "RetryableError",
   ValidationError = "ValidationError",
+  InvalidArgument = "InvalidArgument",
+  ConfigError = "ConfigError",
+  UnknownError = "UnknownError",
 }
 
 export const Err = (req: {

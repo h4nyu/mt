@@ -36,7 +36,7 @@ export default {
     };
     const out = process.stdout;
     const iter = await ReadBoardFn({ store, logger }).run({
-      code: argv.symbol,
+      code: argv.code,
       limit: argv.limit,
     });
     const columns = [
