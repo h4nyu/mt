@@ -11,10 +11,11 @@ x-env: &env
   KABUSAPI_WS_URL: &KABUSAPI_WS_URL ${KABUSAPI_WS_URL:-}
   KABUSAPI_PASSWORD: &KABUSAPI_PASSWORD ${KABUSAPI_PASSWORD:-}
   SCRIPT_SERVER_PORT: &SCRIPT_SERVER_PORT ${SCRIPT_SERVER_PORT:-5000}
-  ENVIRONMENT: &ENVIRONMENT ${ENVIRONMENT:-development}
+  ENVIRONMENT: &ENVIRONMENT ${ENVIRONMENT:-local}
 
   # internal
   DATABASE_URL: postgres://app:app@db/app
+  STORAGE_EMULATOR_HOST: storage:4443
 
 x-app: &app
   image: "kgy"
@@ -24,13 +25,6 @@ x-app: &app
     - .:/app
 
 services:
-  app:
-    <<: *app
-    environment:
-      <<: *env
-    profiles:
-      - development
-
   db:
     image: "timescale/timescaledb:latest-pg13"
     environment:
@@ -67,6 +61,21 @@ services:
         published: *SCRIPT_SERVER_PORT
     profiles:
       - production
+      - development
+
+  storage:
+    image: "fsouza/fake-gcs-server"
+    volumes:
+      - ./data/storage:/data/default
+    command: -scheme http -port 4443
+    profiles:
+      - development
+
+  app:
+    <<: *app
+    environment:
+      <<: *env
+    profiles:
       - development
 
   notebook:

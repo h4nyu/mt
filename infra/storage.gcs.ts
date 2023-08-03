@@ -24,7 +24,10 @@ export const GoogleCloudStorage = (props?: {
     toInteger(process.env.MAX_FILE_SIZE) ||
     30 * 1024 * 1024; //default: 30MB
   const storage = (() => {
-    if (process.env.FIREBASE_STORAGE_EMULATOR_HOST) {
+    if (
+      process.env.STORAGE_EMULATOR_HOST &&
+      process.env.ENVIROMENT === "local"
+    ) {
       return new Storage({
         apiEndpoint: `http://${process.env.FIREBASE_STORAGE_EMULATOR_HOST}`,
       });
