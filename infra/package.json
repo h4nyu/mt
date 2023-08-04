@@ -4,7 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "types": "index.ts",
-  "type": "module",
   "scripts": {
     "clean": "tsc --build --clean",
     "build": "yarn generate && tsc --noEmit false",

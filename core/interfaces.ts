@@ -1,5 +1,5 @@
 import { Board } from "./board";
-import { Readable } from "stream";
+import { Readable, Writable } from "stream";
 import { FileMeta } from "@kgy/core/file-meta";
 import { Paginate } from "./paginate";
 
@@ -26,6 +26,7 @@ export type Storage = {
   write: (
     req: { path: string; buffer: Buffer } | { path: string; stream: Readable },
   ) => Promise<void | Error>;
+  writeStream: (req: { path: string }) => Promise<Writable | Error>;
   delete: (req: { path: string }) => Promise<void | Error>;
   exists: (req: { path: string }) => Promise<boolean | Error>;
 };

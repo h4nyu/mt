@@ -11,7 +11,7 @@ export const LocalStorage = (props?: {
 }) => {
   const maxFileSize = props?.maxFileSize;
   const rootDir = pathLib.resolve(
-    props?.rootDir || process.env.DATA_DIR || ".",
+    props?.rootDir || process.env.STORAGE_DIR || ".",
   );
   const localDir = (x: string) => pathLib.join(rootDir, x);
   const removePrefix = (x: string) => x.slice(rootDir.length + 1);
@@ -33,6 +33,19 @@ export const LocalStorage = (props?: {
       return err as Error;
     }
     return;
+  };
+
+  const writeStream: Storage["writeStream"] = async (req) => {
+    const { path } = req;
+    const localPath = localDir(path);
+    try {
+      await fs.promises.mkdir(pathLib.dirname(localDir(path)), {
+        recursive: true,
+      });
+      return fs.createWriteStream(localPath);
+    } catch (err) {
+      return err as Error;
+    }
   };
 
   const exists = async (req: { path: string }): Promise<boolean | Error> => {
@@ -161,6 +174,7 @@ export const LocalStorage = (props?: {
     read,
     readStream,
     write,
+    writeStream,
     stat,
     delete: delete_,
     rootDir,

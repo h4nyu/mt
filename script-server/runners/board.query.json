@@ -11,6 +11,13 @@
       "type": "string"
     },
     {
+      "name": "saveToFile",
+      "param": "--saveToFile",
+      "required": false,
+      "type": "bool",
+      "no_value": true
+    },
+    {
       "name": "limit",
       "param": "--limit",
       "required": false,
