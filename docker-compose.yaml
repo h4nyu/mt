@@ -12,7 +12,10 @@ x-env: &env
   KABUSAPI_PASSWORD: &KABUSAPI_PASSWORD ${KABUSAPI_PASSWORD:-}
   SCRIPT_SERVER_PORT: &SCRIPT_SERVER_PORT ${SCRIPT_SERVER_PORT:-5000}
   ENVIRONMENT: &ENVIRONMENT ${ENVIRONMENT:-local}
-  STORAGE_DIR: &STORAGE_DIR ${STORAGE_DIR:-./data/storage}
+  GOOGLE_APPLICATION_CREDENTIALS: &GOOGLE_APPLICATION_CREDENTIALS /app/credentials.json
+  BUCKET_NAME: &BUCKET_NAME ${BUCKET_NAME:-staging.kaguya-394811.appspot.com}
+  STORAGE_DIR: &STORAGE_DIR /app/data/storage
+  STORAGE_VOLUME: &STORAGE_VOLUME ${STORAGE_VOLUME:-./data/storage}
 
   # internal
   DATABASE_URL: postgres://app:app@db/app
@@ -23,6 +26,9 @@ x-app: &app
     context: .
   volumes:
     - .:/app
+    - type: bind
+      source: *STORAGE_VOLUME
+      target: *STORAGE_DIR
 
 services:
   db:

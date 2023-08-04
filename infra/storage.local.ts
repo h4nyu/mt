@@ -39,7 +39,7 @@ export const LocalStorage = (props?: {
     const { path } = req;
     const localPath = localDir(path);
     try {
-      await fs.promises.mkdir(pathLib.dirname(localDir(path)), {
+      await fs.promises.mkdir(pathLib.dirname(localPath), {
         recursive: true,
       });
       return fs.createWriteStream(localPath);
@@ -107,15 +107,6 @@ export const LocalStorage = (props?: {
       });
     }
   };
-  const stat: Storage["stat"] = async (req) => {
-    const { path } = req;
-    const localPath = localDir(path);
-    try {
-      return await fs.promises.stat(localPath);
-    } catch (err) {
-      return err as Error;
-    }
-  };
   const read = async (req: { path: string }): Promise<Buffer | Error> => {
     const { path } = req;
     const localPath = localDir(path);
@@ -142,7 +133,7 @@ export const LocalStorage = (props?: {
       });
     }
   };
-  const readStream: Storage["readStream"] = (req: { path: string }) => {
+  const readStream: Storage["readStream"] = async (req: { path: string }) => {
     const { path } = req;
     const localPath = localDir(path);
     return fs.createReadStream(localPath);
@@ -175,7 +166,6 @@ export const LocalStorage = (props?: {
     readStream,
     write,
     writeStream,
-    stat,
     delete: delete_,
     rootDir,
   };

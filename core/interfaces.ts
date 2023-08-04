@@ -21,8 +21,7 @@ export enum TaskKind {
 export type Storage = {
   filter: (req: { prefix: string }) => Promise<FileMeta[] | Error>;
   read: (req: { path: string }) => Promise<Buffer | Error>;
-  readStream: (req: { path: string }) => Readable;
-  stat: (req: { path: string }) => Promise<{ size: number } | Error>;
+  readStream: (req: { path: string }) => Promise<Readable | Error>;
   write: (
     req: { path: string; buffer: Buffer } | { path: string; stream: Readable },
   ) => Promise<void | Error>;
