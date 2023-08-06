@@ -69,6 +69,18 @@ services:
       - production
       - development
 
+  web:
+    <<: *app
+    working_dir: /app/web
+    command: yarn dev
+    environment:
+      <<: *env
+    profiles:
+      - development
+    ports:
+      - target: 3000
+        published: *WEB_PORT
+
   app:
     <<: *app
     environment:
