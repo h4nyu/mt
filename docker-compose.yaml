@@ -72,7 +72,7 @@ services:
   web:
     <<: *app
     working_dir: /app/web
-    command: yarn dev
+    command: yarn start
     environment:
       <<: *env
     profiles:
