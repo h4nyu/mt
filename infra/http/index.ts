@@ -1,11 +1,9 @@
 import fastify from "fastify";
+import { Logger } from "@kgy/core/logger";
 
-export const App = (props: { logger: any }) => {
-  const app = fastify({
-    logger: props.logger,
-  });
+export const App = (props?: { logger?: Logger }) => {
+  const app = fastify();
   app.get("/hello", function (request, reply) {
-    console.log("aaa");
     reply.send({ hello: "world" });
   });
   app.ready(async () => {
