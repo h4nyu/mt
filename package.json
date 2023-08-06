@@ -13,6 +13,7 @@
     "core",
     "infra",
     "usecase",
+    "web",
     "api",
     "cli"
   ],
