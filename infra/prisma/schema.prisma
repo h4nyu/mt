@@ -18,6 +18,7 @@ model Board {
   price     Float?
   sign      String?
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   askSign       String?
   bidSign       String?
