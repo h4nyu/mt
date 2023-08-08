@@ -13,9 +13,11 @@ export type BoardStore = {
     limit?: number;
   }) => Promise<Board[] | Error>;
 };
+
 export enum TaskKind {
   SAVE_BOARD = "SAVE_BOARD",
   READ_BOARD = "READ_BOARD",
+  NOTIFY_BOARD = "NOTIFY_BOARD",
 }
 
 export type Storage = {

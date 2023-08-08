@@ -25,6 +25,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-docker
 
+      - name: Make directories
+        run: |
+          mkdir -p data/db data/storage
+
       - name: Build the Docker image if needed
         run: |
           if test -f image.tar; then

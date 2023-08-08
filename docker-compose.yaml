@@ -56,6 +56,26 @@ services:
       - db
     restart: unless-stopped
 
+  api:
+    <<: *app
+    working_dir: /app/cli
+    command: bash -c 'wait-for-it db:5432 -- kgy serve'
+    environment:
+      <<: *env
+    profiles:
+      - development
+
+  web:
+    <<: *app
+    working_dir: /app/web
+    command: bash -c 'wait-for-it api:3000 -- yarn dev'
+    environment:
+      <<: *env
+    profiles:
+      - development
+    depends_on:
+      - api
+
   script-server:
     <<: *app
     environment:
