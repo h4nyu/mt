@@ -65,6 +65,17 @@ services:
     profiles:
       - development
 
+  web:
+    <<: *app
+    working_dir: /app/web
+    command: bash -c 'wait-for-it api:3000 -- yarn dev'
+    environment:
+      <<: *env
+    profiles:
+      - development
+    depends_on:
+      - api
+
   script-server:
     <<: *app
     environment:
