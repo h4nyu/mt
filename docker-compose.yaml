@@ -19,6 +19,7 @@ x-env: &env
 
   # internal
   DATABASE_URL: postgres://app:app@db/app
+  API_URL: http://api:3000
 
 x-app: &app
   image: "kgy"
@@ -59,7 +60,7 @@ services:
   api:
     <<: *app
     working_dir: /app/cli
-    command: bash -c 'wait-for-it db:5432 -- kgy serve'
+    command: bash -c 'wait-for-it db:5432 -- yarn cli serve'
     environment:
       <<: *env
     profiles:
@@ -75,6 +76,9 @@ services:
       - development
     depends_on:
       - api
+    ports:
+      - target: 3000
+        published: *WEB_PORT
 
   script-server:
     <<: *app
