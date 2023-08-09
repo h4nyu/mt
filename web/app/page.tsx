@@ -16,7 +16,7 @@ export default function Home() {
     () =>
       api.board.read({
         code,
-        limit: 10,
+        limit: 1000,
       }),
     {
       refreshInterval: 1000,

@@ -92,7 +92,7 @@ export const BoardStore = (props: { prisma: PrismaClient }) => {
           },
         },
         orderBy: {
-          time: "asc",
+          time: "desc",
         },
       });
       const res: Board[] = [];
