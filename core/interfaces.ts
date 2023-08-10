@@ -39,5 +39,9 @@ export type Task =
     }
   | {
       kind: TaskKind.READ_BOARD;
-      run: (req: { code: string }) => Promise<Paginate<Board>>;
+      run: (req: { 
+        code: string,
+        limit?: number,
+        cursor?: Board["time"],
+      }) => Promise<Paginate<Board>>;
     };

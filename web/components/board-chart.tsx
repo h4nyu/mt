@@ -15,9 +15,10 @@ const layout = {
 };
 
 export const BoardChart = (props: { boards: Board[] }) => {
+  const times = props.boards.map((board) => board.time);
   const over = (() => {
     return {
-      x: props.boards.map((board) => board.time),
+      x: times,
       y: props.boards.map((board) => board.overQuantity ?? 0),
       mode: "markers",
       name: "over",
@@ -25,7 +26,7 @@ export const BoardChart = (props: { boards: Board[] }) => {
   })();
   const under = (() => {
     return {
-      x: props.boards.map((board) => board.time),
+      x: times,
       y: props.boards.map((board) => board.underQuantity ?? 0),
       mode: "markers",
       name: "under",
@@ -33,7 +34,7 @@ export const BoardChart = (props: { boards: Board[] }) => {
   })();
   const diff = (() => {
     return {
-      x: props.boards.map((board) => board.time),
+      x: times,
       y: props.boards.map(
         (board) => (board.underQuantity ?? 0) - (board.overQuantity ?? 0),
       ),
@@ -41,11 +42,21 @@ export const BoardChart = (props: { boards: Board[] }) => {
       name: "diff",
     };
   })();
-
+  const price = (() => {
+    return {
+      x: times,
+      y: props.boards.map(
+        (board) => board.price,
+      ),
+      mode: "markers",
+      name: "price",
+    };
+  })();
   return <>
     <Plot data={[over]} layout={layout} />
     <Plot data={[under]} layout={layout} />
     <Plot data={[diff]} layout={layout} />
+    <Plot data={[price]} layout={layout} />
   </>
 
 };

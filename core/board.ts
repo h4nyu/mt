@@ -1,4 +1,4 @@
-import { Sign } from "./constants";
+import { Sign } from "@kgy/core/constants";
 export type BoardRow = {
   price: number;
   quantity: number;
