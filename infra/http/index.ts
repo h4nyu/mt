@@ -26,7 +26,11 @@ export const App = (props: {
   app.get<{
     Querystring: Parameters<typeof readBoard.run>[0];
   }>("/board", async (request, reply) => {
-    const iter = await readBoard.run(request.query);
+    const payload = {
+      ...request.query,
+      cursor: request.query.cursor ? new Date(request.query.cursor) : undefined,
+    }
+    const iter = await readBoard.run(payload);
     const rows: Board[] = [];
     for await (const row of iter) {
       if (row instanceof Error) return send(reply, row);
