@@ -1,5 +1,5 @@
 "use client";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { last, chain } from "lodash";
 import { useEffect, useState } from "react";
@@ -20,7 +20,7 @@ export default function Home() {
       api.board.read({
         code,
         cursor,
-        limit: cursor ? 10 : 10000,
+        limit: cursor ? 10 : 20000,
       }),
     {
       refreshInterval: cursor ? 1000: 0,
@@ -30,5 +30,5 @@ export default function Home() {
     setCursor(last(nextBoards ?? [])?.time);
     setBoards([...boards, ...nextBoards].slice(0, 10000));
   }
-  return <BoardChart boards={boards} />;
+  return <BoardChart boards={boards} code={code} />;
 }
