@@ -2,5 +2,5 @@
   "rules": {
     "no-console": 2
   },
-  "ignorePatterns": ["node_modules/", ".next/"]
+  "ignorePatterns": ["node_modules/", ".next/", "strategy/"]
 }
