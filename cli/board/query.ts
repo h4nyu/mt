@@ -59,7 +59,7 @@ export default {
       code,
       limit,
     });
-    const exportName = `board`;
+    const exportName = `${code}-${new Date().toISOString().replace(/:/g, "-")}`;
     const ws: Writable | Error = saveToFile
       ? await commandResultFs.writeStream({
           code,
