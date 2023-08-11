@@ -16,7 +16,7 @@ export type BoardStore = {
 
 export enum TaskKind {
   SAVE_BOARD = "SAVE_BOARD",
-  READ_BOARD = "READ_BOARD",
+  PAGINATE_BOARD = "PAGINATE_BOARD",
   NOTIFY_BOARD = "NOTIFY_BOARD",
 }
 
@@ -38,10 +38,10 @@ export type Task =
       run: (req: { board: Board }) => Promise<void | Error>;
     }
   | {
-      kind: TaskKind.READ_BOARD;
-      run: (req: { 
-        code: string,
-        limit?: number,
-        cursor?: Board["time"],
+      kind: TaskKind.PAGINATE_BOARD;
+      run: (req: {
+        code: string;
+        limit?: number;
+        cursor?: Board["time"];
       }) => Promise<Paginate<Board>>;
     };

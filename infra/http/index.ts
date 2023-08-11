@@ -1,6 +1,6 @@
 import fastify, { FastifyReply } from "fastify";
 import { Logger } from "@kgy/core/logger";
-import { ReadBoardFn } from "@kgy/usecase/read-board";
+import { PaginateBoardFn } from "@kgy/usecase/paginate-board";
 import { BoardStore, Task } from "@kgy/core/interfaces";
 import { Board } from "@kgy/core/board";
 import { ErrorName } from "@kgy/core/error";
@@ -22,15 +22,15 @@ export const App = (props: {
   const app = fastify({
     logger: props.logger as any, // TOOD: fix type
   });
-  const readBoard = ReadBoardFn(props);
+  const paginateBoard = PaginateBoardFn(props);
   app.get<{
-    Querystring: Parameters<typeof readBoard.run>[0];
+    Querystring: Parameters<typeof paginateBoard.run>[0];
   }>("/board", async (request, reply) => {
     const payload = {
       ...request.query,
       cursor: request.query.cursor ? new Date(request.query.cursor) : undefined,
-    }
-    const iter = await readBoard.run(payload);
+    };
+    const iter = await paginateBoard.run(payload);
     const rows: Board[] = [];
     for await (const row of iter) {
       if (row instanceof Error) return send(reply, row);

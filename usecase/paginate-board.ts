@@ -3,7 +3,7 @@ import { Board } from "@kgy/core/board";
 import { Logger } from "@kgy/core/logger";
 import { Paginate } from "@kgy/core/paginate";
 
-export const ReadBoardFn = (props: {
+export const PaginateBoardFn = (props: {
   store: {
     board: BoardStore;
   };
@@ -11,11 +11,7 @@ export const ReadBoardFn = (props: {
   chunkSize?: number;
 }) => {
   const chunkSize = props.chunkSize || 1000;
-  const run = async (req: { 
-    code: string; 
-    cursor?: Date;
-    limit?: number 
-  }) => {
+  const run = async (req: { code: string; cursor?: Date; limit?: number }) => {
     const paginate = Paginate({
       chunkSize,
       fn: async (x) =>
@@ -32,6 +28,6 @@ export const ReadBoardFn = (props: {
   };
   return {
     run,
-    kind: TaskKind.READ_BOARD,
+    kind: TaskKind.PAGINATE_BOARD,
   };
 };
