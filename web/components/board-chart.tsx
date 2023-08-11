@@ -22,11 +22,9 @@ export const BoardChart = (props: { boards: Board[], code:string }) => {
       x: times,
       y: props.boards.map((board) => board.overQuantity ?? 0),
       type: "scattergl" as const,
-      mode: "markers",
-      marker: {
+      mode: "lines",
+      line: {
         color: "red",
-        size: 5,
-        opacity: 0.5,
       },
       name: "over",
       color: 'red',
@@ -37,12 +35,10 @@ export const BoardChart = (props: { boards: Board[], code:string }) => {
       x: times,
       y: props.boards.map((board) => board.underQuantity ?? 0),
       type: "scattergl" as const,
-      marker: {
+      mode: "lines",
+      line: {
         color: "blue",
-        size: 5,
-        opacity: 0.5,
       },
-      mode: "markers",
       name: "under",
       yaxis: 'y2',
     };
@@ -54,12 +50,10 @@ export const BoardChart = (props: { boards: Board[], code:string }) => {
         (board) => board.price ?? 0,
       ),
       type: "scattergl" as const,
-      marker: {
+      mode: "lines",
+      line: {
         color: "black",
-        size: 5,
-        opacity: 0.3,
       },
-      mode: "markers",
       name: "price",
       yaxis: 'y3',
     };

@@ -3,7 +3,7 @@ import { Board } from "@kgy/core/board";
 export const Api = () => {
   const http = axios.create();
   const board = (() => {
-    const read = async (params: { code: string; limit?: number, cursor?:Date }):Promise<Board[]> => {
+    const read = async (params: { code: string; limit?: number, cursor?:Date, interval?:number }):Promise<Board[]> => {
       const res = await http.get(`/api/board/`, {
         params,
       });

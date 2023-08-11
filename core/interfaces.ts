@@ -7,10 +7,9 @@ export type BoardStore = {
   write: (board: Board) => Promise<void | Error>;
   read: (req: {
     code: string;
-    from?: Date;
-    to?: Date;
     cursor?: Board["time"];
     limit?: number;
+    interval?: number;
   }) => Promise<Board[] | Error>;
 };
 

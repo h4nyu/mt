@@ -1,6 +1,7 @@
 import { PrismaClient, Prisma } from "./prisma/client";
 import { Board, BoardRow } from "@kgy/core/board";
 import { max } from "lodash";
+import { add } from "date-fns";
 
 import { BoardStore as IBoardStore } from "@kgy/core/interfaces";
 
@@ -65,17 +66,15 @@ export const BoardStore = (props: { prisma: PrismaClient }) => {
     }
   };
   const read: IBoardStore["read"] = async (req) => {
-    const { code, from, to, limit, cursor } = req;
+    const { code, interval, limit, cursor } = req;
 
     const time = (() => {
-      const base = {
-        gt: from,
-        lte: to,
-      };
       if (cursor) {
-        base.gt = max([cursor, from]) ?? from;
+        return { 
+          gt: cursor,
+          lte: interval ? add(cursor, { seconds: interval }) : undefined,
+        }
       }
-      return base;
     })();
     try {
       const rows = await props.prisma.board.findMany({

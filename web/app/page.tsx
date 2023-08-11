@@ -1,5 +1,6 @@
 "use client";
 import { useSearchParams, useRouter } from "next/navigation";
+import { addDays } from "date-fns";
 import Image from "next/image";
 import { last, chain } from "lodash";
 import { useEffect, useState } from "react";
@@ -8,11 +9,13 @@ import { BoardChart } from "@kgy/web/components/board-chart";
 import { Board } from "@kgy/core/board";
 import useSWR from "swr";
 
-export default function Home() {
+const CodeBoardChart = (props: {
+  code: string;
+}) => {
+  const { code } = props;
   const api = useApi();
-  const searchParams = useSearchParams();
-  const code = searchParams?.get("code") ?? "8035.T";
-  const [cursor, setCursor] = useState<Date | undefined>(undefined);
+  const defaultCursor = addDays(new Date(), -2);
+  const [cursor, setCursor] = useState<Date>(defaultCursor);
   const [boards, setBoards] = useState<Board[]>([]);
   const { data: nextBoards, error } = useSWR(
     `${code}-${cursor?.toISOString()}`,
@@ -20,15 +23,40 @@ export default function Home() {
       api.board.read({
         code,
         cursor,
-        limit: cursor ? 10 : 20000,
+        limit: 100,
       }),
     {
-      refreshInterval: cursor ? 1000: 0,
+      refreshInterval: 1000,
     },
   );
   if(nextBoards?.length){
-    setCursor(last(nextBoards ?? [])?.time);
+    setCursor(last(nextBoards ?? [])?.time ?? defaultCursor);
     setBoards([...boards, ...nextBoards].slice(0, 10000));
   }
-  return <BoardChart boards={boards} code={code} />;
+  return <>
+    <BoardChart boards={boards} code={code} />;
+  </>
 }
+
+const Page = () => {
+  const codes = [
+    "8035.T",
+    "9983.T",
+    "9984.T",
+  ]
+  return (
+    <>
+      {
+        codes.map((code) => {
+          return (
+            <CodeBoardChart 
+              key={code}
+              code={code} 
+            />
+          )
+        })
+      }
+    </>
+  )
+}
+export default Page;

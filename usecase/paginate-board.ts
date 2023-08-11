@@ -11,7 +11,7 @@ export const PaginateBoardFn = (props: {
   chunkSize?: number;
 }) => {
   const chunkSize = props.chunkSize || 1000;
-  const run = async (req: { code: string; cursor?: Date; limit?: number }) => {
+  const run = async (req: { code: string; cursor?: Date; limit?: number, interval?:number }) => {
     const paginate = Paginate({
       chunkSize,
       fn: async (x) =>
