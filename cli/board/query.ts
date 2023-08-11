@@ -7,7 +7,7 @@ import { KabusApi } from "@kgy/infra/kabus-api";
 import { SaveBoardFn } from "@kgy/usecase/save-board";
 import { Run } from "@kgy/infra/runner";
 import { Logger } from "@kgy/infra/logger";
-import { ReadBoardFn } from "@kgy/usecase/read-board";
+import { PaginateBoardFn } from "@kgy/usecase/paginate-board";
 import { TsvHeader } from "@kgy/cli/view/tsv-header";
 import { TsvRow } from "@kgy/cli/view/tsv-row";
 import { Writable } from "stream";
@@ -55,11 +55,11 @@ export default {
     const storage = LocalStorage();
     const commandResultFs = CommandResultFs({ storage });
 
-    const iter = await ReadBoardFn({ store, logger }).run({
+    const iter = await PaginateBoardFn({ store, logger }).run({
       code,
       limit,
     });
-    const exportName = `${Date.now().toString()}`;
+    const exportName = `board`;
     const ws: Writable | Error = saveToFile
       ? await commandResultFs.writeStream({
           code,
@@ -68,7 +68,7 @@ export default {
       : process.stdout;
     if (ws instanceof Error) throw ws;
     if (saveToFile) {
-      process.stdout.write(`Writing to ${code}/${exportName}.tsv\n`);
+      process.stdout.write(`Writing to ${exportName}.tsv\n`);
       process.stdout.write(`Please wait...\n`);
     }
 
