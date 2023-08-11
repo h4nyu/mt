@@ -2,3 +2,5 @@ notebook
 pandas
 matplotlib
 plotly
+timm
+mypy
