@@ -14,7 +14,7 @@ const CodeBoardChart = (props: {
 }) => {
   const { code } = props;
   const api = useApi();
-  const defaultCursor = addDays(new Date(), -2);
+  const defaultCursor = addDays(new Date(), -3);
   const [cursor, setCursor] = useState<Date>(defaultCursor);
   const [boards, setBoards] = useState<Board[]>([]);
   const { data: nextBoards, error } = useSWR(
@@ -23,7 +23,7 @@ const CodeBoardChart = (props: {
       api.board.read({
         code,
         cursor,
-        limit: 100,
+        limit: 1,
       }),
     {
       refreshInterval: 1000,
@@ -31,7 +31,7 @@ const CodeBoardChart = (props: {
   );
   if(nextBoards?.length){
     setCursor(last(nextBoards ?? [])?.time ?? defaultCursor);
-    setBoards([...boards, ...nextBoards].slice(0, 10000));
+    setBoards([...boards, ...nextBoards].slice(0, 3000));
   }
   return <>
     <BoardChart boards={boards} code={code} />;
@@ -41,8 +41,8 @@ const CodeBoardChart = (props: {
 const Page = () => {
   const codes = [
     "8035.T",
-    "9983.T",
-    "9984.T",
+    // "9983.T",
+    // "9984.T",
   ]
   return (
     <>
