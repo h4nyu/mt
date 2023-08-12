@@ -20,5 +20,8 @@ RUN apt-get update \
     && pip install --no-cache-dir torch torchvision --extra-index-url https://download.pytorch.org/whl/cu118
 RUN ln -s /usr/local/cuda/lib64/libnvrtc.so.11.2 /usr/local/cuda/lib64/libnvrtc.so
 
+COPY strategy/requirements.txt /app/strategy/requirements.txt
+RUN pip install -r /app/strategy/requirements.txt
+
 WORKDIR /app
 COPY . .

@@ -2,3 +2,6 @@ numpy
 scikit-learn
 typer[all]
 backtesting
+pytorch_lightning
+timm
+onnx

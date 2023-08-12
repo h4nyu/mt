@@ -101,10 +101,12 @@ services:
       - development
 
   ml:
+    runtime: nvidia
     image: "kgy-ml"
     build:
       context: .
       dockerfile: Dockerfile.ml
+    working_dir: /app/strategy
     volumes:
       - .:/app
     environment:

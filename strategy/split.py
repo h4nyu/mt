@@ -8,6 +8,7 @@ import typer
 
 app = typer.Typer()
 
+
 @app.command()
 def split(
     dataset_dir: Annotated[str, typer.Option()],
