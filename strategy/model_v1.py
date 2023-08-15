@@ -5,6 +5,7 @@ import timm
 import pandas as pd
 import pytorch_lightning as pl
 import typer
+
 app = typer.Typer()
 
 MAX_QUANTITY = 1000_000
@@ -104,11 +105,11 @@ class LtModelV1(pl.LightningModule):
         self.model = ModelV1()
         self.save_hyperparameters()
 
-    def configure_optimizers(self): # type: ignore
+    def configure_optimizers(self):  # type: ignore
         optimizer = optim.Adam(self.parameters(), lr=1e-3)
         return optimizer
 
-    def training_step(self, batch: dict[str, Tensor], batch_idx: int) -> Tensor: # type: ignore
+    def training_step(self, batch: dict[str, Tensor], batch_idx: int) -> Tensor:  # type: ignore
         before = batch["before"]
         after = batch["after"]
         pred = self.model(before)
@@ -127,7 +128,6 @@ class LtModelV1(pl.LightningModule):
         return loss
 
 
-
 @app.command()
 def train() -> None:
     pl.seed_everything()
@@ -138,15 +138,14 @@ def train() -> None:
     )
     train_df = pd.read_table("../datasets/2023-08-11-export/8035.T/split/train_0.tsv")
     train_df = preprocess(train_df)
-    train_loader = DataLoader(BoardDataset(train_df), batch_size=32, num_workers=8, shuffle=True)
+    train_loader = DataLoader(
+        BoardDataset(train_df), batch_size=32, num_workers=8, shuffle=True
+    )
     test_df = pd.read_table("../datasets/2023-08-11-export/8035.T/split/test_0.tsv")
     test_df = preprocess(test_df)
     test_loader = DataLoader(BoardDataset(test_df), batch_size=32, num_workers=8)
     model = LtModelV1()
     trainer.fit(model, train_loader, test_loader)
-
-
-
 
 
 if __name__ == "__main__":
