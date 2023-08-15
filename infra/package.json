@@ -21,20 +21,16 @@
     "date-fns": "^2.30.0",
     "fastify": "^4.9.2",
     "lodash": "^4.17.21",
-    "nanoid": "3.3.1",
+    "nanoid": "3",
     "pino": "^8.15.0",
     "postgres": "^2.0.0-beta.11",
     "prisma": "^5.0.0",
     "ws": "^8.9.0"
   },
   "jest": {
-    "preset": "ts-jest/presets/js-with-babel-esm",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx"
-    ],
+    "transform": {
+      "^.+\\.ts?$": "ts-jest"
+    },
     "testEnvironment": "node",
     "testRegex": ".*\\.(test|spec)?\\.(ts|tsx)$"
   },

@@ -1,6 +1,6 @@
 import { Prisma } from "./prisma";
 import { nanoid } from "nanoid";
-import { range } from "lodash";
+import { range, random } from "lodash";
 
 import { BoardStore } from "./board-store.postgres";
 import { Board } from "@kgy/core/board";
@@ -20,6 +20,20 @@ describe("BoardStore", () => {
         bidSign: Sign.DOWN,
         asks: range(2).map((x) => ({ price: x, quantity: x })),
         bids: range(1).map((x) => ({ price: x, quantity: x })),
+        changePreviousClosePrice: random(),
+        changePreviousCloseRate: random(),
+        previousClosePrice: random(),
+        previousCloseTime: new Date(),
+        openPrice: random(),
+        openTime: new Date(),
+        highPrice: random(),
+        highTime: new Date(),
+        lowPrice: random(),
+        lowTime: new Date(),
+        volume: random(),
+        volumeTime: new Date(),
+        marketOrderSellQuantity: random(),
+        marketOrderBuyQuantity: random(),
       });
     return { prisma, boardStore, code, genBoard };
   };

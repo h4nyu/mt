@@ -1,0 +1,15 @@
+-- AlterTable
+ALTER TABLE "Board" ADD COLUMN     "changePreviousClosePrice" DOUBLE PRECISION,
+ADD COLUMN     "changePreviousCloseRate" DOUBLE PRECISION,
+ADD COLUMN     "highPrice" DOUBLE PRECISION,
+ADD COLUMN     "highTime" TIMESTAMP(3),
+ADD COLUMN     "lowPrice" DOUBLE PRECISION,
+ADD COLUMN     "lowTime" TIMESTAMP(3),
+ADD COLUMN     "marketOrderBuyQuantity" INTEGER,
+ADD COLUMN     "marketOrderSellQuantity" INTEGER,
+ADD COLUMN     "openPrice" DOUBLE PRECISION,
+ADD COLUMN     "openTime" TIMESTAMP(3),
+ADD COLUMN     "previousClosePrice" DOUBLE PRECISION,
+ADD COLUMN     "previousCloseTime" TIMESTAMP(3),
+ADD COLUMN     "volume" INTEGER,
+ADD COLUMN     "volumeTime" TIMESTAMP(3);

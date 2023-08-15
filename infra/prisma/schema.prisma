@@ -20,11 +20,31 @@ model Board {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  askSign       String?
-  bidSign       String?
-  BoardRow      BoardRow[]
-  overQuantity  Int?
-  underQuantity Int?
+  askSign  String?
+  bidSign  String?
+  BoardRow BoardRow[]
+
+  overQuantity             Int?
+  underQuantity            Int?
+  changePreviousClosePrice Float?
+  changePreviousCloseRate  Float?
+
+  previousClosePrice Float?
+  previousCloseTime  DateTime?
+  openPrice          Float?
+  openTime           DateTime?
+
+  highPrice Float?
+  highTime  DateTime?
+
+  lowPrice Float?
+  lowTime  DateTime?
+
+  volume     Int?
+  volumeTime DateTime?
+
+  marketOrderSellQuantity Int?
+  marketOrderBuyQuantity  Int?
 
   @@id([code, time])
 }
