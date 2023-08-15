@@ -19,9 +19,30 @@ export type Board = {
   sign?: Sign;
   overQuantity?: number;
   underQuantity?: number;
+
+  changePreviousClosePrice?: number; //前日比
+  changePreviousCloseRate?: number; //前日比率
+
+  previousClosePrice?: number; //前日終値日付
+  previousCloseTime?: Date; //前日終値日付
+
+  openPrice?: number; //始値
+  openTime?: Date; //始値時刻
+
+  highPrice?: number; //高値
+  highTime?: Date; //高値時刻
+
+  lowPrice?: number; //安値
+  lowTime?: Date; //安値時刻
+
+  volume?: number; //出来高
+  volumeTime?: Date; //出来高時刻
+
+  marketOrderSellQuantity?: number; //売成行数量
+  marketOrderBuyQuantity?: number; //買成行数量
 };
 
-export const Board = (props: Board) => {
+export const Board = (props: Board): Board => {
   const {
     code,
     exchange,
@@ -32,6 +53,20 @@ export const Board = (props: Board) => {
     price,
     time,
     sign,
+    changePreviousClosePrice,
+    changePreviousCloseRate,
+    previousClosePrice,
+    previousCloseTime,
+    openPrice,
+    openTime,
+    highPrice,
+    highTime,
+    lowPrice,
+    lowTime,
+    volume,
+    volumeTime,
+    marketOrderSellQuantity,
+    marketOrderBuyQuantity,
   } = props;
   const asks = props.asks.map(BoardRow);
   const bids = props.bids.map(BoardRow);
@@ -46,5 +81,19 @@ export const Board = (props: Board) => {
     sign,
     overQuantity,
     underQuantity,
+    changePreviousClosePrice,
+    changePreviousCloseRate,
+    previousClosePrice,
+    previousCloseTime,
+    openPrice,
+    openTime,
+    highPrice,
+    highTime,
+    lowPrice,
+    lowTime,
+    volume,
+    volumeTime,
+    marketOrderSellQuantity,
+    marketOrderBuyQuantity,
   };
 };

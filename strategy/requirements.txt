@@ -2,3 +2,9 @@ numpy
 scikit-learn
 typer[all]
 backtesting
+pytorch_lightning
+timm
+onnx
+lightgbm
+matplotlib
+stockstats
