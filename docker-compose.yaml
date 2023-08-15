@@ -100,6 +100,20 @@ services:
     profiles:
       - development
 
+  ml:
+    runtime: nvidia
+    image: "kgy-ml"
+    build:
+      context: .
+      dockerfile: Dockerfile.ml
+    working_dir: /app/strategy
+    volumes:
+      - .:/app
+    environment:
+      <<: *env
+    profiles:
+      - development
+
   notebook:
     <<: *app
     command: jupyter notebook --ip 0.0.0.0 --port 8888 --allow-root --NotebookApp.password='' --NotebookApp.token='' --NotebookApp.notebook_dir='/app'

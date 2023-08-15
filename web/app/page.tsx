@@ -9,9 +9,7 @@ import { BoardChart } from "@kgy/web/components/board-chart";
 import { Board } from "@kgy/core/board";
 import useSWR from "swr";
 
-const CodeBoardChart = (props: {
-  code: string;
-}) => {
+const CodeBoardChart = (props: { code: string }) => {
   const { code } = props;
   const api = useApi();
   const defaultCursor = addDays(new Date(), -3);
@@ -29,14 +27,16 @@ const CodeBoardChart = (props: {
       refreshInterval: 1000,
     },
   );
-  if(nextBoards?.length){
+  if (nextBoards?.length) {
     setCursor(last(nextBoards ?? [])?.time ?? defaultCursor);
     setBoards([...boards, ...nextBoards].slice(0, 3000));
   }
-  return <>
-    <BoardChart boards={boards} code={code} />;
-  </>
-}
+  return (
+    <>
+      <BoardChart boards={boards} code={code} />;
+    </>
+  );
+};
 
 const Page = () => {
   const codes = [
@@ -46,17 +46,10 @@ const Page = () => {
   ]
   return (
     <>
-      {
-        codes.map((code) => {
-          return (
-            <CodeBoardChart 
-              key={code}
-              code={code} 
-            />
-          )
-        })
-      }
+      {codes.map((code) => {
+        return <CodeBoardChart key={code} code={code} />;
+      })}
     </>
-  )
-}
+  );
+};
 export default Page;

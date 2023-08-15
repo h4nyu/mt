@@ -1,1 +1,6 @@
 *.html
+.mypy_cache
+**/__pycache__
+lightning_logs
+*.png
+*.txt
