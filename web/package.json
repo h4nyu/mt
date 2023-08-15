@@ -23,6 +23,7 @@
     "eslint-config-next": "13.4.12",
     "framer-motion": "^10.15.1",
     "http-proxy-middleware": "^2.0.6",
+    "lodash": "^4.17.21",
     "next": "13.4.12",
     "plotly.js": "^2.25.1",
     "postcss": "8.4.27",

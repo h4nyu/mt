@@ -12,7 +12,7 @@ import useSWR from "swr";
 const CodeBoardChart = (props: { code: string }) => {
   const { code } = props;
   const api = useApi();
-  const defaultCursor = addDays(new Date(), -2);
+  const defaultCursor = addDays(new Date(), -3);
   const [cursor, setCursor] = useState<Date>(defaultCursor);
   const [boards, setBoards] = useState<Board[]>([]);
   const { data: nextBoards, error } = useSWR(
@@ -21,7 +21,7 @@ const CodeBoardChart = (props: { code: string }) => {
       api.board.read({
         code,
         cursor,
-        limit: 100,
+        limit: 1,
       }),
     {
       refreshInterval: 1000,
@@ -29,12 +29,7 @@ const CodeBoardChart = (props: { code: string }) => {
   );
   if (nextBoards?.length) {
     setCursor(last(nextBoards ?? [])?.time ?? defaultCursor);
-    setBoards(
-      chain([...boards, ...nextBoards])
-        .orderBy("time", "desc")
-        .values()
-        .slice(0, 10000),
-    );
+    setBoards([...boards, ...nextBoards].slice(0, 3000));
   }
   return (
     <>
@@ -44,7 +39,11 @@ const CodeBoardChart = (props: { code: string }) => {
 };
 
 const Page = () => {
-  const codes = ["8035.T", "9983.T", "9984.T"];
+  const codes = [
+    "8035.T",
+    // "9983.T",
+    // "9984.T",
+  ]
   return (
     <>
       {codes.map((code) => {
