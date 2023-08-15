@@ -16,6 +16,20 @@ export const BoardStore = (props: { prisma: PrismaClient }) => {
       bidSign: board.bidSign,
       overQuantity: board.overQuantity,
       underQuantity: board.underQuantity,
+      changePreviousClosePrice: board.changePreviousClosePrice ?? null,
+      changePreviousCloseRate: board.changePreviousCloseRate ?? null,
+      previousClosePrice: board.previousClosePrice ?? null,
+      previousCloseTime: board.previousCloseTime ?? null,
+      openPrice: board.openPrice ?? null,
+      openTime: board.openTime ?? null,
+      highPrice: board.highPrice ?? null,
+      highTime: board.highTime ?? null,
+      lowPrice: board.lowPrice ?? null,
+      lowTime: board.lowTime ?? null,
+      volume: board.volume ?? null,
+      volumeTime: board.volumeTime ?? null,
+      marketOrderSellQuantity: board.marketOrderSellQuantity ?? null,
+      marketOrderBuyQuantity: board.marketOrderBuyQuantity ?? null,
     };
     const boardRowData: Prisma.BoardRowCreateManyInput[] = [
       ...board.asks.map((x, i) => {
@@ -70,10 +84,10 @@ export const BoardStore = (props: { prisma: PrismaClient }) => {
 
     const time = (() => {
       if (cursor) {
-        return { 
+        return {
           gt: cursor,
           lte: interval ? add(cursor, { seconds: interval }) : undefined,
-        }
+        };
       }
     })();
     try {
@@ -118,6 +132,20 @@ export const BoardStore = (props: { prisma: PrismaClient }) => {
             bids,
             overQuantity: row.overQuantity ?? undefined,
             underQuantity: row.underQuantity ?? undefined,
+            changePreviousClosePrice: row.changePreviousClosePrice ?? undefined,
+            changePreviousCloseRate: row.changePreviousCloseRate ?? undefined,
+            previousClosePrice: row.previousClosePrice ?? undefined,
+            previousCloseTime: row.previousCloseTime ?? undefined,
+            openPrice: row.openPrice ?? undefined,
+            openTime: row.openTime ?? undefined,
+            highPrice: row.highPrice ?? undefined,
+            highTime: row.highTime ?? undefined,
+            lowPrice: row.lowPrice ?? undefined,
+            lowTime: row.lowTime ?? undefined,
+            volume: row.volume ?? undefined,
+            volumeTime: row.volumeTime ?? undefined,
+            marketOrderSellQuantity: row.marketOrderSellQuantity ?? undefined,
+            marketOrderBuyQuantity: row.marketOrderBuyQuantity ?? undefined,
           }),
         );
       }

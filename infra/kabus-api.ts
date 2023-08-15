@@ -80,6 +80,24 @@ export const parseBoard = (raw: any) => {
     bidSign: raw.BidSign,
     overQuantity: raw.OverSellQty,
     underQuantity: raw.UnderBuyQty,
+    changePreviousClosePrice: raw.ChangePreviousClose,
+    changePreviousCloseRate: raw.ChangePreviousClosePer,
+    previousClosePrice: raw.PreviousClose,
+    previousCloseTime: raw.PreviousCloseTime
+      ? new Date(raw.PreviousCloseTime)
+      : undefined,
+    openPrice: raw.OpeningPrice,
+    openTime: raw.OpeningPriceTime ? new Date(raw.OpeningPriceTime) : undefined,
+    highPrice: raw.HighPrice,
+    highTime: raw.HighPriceTime ? new Date(raw.HighPriceTime) : undefined,
+    lowPrice: raw.LowPrice,
+    lowTime: raw.LowPriceTime ? new Date(raw.LowPriceTime) : undefined,
+    volume: raw.TradingVolume,
+    volumeTime: raw.TradingVolumeTime
+      ? new Date(raw.TotalVolumeTime)
+      : undefined,
+    marketOrderSellQuantity: raw.MarketOrderSellQty,
+    marketOrderBuyQuantity: raw.MarketOrderBuyQty,
   });
 };
 const handleError = (e: Error) => {
