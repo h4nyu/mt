@@ -1,0 +1,8 @@
+{
+  "name": "board export-all",
+  "description": "board export-all",
+  "script_path": "kgy board export-all",
+  "output_format": "terminal",
+  "parameters": [
+  ]
+}

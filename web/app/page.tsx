@@ -56,7 +56,7 @@ const CodeBoardChart = (props: {
 
 const Page = () => {
   const [fromDate, setFromDate] = useState<Date>(add(new Date(), {
-    minutes: -10,
+    days: -1,
   }));
 
   const codes = [
@@ -66,7 +66,6 @@ const Page = () => {
   ]
   return (
     <>
-      <input type="date" value={fromDate?.toISOString().slice(0, 10)} onChange={(e) => setFromDate(new Date(e.target.value))} />
       {
         codes.map((code) => {
           return (

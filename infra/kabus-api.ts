@@ -93,9 +93,9 @@ export const parseBoard = (raw: any) => {
     lowPrice: raw.LowPrice,
     lowTime: raw.LowPriceTime ? new Date(raw.LowPriceTime) : undefined,
     volume: raw.TradingVolume,
-    volumeTime: raw.TradingVolumeTime
-      ? new Date(raw.TotalVolumeTime)
-      : undefined,
+    // volumeTime: raw.TradingVolumeTime
+    //   ? new Date(raw.TotalVolumeTime)
+    //   : undefined,
     marketOrderSellQuantity: raw.MarketOrderSellQty,
     marketOrderBuyQuantity: raw.MarketOrderBuyQty,
   });
@@ -223,9 +223,11 @@ export const KabusApi = (props?: { logger?: Logger }) => {
         });
       });
       ws.on("message", (data) => {
+
         props?.logger?.info({
           name,
           message: `Receive message from ${process.env.KABUSAPI_WS_URL}`,
+          data: data.toString(),
         });
         const board = parseBoard(JSON.parse(data.toString()));
         handler({ board });

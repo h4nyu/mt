@@ -1,7 +1,10 @@
 import { Storage } from "@kgy/core/interfaces";
 
-export const CommandResultFs = (props: { storage: Storage }) => {
-  const ROOT = "command-results";
+export const CommandResultFs = (props: { 
+  storage: Storage,
+  root?: string,
+}) => {
+  const ROOT = props.root ?? "command-result";
 
   const getPath = (req: { code: string; name: string }) => {
     const { code, name } = req;
