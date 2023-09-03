@@ -2,6 +2,7 @@
   "name": "@kgy/infra",
   "version": "0.1.0",
   "main": "index.js",
+  "type": "module",
   "license": "MIT",
   "types": "index.ts",
   "scripts": {
@@ -10,7 +11,7 @@
     "generate": "pnpify prisma generate",
     "prepack": "yarn build",
     "postpack": "yarn clean",
-    "test": "yarn node --experimental-vm-modules $(yarn bin jest)"
+    "test": "jest"
   },
   "dependencies": {
     "@google-cloud/storage": "^6.12.0",
@@ -28,11 +29,18 @@
     "ws": "^8.9.0"
   },
   "jest": {
-    "transform": {
-      "^.+\\.ts?$": "ts-jest"
+    "preset": "ts-jest/presets/default-esm",
+    "moduleNameMapper": {
+      "^(\\.{1,2}/.*)\\.js$": "$1"
     },
-    "testEnvironment": "node",
-    "testRegex": ".*\\.(test|spec)?\\.(ts|tsx)$"
+    "transform": {
+      "^.+\\.tsx?$": [
+        "ts-jest",
+        {
+          "useESM": true
+        }
+      ]
+    }
   },
   "devDependencies": {
     "@types/jest": "^27.5.1",

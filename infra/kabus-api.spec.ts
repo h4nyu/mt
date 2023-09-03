@@ -2,7 +2,13 @@ import { KabusApi, parseBoard } from "./kabus-api";
 import { Sign } from "@kgy/core/constants";
 import fs from "fs";
 
-describe("KabusApi", () => {
+const describeIf = (() => {
+  if (process.env.KABUS_API_TOKEN && process.env.ENVIRONMENT === "local")
+    return describe;
+  return describe.skip;
+})();
+
+describeIf("KabusApi", () => {
   const setup = () => {
     const client = KabusApi({
       logger: console,

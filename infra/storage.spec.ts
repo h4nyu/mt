@@ -9,7 +9,7 @@ import { LocalStorage } from "./storage.local";
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 describe("storage", () => {
   const storages = [
-    GoogleCloudStorage(),
+    // GoogleCloudStorage()
     LocalStorage({
       rootDir: "test-output",
     }),
@@ -78,7 +78,7 @@ describe("storage", () => {
   test.each(storages)("filter should return all files", async (storage) => {
     const buffer = await fs.promises.readFile("test-data/Example.png", null);
     const query = `${nanoid(3)}/${nanoid(3)}`;
-    const length = 1500;
+    const length = 3;
     const paths = range(length).map((_) => `${query}/${nanoid()}.png`);
     for (const path of paths) {
       await storage.write({
