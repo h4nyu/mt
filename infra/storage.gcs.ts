@@ -9,32 +9,16 @@ import { Logger } from "@kgy/core/logger";
 
 export const GoogleCloudStorage = (props?: {
   bucketName?: string;
-  maxFileSize?: number;
   logger?: Logger;
 }) => {
   const bucketName = props?.bucketName ?? process.env.BUCKET_NAME;
   if (!bucketName) {
     throw Err({
       name: ErrorName.ConfigError,
-      message: `bucketName is not set. It is required to use FirebaseStorage`,
+      message: `bucketName is not set. It is required to use GoogleCloudStorage.`,
     });
   }
-  const maxFileSize =
-    props?.maxFileSize ||
-    toInteger(process.env.MAX_FILE_SIZE) ||
-    30 * 1024 * 1024; //default: 30MB
-  const storage = (() => {
-    if (
-      process.env.STORAGE_EMULATOR_HOST &&
-      process.env.ENVIROMENT === "local"
-    ) {
-      return new Storage({
-        apiEndpoint: `http://${process.env.FIREBASE_STORAGE_EMULATOR_HOST}`,
-      });
-    }
-    return new Storage();
-  })();
-  props?.logger?.info(`Storage.maxFileSize: ${maxFileSize}`);
+  const storage = new Storage();
 
   const handleError = (err: any): Error => {
     // EPIPE: Broken pipe (write):
@@ -102,7 +86,7 @@ export const GoogleCloudStorage = (props?: {
     return err;
   };
 
-  const exists = async (req): Promise<boolean | Error> => {
+  const exists: IStorage["exists"] = async (req) => {
     const { path } = req;
     try {
       const bucket = storage.bucket(bucketName);
@@ -136,7 +120,7 @@ export const GoogleCloudStorage = (props?: {
     }
   };
 
-  const delete_ = async (req): Promise<void | Error> => {
+  const delete_: IStorage["delete"] = async (req) => {
     const { path } = req;
     const isExists = await exists(req);
     if (isExists === false) {
@@ -144,7 +128,7 @@ export const GoogleCloudStorage = (props?: {
     }
     try {
       const bucket = storage.bucket(bucketName);
-      const file = bucket.file(req);
+      const file = bucket.file(path);
       await file.delete();
     } catch (e) {
       return handleError(e);
@@ -174,7 +158,7 @@ export const GoogleCloudStorage = (props?: {
 
   const readStream = async (req: { path: string }) => {
     const { path } = req;
-    const prev = await exists(path);
+    const prev = await exists({ path });
     if (prev instanceof Error) {
       return prev;
     }
@@ -210,6 +194,7 @@ export const GoogleCloudStorage = (props?: {
     const { path } = req;
     try {
       const bucket = storage.bucket(bucketName);
+      console.log("path", path);
       const file = bucket.file(path);
       const ws = await writeStream({
         path,
@@ -217,9 +202,11 @@ export const GoogleCloudStorage = (props?: {
       if (ws instanceof Error) return ws;
       if ("buffer" in req) {
         await pipeline(Readable.from(req.buffer), ws);
+        return;
       }
       if ("stream" in req) {
         await pipeline(req.stream, ws);
+        return;
       }
       return Err({
         name: ErrorName.InvalidArgument,
