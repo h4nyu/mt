@@ -56,7 +56,7 @@ const CodeBoardChart = (props: {
 
 const Page = () => {
   const [fromDate, setFromDate] = useState<Date>(add(new Date(), {
-    days: -1,
+    days: -4,
   }));
 
   const codes = [

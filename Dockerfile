@@ -21,9 +21,7 @@ RUN wget https://github.com/bugy/script-server/releases/download/1.18.0/script-s
     && pip install -r requirements.txt
 
 COPY notebook/requirements.txt /app/notebook/requirements.txt
-COPY ml-board/requirements.txt /app/ml-board/requirements.txt
-RUN pip install -r /app/notebook/requirements.txt \
-    && pip install -r /app/ml-board/requirements.txt
+RUN pip install -r /app/notebook/requirements.txt
 
 
 WORKDIR /app
