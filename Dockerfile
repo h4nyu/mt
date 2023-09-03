@@ -15,7 +15,7 @@ RUN apt-get update \
      && rm /usr/lib/python3.11/EXTERNALLY-MANAGED
 
 WORKDIR /script-server
-RUN wget https://github.com/bugy/script-server/releases/download/1.17.1/script-server.zip \
+RUN wget https://github.com/bugy/script-server/releases/download/1.18.0/script-server.zip \
     && unzip script-server.zip \
     && rm script-server.zip \
     && pip install -r requirements.txt
