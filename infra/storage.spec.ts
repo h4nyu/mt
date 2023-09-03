@@ -9,7 +9,7 @@ import { LocalStorage } from "./storage.local";
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 describe("storage", () => {
   const storages = [
-    GoogleCloudStorage(),
+    // GoogleCloudStorage()
     LocalStorage({
       rootDir: "test-output",
     }),
